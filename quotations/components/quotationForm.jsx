@@ -12,6 +12,8 @@ import { useSearchParams } from "next/navigation";
 import { getSingleDocument } from "@/firebase/databaseOperations";
 import useFetchAll from "@/lib/hooks/useFetchAll";
 import SectionTitle from "@/components/dashboard/sectionTitle";
+import ItineraryMap from "./itineraryMap";
+import ItineraryStaticMap from "./itineraryMapWithStaticMapApi";
 
 const newItnItem = {
   accommodation: [],
@@ -112,6 +114,10 @@ const ItineraryForm = () => {
             `
             )
             .join("")}
+                      <div class="w-[70vw]">
+                      <img src="${
+                        imgUrl ? imgUrl : ""
+                      }" alt="Accommodation Image" class="w-full h-auto object-cover rounded shadow mt-2"></div>
         </div>
       </body>
       </html>`;
@@ -501,8 +507,73 @@ const ItineraryForm = () => {
     );
   }
 
+  // const safariLocations = [
+  //   { name: "Dar es Salaam", coordinates: [-6.829563, 39.278995] },
+  //   { name: "Mikumi National Park", coordinates: [-7.189831, 37.469431] },
+  //   { name: "Tarangire National Park", coordinates: [-4.162858, 36.08993] },
+  //   { name: "Lake Manyara National Park", coordinates: [-3.607861, 35.75758] },
+  //   { name: "Ngorongoro Crater", coordinates: [-3.155476, 35.576657] },
+  //   { name: "Serengeti National Park", coordinates: [-2.333462, 34.83329] },
+  //   { name: "Zanzibar City", coordinates: [-6.166923, 39.333419] },
+  // ];
+
+  const [imgUrl, setMapImg] = useState(null);
+
+  const destinations = [
+    {
+      latitude: -6.7924,
+      longitude: 39.2083,
+      name: "Dar es Salaam",
+      day: "Start",
+    },
+    {
+      latitude: -4.1437219,
+      longitude: 35.7225609,
+      name: "Tarangire NP",
+      day: "Day 1-2",
+    },
+    {
+      latitude: -3.1661679,
+      longitude: 35.5437669,
+      name: "Ngorongoro Crater",
+      day: "Day 3",
+    },
+    {
+      latitude: -2.3333333,
+      longitude: 34.8307584,
+      name: "Serengeti NP",
+      day: "Day 4",
+    },
+    {
+      latitude: -3.6077859,
+      longitude: 35.7369594,
+      name: "Lake Manyara NP",
+      day: "Day 5",
+    },
+    {
+      latitude: -3.0674244,
+      longitude: 37.3350277,
+      name: "Mount Kilimanjaro",
+      day: "End",
+    },
+  ];
+
+  const handleMapCapture = (imgUrl) => {
+    setMapImg(imgUrl);
+    // console.log("the img url ", imgUrl);
+  };
+
   return (
     <div className="p-8 bg-white shadow-md rounded-md  mx-auto">
+      <ItineraryMap
+        onMapCapture={handleMapCapture}
+        destinations={destinations}
+      />
+
+      {/* <ItineraryStaticMap
+        onMapCapture={handleMapCapture}
+        destinations={destinations}
+      /> */}
       <h2 className="text-xl font-semibold mb-6 text-gray-800">
         Customer Details
       </h2>
