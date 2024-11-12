@@ -1,0 +1,383 @@
+"use client";
+import { AddHoldStateCard } from "@/components/accomodation/addHoldStateCard";
+import React, { useState } from "react";
+import { FaPlus } from "react-icons/fa";
+import { FaMinus } from "react-icons/fa6";
+
+const PropertyForm = ({ existingProperty, handleSubmit }) => {
+  const [formData, setFormData] = useState({
+    name: existingProperty?.name || "",
+    address: existingProperty?.address || "",
+    emails: existingProperty?.emails || [],
+    phones: existingProperty?.phones || [],
+    departments: existingProperty?.departments || [],
+    image: existingProperty?.image || "",
+  });
+
+  const [newEmail, setNewEmail] = useState("");
+  const [newPhone, setNewPhone] = useState("");
+  const [newDepartment, setNewDepartment] = useState("");
+
+  const handleAddEmail = () => {
+    if (newEmail.trim()) {
+      setFormData({
+        ...formData,
+        emails: [...formData.emails, newEmail],
+      });
+      setNewEmail(""); // Reset the input
+    }
+  };
+
+  const handleAddPhone = () => {
+    if (newPhone.trim()) {
+      setFormData({
+        ...formData,
+        phones: [...formData.phones, newPhone],
+      });
+      setNewPhone(""); // Reset the input
+    }
+  };
+
+  const handleAddDepartment = () => {
+    if (newDepartment.trim()) {
+      setFormData({
+        ...formData,
+        departments: [...formData.departments, newDepartment],
+      });
+      setNewDepartment(""); // Reset the input
+    }
+  };
+
+  const handleRemoveField = (field, index) => {
+    const updatedArray = formData[field].filter((_, i) => i !== index);
+    setFormData({
+      ...formData,
+      [field]: updatedArray,
+    });
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({
+        ...formData,
+        image: URL.createObjectURL(file), // Handle image as URL or file
+      });
+    }
+  };
+
+  const submitForm = (e) => {
+    e.preventDefault();
+    handleSubmit(formData); // Pass form data to the parent component or submit handler
+  };
+
+  return (
+    <form onSubmit={submitForm}>
+      <div className="sektion md:grid-cols-4">
+        <div className="mb-4 col-span-2">
+          <label
+            className="block text-slate-700 text-sm font-bold mb-2"
+            htmlFor="name"
+          >
+            Property Name
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="name"
+            type="text"
+            placeholder="Enter Property Name"
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label
+            className="block text-slate-700 text-sm font-bold mb-2"
+            htmlFor="address"
+          >
+            Property Address
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="address"
+            type="text"
+            placeholder="Enter Property Address"
+            name="address"
+            value={formData.address}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label
+            className="block text-slate-700 text-sm font-bold mb-2"
+            htmlFor="noRooms"
+          >
+            No. Rooms
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="noRooms"
+            type="number"
+            placeholder="Property No. Rooms"
+            name="noRooms"
+            value={formData.noRooms}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+      </div>
+
+      <div className="sektion md:grid-cols-4">
+        {/* Emails */}
+        {/* <div className="mb-4">
+          <label
+            className="block text-slate-700 text-sm font-bold mb-2"
+            htmlFor="emails"
+          >
+            Property Emails
+          </label>
+          <div className="flex items-center space-x-1 shadow appearance-none border rounded py-1 px-1 text-slate-700 leading-tight focus:outline-none focus:shadow-outline">
+            <input
+              className="w-full bg-slate-200 py-2 px-3 text-slate-700 leading-tight focus:outline-none rounded"
+              id="emails"
+              type="email"
+              placeholder="Enter Property Email"
+              name="emails"
+              value={newEmail}
+              onChange={(e) => setNewEmail(e.target.value)}
+              required
+            />
+            <button
+              type="button"
+              onClick={handleAddEmail}
+              className="bg-pamojaprimary hover:bg-pamojaaccent hover:text-pamojadark text-white font-bold py-2 px-4 rounded"
+            >
+              <FaPlus />
+            </button>
+          </div>
+          <div className="w-full mt-2">
+            {formData.emails.length > 0 &&
+              formData.emails.map((email, index) => (
+                <div key={index} className="flex items-center space-x-1 mb-1">
+                  <span className="w-full bg-slate-200 py-2 px-3 text-slate-700 rounded">
+                    {email}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveField("emails", index)}
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded-full"
+                  >
+                    <FaMinus className="h-4 w-4" />
+                  </button>
+                </div>
+              ))}
+          </div>
+        </div> */}
+
+        <AddHoldStateCard
+          title="Property Emails"
+          name="emails"
+          valueState={newEmail}
+          onChangeState={setNewEmail}
+          formData={formData}
+          setFormData={setFormData}
+          field="emails"
+          type="email" // Input type
+        />
+
+        {/* Phones */}
+        {/* <div className="mb-4">
+          <label
+            className="block text-slate-700 text-sm font-bold mb-2"
+            htmlFor="phones"
+          >
+            Property Phones
+          </label>
+          <div className="flex items-center space-x-1 shadow appearance-none border rounded py-1 px-1 text-slate-700 leading-tight focus:outline-none focus:shadow-outline">
+            <input
+              className="w-full bg-slate-200 py-2 px-3 text-slate-700 leading-tight focus:outline-none rounded"
+              id="phones"
+              type="text"
+              placeholder="Enter Property Phone"
+              name="phones"
+              value={newPhone}
+              onChange={(e) => setNewPhone(e.target.value)}
+              required
+            />
+            <button
+              type="button"
+              onClick={handleAddPhone}
+              className="bg-pamojaprimary hover:bg-pamojaaccent hover:text-pamojadark text-white font-bold py-2 px-4 rounded"
+            >
+              <FaPlus />
+            </button>
+          </div>
+          <div className="w-full mt-2">
+            {formData.phones.length > 0 &&
+              formData.phones.map((phone, index) => (
+                <div key={index} className="flex items-center space-x-1 mb-1">
+                  <span className="w-full bg-slate-200 py-2 px-3 text-slate-700 rounded">
+                    {phone}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveField("phones", index)}
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded-full"
+                  >
+                    <FaMinus className="h-4 w-4" />
+                  </button>
+                </div>
+              ))}
+          </div>
+        </div> */}
+
+        <AddHoldStateCard
+          title="Property Phone"
+          name="phones"
+          valueState={newPhone}
+          onChangeState={setNewPhone}
+          formData={formData}
+          setFormData={setFormData}
+          field="phones"
+          type="number" // Input type
+        />
+
+        {/* Departments */}
+        {/* <div className="mb-4">
+          <label
+            className="block text-slate-700 text-sm font-bold mb-2"
+            htmlFor="departments"
+          >
+            Property Departments
+          </label>
+          <div className="flex items-center space-x-1 shadow appearance-none border rounded py-1 px-1 text-slate-700 leading-tight focus:outline-none focus:shadow-outline">
+            <input
+              className="w-full bg-slate-200 py-2 px-3 text-slate-700 leading-tight focus:outline-none rounded"
+              id="departments"
+              type="text"
+              placeholder="Enter Property Department"
+              name="departments"
+              value={newDepartment}
+              onChange={(e) => setNewDepartment(e.target.value)}
+              required
+            />
+            <button
+              type="button"
+              onClick={handleAddDepartment}
+              className="bg-pamojaprimary hover:bg-pamojaaccent hover:text-pamojadark text-white font-bold py-2 px-4 rounded"
+            >
+              <FaPlus />
+            </button>
+          </div>
+          <div className="w-full mt-2">
+            {formData.departments.length > 0 &&
+              formData.departments.map((department, index) => (
+                <div key={index} className="flex items-center space-x-1 mb-1">
+                  <span className="w-full bg-slate-200 py-2 px-3 text-slate-700 rounded">
+                    {department}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveField("departments", index)}
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded-full"
+                  >
+                    <FaMinus className="h-4 w-4" />
+                  </button>
+                </div>
+              ))}
+          </div>
+        </div> */}
+
+        <AddHoldStateCard
+          title="Propery Departments"
+          name="departments"
+          valueState={newDepartment}
+          onChangeState={setNewDepartment}
+          formData={formData}
+          setFormData={setFormData}
+          field="departments"
+          type="text" // Input type
+        />
+        <div className="col-span-2 mb-4">
+          <label
+            className="block text-slate-700 text-sm font-bold mb-2"
+            htmlFor="emails"
+          >
+            Property Social Medias
+          </label>
+          <div className="flex item-center space-x-1 shadow appearance-none border rounded  py-1 px-1 text-slate-700 leading-tight focus:outline-none focus:shadow-outline">
+            <select name="icons" id="icons">
+              <option value="facebook">Facebook</option>
+              <option value="instagram">Instagram</option>
+              <option value="trip-advisor">Trip Advisor</option>
+              <option value="safari-booking">Safari Booking</option>
+            </select>
+            <input
+              className="w-full appearance-none bg-slate-200 py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline rounded"
+              id="socialMedias"
+              type="socialMedias"
+              placeholder="Enter Property Email"
+              name="socialMedias"
+              value={formData.socialMedias}
+              onChange={handleChange}
+              required
+            />
+            <button className="bg-pamojaprimary hover:bg-pamojaaccent hover:text-pamojadark text-white font-bold py-2 px-4 rounded">
+              <FaPlus />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Image */}
+      <div className="mb-4">
+        <label
+          className="block text-slate-700 text-sm font-bold mb-2"
+          htmlFor="image"
+        >
+          Property Image
+        </label>
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="image"
+          type="file"
+          name="image"
+          onChange={handleImageChange}
+        />
+        {formData.image && (
+          <div className="mt-2 sektion md:grid-cols-4">
+            <img
+              src={formData.image}
+              alt="Property"
+              className="h-32 w-full object-cover rounded"
+            />
+          </div>
+        )}
+      </div>
+
+      <div className="flex items-center justify-between">
+        <button
+          type="submit"
+          className="bg-pamojaprimary hover:bg-pamojaaccent text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Save Property
+        </button>
+      </div>
+    </form>
+  );
+};
+
+export default PropertyForm;

@@ -1,0 +1,32 @@
+/* eslint-disable react/display-name */
+// components/CustomModal.js
+"use client";
+import { useState, forwardRef, useImperativeHandle } from "react";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+
+const DashboardModal = forwardRef(({ title, description,children }, ref) => {
+  const [open, setOpen] = useState(false);
+
+  useImperativeHandle(ref, () => ({
+    open: () => setOpen(true),
+    close: () => setOpen(false),
+  }));
+
+  return (
+    <AlertDialog open={open} onOpenChange={setOpen}>
+      <AlertDialogContent>
+        <AlertDialogTitle>{title}</AlertDialogTitle>
+        <AlertDialogDescription>{description}</AlertDialogDescription>
+
+{children}
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+});
+
+export default DashboardModal;

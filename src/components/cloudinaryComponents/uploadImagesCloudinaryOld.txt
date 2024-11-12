@@ -1,0 +1,73 @@
+"use client"; // Required for client-side code in the App Router
+import { useState } from "react";
+
+export default function UploadImagesCloudinaryForm() {
+  const [files, setFiles] = useState([]);
+  const [folder, setFolder] = useState("default-folder");
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [previews, setPreviews] = useState([]);
+
+  const handleFileChange = (e) => {
+    setFiles(e.target.files); // Handle multiple files
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (files.length === 0) {
+      setError("Please select at least one file.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("folder", folder);
+
+    // Append all selected files to the form data
+    for (let i = 0; i < files.length; i++) {
+      formData.append("files", files[i]);
+    }
+
+    setIsLoading(true);
+    try {
+      const res = await fetch("/api/uploadImages", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      setIsLoading(false);
+      if (data.success) {
+        console.log("Files uploaded successfully:", data.results);
+      } else {
+        console.error("Upload error:", data.error);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="bg-pamojaaccent flex flex-col space-y-5 p-5 border border-pamojaprimary"
+    >
+      <input
+        type="text"
+        value={folder}
+        onChange={(e) => setFolder(e.target.value)}
+        placeholder="Folder name"
+        className="w-full px-4 py-2 border"
+      />
+      <input type="file" multiple onChange={handleFileChange} />
+      {error && <p className="text-red-500">{error}</p>}
+      <button
+        type="submit"
+        className="bg-pamojaprimary text-white font-bold py-2 px-4 rounded"
+        disabled={isLoading}
+      >
+        {isLoading ? "Uploading..." : "Upload"}
+      </button>
+    </form>
+  );
+}

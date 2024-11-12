@@ -1,0 +1,34 @@
+import React from 'react'
+import {
+    Command,
+    CommandGroup,
+    CommandItem,
+    CommandList,
+    CommandSeparator,
+  } from "@/components/ui/command"
+  import { menuDashItem } from "@/data/menuDash";
+import Link from 'next/link';
+
+export default function SideBar() {
+  return (
+    <div className="space-y-5">
+      
+      {/* type two */}
+      {menuDashItem.map((dashitem, i) => (
+        <div key={i} > 
+          <Command > 
+           <CommandList>
+              <CommandGroup heading={dashitem.name}>
+                {dashitem.subMenu.map((dashsub, idash) => (
+                  <CommandItem key={idash}  asChild>
+                    <Link href={dashsub.path}>{dashsub.name}</Link> 
+                  </CommandItem>
+                ))}
+              </CommandGroup> <CommandSeparator />
+            </CommandList>
+          </Command>
+        </div>
+      ))}
+    </div>
+  )
+}

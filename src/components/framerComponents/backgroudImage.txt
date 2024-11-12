@@ -1,0 +1,31 @@
+import { motion } from "framer-motion";
+import React from 'react'
+
+export const BackgroudImage = ({ transitionData, currentSlideData }) => {
+  return (
+    <>
+      {transitionData && (
+        <motion.image
+          key={transitionData.image}
+          layoutId={transitionData.image}
+          src={transitionData.image}
+          alt="Transition Image"
+          layout
+          // animate={{ opacity: 0.5 }}
+          transition={{
+            opacity: { ease: "linear" },
+            layout: { duration: 0.3 },
+          }}
+          className="absolute bottom-0 left-0 z-10 h-full w-full object-cover brightness-50"
+        />
+      )}
+
+      <motion.image
+        alt="Current Image"
+        src={currentSlideData.image}
+        key={currentSlideData.data.image + "transition"}
+        className="absolute bottom-0 left-0 h-full w-full object-cover brightness-50"
+      />
+    </>
+  );
+};

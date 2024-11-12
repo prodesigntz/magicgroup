@@ -1,0 +1,757 @@
+"use client";
+
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
+import { FaPlus } from "react-icons/fa";
+import { LuMinusCircle } from "react-icons/lu";
+import { accmTypeStandards } from "@/data/localData";
+import { isValidNumber } from "@/lib/utils";
+
+const RoomsCostDetails = forwardRef(
+  ({ onHandleRoomsDetailsChange, initialInfo }, ref) => {
+    const initialFormData = [
+      {
+        isPerPerson: true,
+        isForeigner: true,
+        foreigner: {
+          isGeneralStatus: true,
+          highSeason: {
+            roomType: "Single",
+            rack: 0,
+            sto: 0,
+          },
+          lowSeason: {
+            roomType: "Single",
+            rack: 0,
+            sto: 0,
+          },
+        },
+        local: {
+          isGeneralStatus: true,
+          highSeason: {
+            roomType: "Single",
+            rack: 0,
+            sto: 0,
+          },
+          lowSeason: {
+            roomType: "Single",
+            rack: 0,
+            sto: 0,
+          },
+        },
+      },
+    ];
+
+    const newRoomCostData = {
+      isPerPerson: true,
+      isForeigner: true,
+      foreigner: {
+        isGeneralStatus: true,
+        highSeason: {
+          roomType: "Single",
+          rack: 0,
+          sto: 0,
+        },
+        lowSeason: {
+          roomType: "Single",
+          rack: 0,
+          sto: 0,
+        },
+      },
+      local: {
+        isGeneralStatus: true,
+        highSeason: {
+          roomType: "Single",
+          rack: 0,
+          sto: 0,
+        },
+        lowSeason: {
+          roomType: "Single",
+          rack: 0,
+          sto: 0,
+        },
+      },
+    };
+
+    const [roomsDetails, setRoomsDetails] = useState(initialFormData);
+    const [roomsErrors, setRoomsErrors] = useState([]);
+
+    //updating initial info...................
+    useEffect(() => {
+      if (initialInfo) {
+        setRoomsDetails(initialInfo);
+      }
+    }, [initialInfo]);
+
+    //end of season se up.................................
+    const handleChangeToForeigner = (roomIndex) => {
+      setRoomsDetails((prevRoomsDetails) => {
+        const updatedRooms = prevRoomsDetails.map((room, index) => {
+          if (index === roomIndex) {
+            return { ...room, isForeigner: true };
+          }
+          return room;
+        });
+
+        return updatedRooms;
+      });
+    };
+    const handleChangeToLocal = (roomIndex) => {
+      setRoomsDetails((prevRoomsDetails) => {
+        const updatedRooms = prevRoomsDetails.map((room, index) => {
+          if (index === roomIndex) {
+            return { ...room, isForeigner: false };
+          }
+          return room;
+        });
+
+        return updatedRooms;
+      });
+    };
+
+    const handleChangeToPerPerson = (roomIndex) => {
+      setRoomsDetails((prevRoomsDetails) => {
+        const updatedRooms = prevRoomsDetails.map((room, index) => {
+          if (index === roomIndex) {
+            return { ...room, isPerPerson: true };
+          }
+          return room;
+        });
+
+        return updatedRooms;
+      });
+    };
+
+    const handleChangeToPerRoom = (roomIndex) => {
+      setRoomsDetails((prevRoomsDetails) => {
+        const updatedRooms = prevRoomsDetails.map((room, index) => {
+          if (index === roomIndex) {
+            return { ...room, isPerPerson: false };
+          }
+          return room;
+        });
+
+        return updatedRooms;
+      });
+    };
+
+    const handleChangeToGeneral = (roomIndex) => {
+      setRoomsDetails((prevRoomsDetails) => {
+        const updatedRooms = prevRoomsDetails.map((room, index) => {
+          if (index === roomIndex) {
+            if (room.isForeigner) {
+              return {
+                ...room,
+                foreigner: { ...room.foreigner, isGeneralStatus: true },
+              };
+            } else {
+              return {
+                ...room,
+                local: { ...room.local, isGeneralStatus: true },
+              };
+            }
+          }
+          return room;
+        });
+
+        return updatedRooms;
+      });
+    };
+
+    const handleChangeToHighLow = (roomIndex) => {
+      setRoomsDetails((prevRoomsDetails) => {
+        const updatedRooms = prevRoomsDetails.map((room, index) => {
+          if (index === roomIndex) {
+            if (room.isForeigner) {
+              return {
+                ...room,
+                foreigner: { ...room.foreigner, isGeneralStatus: false },
+              };
+            } else {
+              return {
+                ...room,
+                local: { ...room.local, isGeneralStatus: false },
+              };
+            }
+          }
+          return room;
+        });
+
+        return updatedRooms;
+      });
+    };
+
+    const handleCheckIsGeneral = (room) => {
+      if (room.isForeigner) {
+        return room.foreigner.isGeneralStatus;
+      }
+      return room.local.isGeneralStatus;
+    };
+
+    const handleAddNewRoom = () => {
+      const newList = [...roomsDetails, newRoomCostData];
+      setRoomsDetails((prevState) => newList);
+      onHandleRoomsDetailsChange(newList);
+    };
+
+    const handleRemoveRoom = (roomIndex) => {
+      if (roomsErrors[roomIndex]) {
+        setRoomsDetails((prev) =>
+          roomsErrors.filter((item, index) => index !== roomIndex)
+        );
+      }
+
+      const newList = roomsDetails.filter((item, index) => index !== roomIndex);
+      setRoomsDetails((prevState) => newList);
+      onHandleRoomsDetailsChange(newList);
+    };
+
+    //handle apply foreigner charges to local..............
+    const handleApplySamechargesToLocal = (roomIndex) => {
+      setRoomsDetails((prevState) => {
+        const updatedList = prevState.map((room, index) => {
+          if (roomIndex === index) {
+            return { ...room, local: room.foreigner };
+          }
+
+          return room;
+        });
+
+        return updatedList;
+      });
+    };
+
+    //handle fields in general(both high and low) or high (for high/low mode)........
+    const handleGHField = (fieldName, value, rIndex) => {
+      if (fieldName !== "roomType") {
+        if (value !== "") {
+          if (!isValidNumber(value)) return;
+        }
+      }
+
+      const getUpdatedList = (prevList) => {
+        const updatedList = prevList.map((room, index) => {
+          if (rIndex === index) {
+            if (room.isForeigner) {
+              //updating foreigner details
+              if (room.foreigner.isGeneralStatus) {
+                //update for both high and low season......
+                return {
+                  ...room,
+                  foreigner: {
+                    ...room.foreigner,
+                    highSeason: {
+                      ...room.foreigner.highSeason,
+                      [fieldName]: value,
+                    },
+                    lowSeason: {
+                      ...room.foreigner.lowSeason,
+                      [fieldName]: value,
+                    },
+                  },
+                };
+              } else {
+                //update only high season..................
+                return {
+                  ...room,
+                  foreigner: {
+                    ...room.foreigner,
+                    highSeason: {
+                      ...room.foreigner.highSeason,
+                      [fieldName]: value,
+                    },
+                  },
+                };
+              }
+            } else {
+              //updating local cst details
+
+              if (room.local.isGeneralStatus) {
+                //update for both high and low season......
+                return {
+                  ...room,
+                  local: {
+                    ...room.local,
+                    highSeason: {
+                      ...room.local.highSeason,
+                      [fieldName]: value,
+                    },
+                    lowSeason: {
+                      ...room.local.lowSeason,
+                      [fieldName]: value,
+                    },
+                  },
+                };
+              } else {
+                //update only high season..................
+                return {
+                  ...room,
+                  local: {
+                    ...room.local,
+                    highSeason: {
+                      ...room.local.highSeason,
+                      [fieldName]: value,
+                    },
+                  },
+                };
+              }
+            }
+          }
+          return room;
+        });
+
+        return updatedList;
+      };
+
+      const newList = getUpdatedList(roomsDetails);
+      onHandleRoomsDetailsChange(newList);
+      setRoomsDetails((prevState) => {
+        const updtList = getUpdatedList(prevState);
+        return updtList;
+      });
+    };
+
+    //handle fields for low season (in high low mode)........
+    const handleLowField = (fieldName, value, rIndex) => {
+      if (fieldName !== "roomType") {
+        if (value !== "") {
+          if (!isValidNumber(value)) return;
+        }
+      }
+
+      const getUpdatedList = (prevList) => {
+        const updatedList = prevList.map((room, index) => {
+          if (rIndex === index) {
+            if (room.isForeigner) {
+              //updating foreigner details
+              return {
+                ...room,
+                foreigner: {
+                  ...room.foreigner,
+                  lowSeason: {
+                    ...room.foreigner.lowSeason,
+                    [fieldName]: value,
+                  },
+                },
+              };
+            } else {
+              //updating local cst details
+              return {
+                ...room,
+                local: {
+                  ...room.local,
+                  lowSeason: {
+                    ...room.local.lowSeason,
+                    [fieldName]: value,
+                  },
+                },
+              };
+            }
+          }
+          return room;
+        });
+
+        return updatedList;
+      };
+
+      const newList = getUpdatedList(roomsDetails);
+      onHandleRoomsDetailsChange(newList);
+      setRoomsDetails((prevState) => {
+        const updtList = getUpdatedList(prevState);
+        return updtList;
+      });
+    };
+
+    const getStoAndRack = (room) => {
+      if (room.isForeigner) {
+        return {
+          stoH: room.foreigner.highSeason.sto,
+          rackH: room.foreigner.highSeason.rack,
+          rTypeH: room.foreigner.highSeason.roomType,
+          stoL: room.foreigner.lowSeason.sto,
+          rackL: room.foreigner.lowSeason.rack,
+          rTypeL: room.foreigner.lowSeason.roomType,
+        };
+      } else {
+        return {
+          stoH: room.local.highSeason.sto,
+          rackH: room.local.highSeason.rack,
+          rTypeH: room.local.highSeason.roomType,
+          stoL: room.local.lowSeason.sto,
+          rackL: room.local.lowSeason.rack,
+          rTypeL: room.local.lowSeason.roomType,
+        };
+      }
+    };
+
+    useImperativeHandle(ref, () => ({
+      validateInputs,
+    }));
+
+    //validation function..............
+    const validateInputs = () => {
+      let errorsList = []; //should be empty for room details to be complete
+      roomsDetails.forEach((room, roomIndex) => {
+        //validate foreigner cost details..............
+        const HSValues = Object.values(room.foreigner.highSeason);
+        const LSValues = Object.values(room.foreigner.lowSeason);
+        //high season....
+        if (
+          HSValues.some(
+            (item) => item === "" || item === 0 || item.startsWith("0")
+          )
+        ) {
+          errorsList[roomIndex] = [
+            "some of Foreigner high season inputs for this room are not filled",
+          ];
+        }
+        //low season....
+        if (
+          LSValues.some(
+            (item) => item === "" || item === 0 || item.startsWith("0")
+          )
+        ) {
+          if (errorsList[roomIndex] === undefined) {
+            errorsList[roomIndex] = [
+              "some of Foreigner low season inputs for this room are not filled",
+            ];
+          } else {
+            errorsList[roomIndex] = [
+              ...errorsList[roomIndex],
+              "some of Foreigner low season inputs for this room are not filled",
+            ];
+          }
+        }
+
+        //validate local c cost details..............
+        const lcHSValues = Object.values(room.local.highSeason);
+        const lcLSValues = Object.values(room.local.lowSeason);
+        //high season....
+        if (
+          lcHSValues.some(
+            (item) => item === "" || item === 0 || item.startsWith("0")
+          )
+        ) {
+          if (errorsList[roomIndex] === undefined) {
+            errorsList[roomIndex] = [
+              "some of Local customer high season inputs for this room are not filled",
+            ];
+          } else {
+            errorsList[roomIndex] = [
+              ...errorsList[roomIndex],
+              "some of Local customer high season inputs for this room are not filled",
+            ];
+          }
+        }
+        //low season....
+        if (
+          lcLSValues.some(
+            (item) => item === "" || item === 0 || item.startsWith("0")
+          )
+        ) {
+          if (errorsList[roomIndex] === undefined) {
+            errorsList[roomIndex] = [
+              "some of Local customer low season inputs for this room are not filled",
+            ];
+          } else {
+            errorsList[roomIndex] = [
+              ...errorsList[roomIndex],
+              "some of Local customer low season inputs for this room are not filled",
+            ];
+          }
+        }
+      });
+
+      if (errorsList.length > 0) {
+        setRoomsErrors(errorsList);
+        return false;
+      }
+      setRoomsErrors(errorsList);
+      return true;
+    };
+
+    return (
+      <div className="space-y-5">
+        {/* single room ................. */}
+
+        {roomsDetails.map((room, index) => {
+          const isGeneral = handleCheckIsGeneral(room);
+          const { stoH, rackH, rTypeH, stoL, rackL, rTypeL } =
+            getStoAndRack(room);
+
+          return (
+            <div key={index} className="space-y-2">
+              <div className="flex justify-between items-center">
+                <h2 className="block text-lg font-semibold">
+                  {`Room ${index + 1} Cost Details`}
+                </h2>
+                <button
+                  onClick={() => handleRemoveRoom(index)}
+                  type="button"
+                  className="p-2 rounded-xl"
+                >
+                  <LuMinusCircle
+                    className="text-red-600 hover:bg-red-100 rounded-full"
+                    size={24}
+                  />
+                </button>
+              </div>
+              <p className="m-0 p-0">Charges category</p>
+              <div className="pb-4">
+                <div className="inline-block">
+                  <div className="flex gap-2 rounded-lg bg-[#f1f5f9]">
+                    <button
+                      type="button"
+                      onClick={() => handleChangeToPerPerson(index)}
+                      className={`${
+                        room.isPerPerson ? "bg-prosecondary" : "text-gray-600"
+                      } px-3 py-2 rounded-lg  text-[17px]`}
+                    >
+                      Per Person
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleChangeToPerRoom(index)}
+                      className={` ${
+                        !room.isPerPerson ? "bg-prosecondary" : "text-gray-600"
+                      } px-3 py-2 rounded-lg  text-[17px]`}
+                    >
+                      Per Room
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* residential status tab....................................................  */}
+              <p className="m-0 p-0">Residential Status</p>
+              <div className="inline-block pb-4">
+                <div className="flex  gap-2 rounded-lg bg-[#f1f5f9]">
+                  <button
+                    type="button"
+                    onClick={() => handleChangeToForeigner(index)}
+                    className={`${
+                      room.isForeigner ? "bg-prosecondary" : "text-gray-600"
+                    } px-3 py-2 rounded-lg  text-[17px]`}
+                  >
+                    Foreigner
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleChangeToLocal(index)}
+                    className={` ${
+                      !room.isForeigner ? "bg-prosecondary" : "text-gray-600"
+                    } px-3 py-2 rounded-lg  text-[17px]`}
+                  >
+                    Local
+                  </button>
+                </div>
+              </div>
+              {/* end of residential status tab ................................................ */}
+
+              {/* residential tabs content..................................  */}
+
+              <div className="pb-4">
+                {!room.isForeigner && (
+                  <button
+                    onClick={() => handleApplySamechargesToLocal(index)}
+                    className=" py-1 px-2 rounded-lg border"
+                    type="button"
+                  >
+                    Apply the same charges as for a foreigner
+                  </button>
+                )}
+                <p className="block text-sm font-medium mb-1 mt-4">Seasons</p>
+                {/* seasons(general or else) status tab....................................................  */}
+                <div className="inline-block">
+                  <div className="flex gap-2 rounded-lg bg-[#f1f5f9]">
+                    <button
+                      type="button"
+                      onClick={() => handleChangeToGeneral(index)}
+                      className={`${
+                        isGeneral ? "bg-prosecondary" : "text-gray-600"
+                      } px-3 py-2 rounded-lg  text-[14px]`}
+                    >
+                      General
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleChangeToHighLow(index)}
+                      className={` ${
+                        !isGeneral ? "bg-prosecondary" : "text-gray-600"
+                      } px-3 py-2 rounded-lg  text-[14px]`}
+                    >
+                      High & Low
+                    </button>
+                  </div>
+                </div>
+                {/* end of seasons status tab ................................................ */}
+              </div>
+
+              {/* end of residential tabs content...................................... */}
+              {/* single room details */}
+              <div className="space-y-5">
+                {/* seasons mode is general or high.....................................................  */}
+                <p className="text-sm font-semibold">
+                  {isGeneral ? "For both high and low season" : "High Season"}
+                </p>
+                <div className="bg-gradient-to-r px-2 from-protertiary to-transparent border border-t-procolor border-b-procolor border-r-transparent border-l-transaparent py-2">
+                  <div className="sektion2 md:grid-cols-3">
+                    <div>
+                      <label
+                        htmlFor="options"
+                        className="block text-sm font-medium pb-1"
+                      >
+                        Type
+                      </label>
+                      <select
+                        id="options"
+                        className="inputClass"
+                        value={rTypeH}
+                        onChange={(event) =>
+                          handleGHField("roomType", event.target.value, index)
+                        }
+                      >
+                        <option value="">Select room type</option>
+                        {accmTypeStandards.map((item, index) => (
+                          <option key={index} value={item.value}>
+                            {item.value}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="space-y-1">
+                      <label className="block text-sm font-medium pb-1">
+                        Rack
+                      </label>
+                      <input
+                        value={rackH}
+                        onChange={(event) =>
+                          handleGHField("rack", event.target.value, index)
+                        }
+                        type="text"
+                        className="inputClass"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="block text-sm font-medium pb-1">
+                        STO
+                      </label>
+                      <input
+                        type="text"
+                        value={stoH}
+                        onChange={(event) =>
+                          handleGHField("sto", event.target.value, index)
+                        }
+                        className="inputClass"
+                      />
+                    </div>
+                  </div>
+                </div>
+                {/* end of seasons mode is general or high..............................................  */}
+                {/*  seasons mode is  low ..............................................  */}
+                {!isGeneral && (
+                  <div style={{ marginTop: "5px !important" }}>
+                    {" "}
+                    <p className="text-sm font-semibold mb-2">Low Season</p>
+                    <div
+                      style={{ marginTop: "0px !important" }}
+                      className="bg-gradient-to-r px-2 from-protertiary to-transparent border border-t-procolor border-b-procolor border-r-transparent border-l-transaparent py-2"
+                    >
+                      <div className="sektion2 md:grid-cols-3">
+                        <div>
+                          <label
+                            htmlFor="options"
+                            className="block text-sm font-medium pb-1"
+                          >
+                            Type
+                          </label>
+                          <select
+                            id="options"
+                            className="inputClass"
+                            value={rTypeL}
+                            onChange={(event) =>
+                              handleLowField(
+                                "roomType",
+                                event.target.value,
+                                index
+                              )
+                            }
+                          >
+                            <option value="">Select room type</option>
+                            {accmTypeStandards.map((item, index) => (
+                              <option key={index} value={item.value}>
+                                {item.value}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="space-y-1">
+                          <label className="block text-sm font-medium pb-1">
+                            Rack
+                          </label>
+                          <input
+                            type="text"
+                            value={rackL}
+                            onChange={(event) =>
+                              handleLowField("rack", event.target.value, index)
+                            }
+                            className="inputClass"
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="block text-sm font-medium pb-1">
+                            STO
+                          </label>
+                          <input
+                            type="text"
+                            value={stoL}
+                            onChange={(event) =>
+                              handleLowField("sto", event.target.value, index)
+                            }
+                            className="inputClass"
+                          />
+                        </div>
+                      </div>
+                    </div>{" "}
+                  </div>
+                )}
+
+                {/* end of seasons mode is low..........................................  */}
+              </div>
+
+              {roomsErrors[index] && (
+                <div>
+                  {roomsErrors[index].length > 0 && (
+                    <div className="flex flex-col">
+                      {roomsErrors[index].map((error, index) => (
+                        <div key={index}>
+                          <p className="text-red-500">{error}</p>
+                        </div>
+                      ))}{" "}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })}
+
+        {/* end of single room............ */}
+
+        <button
+          onClick={handleAddNewRoom}
+          type="button"
+          className="bg-protertiary text-procolor hover:bg-proprimary hover:text-white p-2 rounded-xl"
+        >
+          <FaPlus />
+        </button>
+      </div>
+    );
+  }
+);
+
+export default RoomsCostDetails;

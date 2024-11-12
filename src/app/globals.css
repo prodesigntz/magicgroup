@@ -1,0 +1,168 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* color codes */
+/* pro-primary: 226, 76%, 23% ; */
+/* pro-secondary: 4, 86%, 49% ; org */
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 226, 76%, 23%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.75rem;
+    --pamoja-primary: 37, 35%, 57%;
+    --pamoja-secondary: 37, 83%, 86%;
+    --pamoja-tertiary: 33, 43%, 96%;
+    --pamoja-accent: 60, 33%, 94%;
+    --pamoja-dark: 37, 59%, 27%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+
+    --pamoja-primary: 37, 35%, 57%;
+    --pamoja-secondary: 37, 83%, 86%;
+    --pamoja-tertiary: 33, 43%, 96%;
+    --pamoja-accent: 60, 33%, 94%;
+    --pamoja-dark: 37, 59%, 27%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* .slick-slide div {
+    margin: 3px;
+  } */
+
+/* .slick-arrow:before{
+    color: brown;
+    font-size: small;
+  } */
+
+.fredoka {
+  font-family: var(--font-fredoka);
+}
+
+.gilda_display {
+  font-family: var(--font-gilda);
+}
+
+.barlow {
+  font-family: var(--font-barlow);
+}
+
+.babylonica {
+  font-family: var(--font-babylonica);
+}
+
+/* .respons {
+  @apply container mx-auto;
+} */
+
+.respons {
+  @apply container mx-auto max-w-[1200px] sm:px-8 px-4;
+}
+
+.sektion {
+  @apply grid grid-cols-1 gap-x-0 md:gap-x-5 gap-5 px-5 md:px-0;
+}
+
+.sektion2 {
+  @apply grid grid-cols-2 gap-x-2 md:gap-x-5 gap-5 px-5 md:px-0;
+}
+
+.psektion {
+  @apply py-10 md:py-20;
+}
+
+.bg-heroImage {
+  background-image: url("/img/hero/bghero.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-clouds {
+  background-image: url("/images/fontfed/wavecloud.png");
+  background-size: cover;
+  background-position: center;
+}
+
+/* styles/globals.css */
+.toolbar {
+  display: flex;
+  gap: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  background-color: #f7f7f7;
+}
+
+.toolbar-item {
+  padding: 5px 10px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  background-color: white;
+  transition: background-color 0.2s;
+}
+
+.toolbar-item.active {
+  background-color: #ddd;
+}
+
+.editor-input {
+  /* min-height: 200px;
+  padding: 8px;
+  border: 1px solid #ccc; */
+
+  @apply shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight outline-none  min-h-40;
+}
+
+.editor-placeholder {
+  color: #888;
+  position: absolute;
+  pointer-events: none;
+}
+

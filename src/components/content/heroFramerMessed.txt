@@ -1,0 +1,156 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { HomeParagraph, Title } from "../texties";
+import NavBar from "../navbar";
+import { ButtonOne } from "../buttons";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import { truncateDescription } from "@/lib/utils";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
+import Image from "next/image"; // Importing Next.js Image component
+import useFetchAll from "@/lib/hooks/useFetchAll";
+import SkeletonOne from "../skeletonOne";
+//import useFetchAll from "@/hooks/useFetchAll"; // Assuming you have a custom hook for fetching data
+
+export default function HeroFramer() {
+  const router = useRouter();
+  const { isLoading, data } = useFetchAll("Properties"); // Fetching properties
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const getVisibleCards = () => (window.innerWidth < 768 ? 2 : 3); // 2 cards on mobile, 3 on larger screens
+  const [visibleCards, setVisibleCards] = useState(getVisibleCards);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setVisibleCards(getVisibleCards()); // Adjust visible cards on window resize
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Infinite loop handling
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? data.length - 1 : prevIndex - 1
+    );
+  };
+
+  // Auto-slide functionality (pauses on hover)
+  useEffect(() => {
+    if (isHovered) return; // Stop auto-slide when hovered
+    const interval = setInterval(() => {
+      handleNext();
+    }, 5000); // Auto-slides every 5 seconds
+    return () => clearInterval(interval); // Cleanup on unmount
+  }, [isHovered]);
+
+  // Dynamic card wrapping for overflow handling
+  const displayedSlides = [
+    ...data.slice(currentIndex, currentIndex + visibleCards),
+    ...data.slice(0, (currentIndex + visibleCards) % data.length),
+  ];
+
+  // if (isLoading) {
+  //   return <div>Loading...</div>; // You can customize your loading state here
+  // }
+
+  return (
+    <div
+      className="relative"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
+        className="text-white bg-cover bg-center bg-slate-700 bg-blend-overlay bg-no-repeat min-h-screen md:min-h-[90vh]"
+        style={{
+          backgroundImage: `url(${data[currentIndex]?.img})`, // Adjusted for fetched data
+        }}
+      >
+        <NavBar />
+        {isLoading ? (
+          <div className="psektion">
+            <SkeletonOne />
+          </div>
+        ) : (
+          <div className="respons sektion py-10 grid md:grid-cols-5 items-center ">
+            <div className="col-span-2 px-5 space-y-5 content-center">
+              <Title
+                className="md:text-start"
+                subHeading="Luxury Camps & Lodges"
+                first={data[currentIndex]?.name}
+              />
+              {/* <HomeParagraph
+                className="md:text-start"
+                content={truncateDescription(data[currentIndex]?.desc, 12)}
+              /> */}
+              <ButtonOne
+                name="Get In Touch"
+                onClick={() =>
+                  router.push(`/accomodation/${data[currentIndex]?.slug}`)
+                } // Adjusted for fetched data
+                className="justify-center md:justify-start"
+              />
+            </div>
+
+            <div className="col-span-3 flex flex-col space-y-10">
+              <div className="flex items-center overflow-hidden">
+                {/* Cards slider showing dynamic number of cards */}
+                {displayedSlides.slice(0, visibleCards).map((slide, i) => (
+                  <motion.div
+                    key={slide.id}
+                    className="w-1/3 relative bg-pamojaaccent mx-5 p-1 rounded-md shadow-md"
+                    initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5 + i * 0.1 }}
+                  >
+                    <Image
+                      src={slide.img}
+                      alt={slide.name}
+                      width={400} // Set your desired width
+                      height={240} // Set your desired height
+                      className="w-full h-60 object-cover rounded-md"
+                    />
+                    <div className="absolute bottom-5 left-5 space-y-5">
+                      <h3 className="mt-2 text-lg font-semibold">
+                        {slide.name}
+                      </h3>
+                      {/* <p className="mt-1 text-sm">
+                      {truncateDescription(slide?.desc, 10)}
+                    </p> */}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+              {/* Buttons for previous/next */}
+              <div className="flex items-center justify-center space-x-4">
+                <button
+                  onClick={handlePrev}
+                  className="bg-pamojaprimary text-pamojaaccent p-2 rounded-full hover:bg-opacity-80 transition"
+                >
+                  <FaArrowLeft size={20} />
+                </button>
+                <button
+                  onClick={handleNext}
+                  className="bg-pamojaprimary text-pamojaaccent p-2 rounded-full hover:bg-opacity-80 transition"
+                >
+                  <FaArrowRight size={20} />
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </motion.div>
+    </div>
+  );
+}

@@ -1,0 +1,48 @@
+import { motion } from "framer-motion";
+import React from 'react'
+
+const item ={
+    hidden:{
+       y:"100%",
+       transition:{ease:[0.455, 0.03, 0.515, 0.955], duration:0.85}
+    },
+    visible:{
+       y:0,
+       transition:{ease:[0.455, 0.03, 0.515, 0.955], duration:0.75}
+    }
+}
+export const OtherInfo = ({data}) => {
+  return (
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      className="flex flex-col space-y-5"
+    >
+      <AnimatedText
+        className="spacing overflow-hidden text-slate-200"
+        text={data?.location}
+      />
+      <AnimatedText
+        className="spacing overflow-hidden text-slate-200"
+        text={data?.title}
+      />
+      <AnimatedText
+        className="text-sm spacing overflow-hidden text-slate-200"
+        text={data?.description}
+      />
+    </motion.div>
+  );
+}
+
+
+const AnimatedText = ({ data, className }) => {
+    return (
+      <span className="block overflow-hidden">
+        <motion.p
+          className={`${className}`} variants={item} key={data}
+        >
+          {data}
+        </motion.p>
+      </span>
+    );
+}

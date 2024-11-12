@@ -1,0 +1,191 @@
+import React, { useEffect, useRef, useState } from "react";
+import ImageCropper from "./image-cropper";
+import Image from "next/image";
+import Backdrop from "../simpleComponents/backdrop";
+import {
+  imageDeleteFromFirebase,
+  imageUploadToFirebase,
+} from "@/firebase/fileOperations";
+import { FaUpload } from "react-icons/fa6";
+
+const ImagesUploadSection = ({
+  addImageToList,
+  removeImageToList,
+  imgs,
+  uploadFolderName,
+  cropRatio,
+  sectionTitle,
+}) => {
+  useEffect(() => {
+    if (imgs) {
+      setUploadedImages(imgs);
+    }
+  }, [imgs]);
+
+  const fileInputRef = useRef(null);
+
+  const [isImageCropperOpen, setIsImageCropperOpen] = useState(false);
+  const [image, setImage] = useState(null);
+
+  const [imageUrl, setImageUrl] = useState(null);
+  const [uploadedImages, setUploadedImages] = useState([]);
+
+  const [uploading, setUploading] = useState(false);
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+
+    const url = URL.createObjectURL(file);
+    handleSetImageInfo(file, url);
+    setIsImageCropperOpen(true);
+  };
+
+  const handleSetImageInfo = (file, url) => {
+    setImage(file);
+    setImageUrl(url);
+  };
+  const handleUnSetImageInfo = () => {
+    setImage(null);
+    setImageUrl(null);
+  };
+
+  const handleUpload = async () => {
+    if (!image) return;
+    setUploading(true);
+    setIsBackdropOpen(true);
+
+    // Upload the file....................................
+    try {
+      const imgUrl = await imageUploadToFirebase(image, uploadFolderName);
+
+      addImageToList(imgUrl);
+      setUploadedImages((prevState) => [...prevState, imgUrl]);
+      setImage(null);
+      setImageUrl(null);
+    } catch (error) {
+      window.alert("image upload was unsuccessfully");
+    }
+
+    setUploading(false);
+
+    setIsBackdropOpen(false);
+  };
+
+  const handleDeleteImage = (imgUrl) => {
+    setIsBackdropOpen(true);
+
+    imageDeleteFromFirebase(imgUrl)
+      .then(() => {
+        removeImageToList(imgUrl);
+        setUploadedImages((prevState) => {
+          const updatedList = prevState.filter((img) => img !== imgUrl);
+          return updatedList;
+        });
+      })
+      .catch((error) => {
+        console.error("Error deleting image:", error);
+      });
+
+    setIsBackdropOpen(false);
+  };
+
+  //backdrop...................
+  const [isBackdropOpen, setIsBackdropOpen] = useState(false);
+  return (
+    <>
+      {isBackdropOpen && <Backdrop onClose={() => setIsBackdropOpen(false)} />}
+
+      {isImageCropperOpen && (
+        <ImageCropper
+          imgUrl={imageUrl}
+          aspectRatio={cropRatio}
+          onUnSetImageInfo={handleUnSetImageInfo}
+          onSetImageInfo={handleSetImageInfo}
+          onClose={() => setIsImageCropperOpen(false)}
+        />
+      )}
+
+      <div className="pt-2">
+        <h2 className="block text-slate-700 text-sm font-bold mb-2">
+          {sectionTitle}
+        </h2>
+
+        <div className="my-2 pb-2">
+          <div className="inline-block hover:bg-protertiary  p-2 rounded-md">
+            <button
+              type="button"
+              onClick={() => fileInputRef.current.click()}
+              className="cursor-pointer  border border-pamojaprimary space-x-2 p-3 flex items-center rounded-lg"
+            >
+              {/* <img
+                src="/images/icons/addImage1.png"
+                alt="preview image"
+                className="w-[30vw] sm:w-[20vw]  md:w-[15vw] lg:w-[10vw] xl:w-[6vw] rounded-md h-auto"
+              /> */}
+              <FaUpload className="h-12 w-12 " />
+              <p className="font-bold tracking-wide">Click to Upload </p>
+            </button>
+          </div>
+        </div>
+        <input
+          type="file"
+          id="imageSelect"
+          ref={fileInputRef}
+          onChange={handleImageChange}
+          className="hidden cursor-pointer h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 "
+        />
+        {/* preview image..........................................................................  */}
+        {imageUrl && (
+          <div>
+            <img
+              src={imageUrl}
+              alt="preview image"
+              className="w-[90vw]  md:w-[40vw] lg:w-[35vw] rounded h-auto"
+            />
+            <div className="flex space-x-4 mt-3">
+              <button
+               type="button"
+                onClick={handleUpload}
+                className="px-3 py-1 text-sm font-medium text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
+              >
+                {uploading ? "uploading...." : "Upload"}
+              </button>
+              <button
+                onClick={() => {
+                  handleSetImageInfo(null, null);
+                }}
+                className="px-3 py-1 text-sm font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* end of  preview image...................................................................  */}
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2">
+          {uploadedImages.map((img, index) => (
+            <div key={index} className=" my-2">
+              <Image
+                src={img}
+                alt="pamoja africa tz"
+                layout="responsive"
+                width={700}
+                height={475}
+                className="w-full h-auto rounded-2xl"
+              />
+              <button
+                onClick={() => handleDeleteImage(img)}
+                className="mt-2 bg-pamojaprimary hover:pamojaaccent text-white hover:text-pamojadark"
+              >
+                Delete
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default ImagesUploadSection;
