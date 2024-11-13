@@ -20,9 +20,9 @@ export default function Socialmedias() {
               <Link href="/">
                 <FaSquareXTwitter className="text-xl" />
               </Link>
-              <Link href="/">
+              {/* <Link href="/">
                 <FaTripadvisor className="text-xl" />
-              </Link>
+              </Link> */}
              
             </div>
     </div>

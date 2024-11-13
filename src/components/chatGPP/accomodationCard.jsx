@@ -20,7 +20,7 @@ const AccommodationCard = ({ img, address, title, desc, href }) => (
         }}
       />
       <div className="absolute left-5 bottom-5 right-5 space-y-5  flex items-center justify-between  text-white text-start ">
-        <h2 className="text-sm">{address || " "}</h2>
+        {/* <h2 className="text-sm">{address || " "}</h2> */}
         <div className="border border-pamojaprimary bg-white shadow-lg">
         <Image
           src={img}

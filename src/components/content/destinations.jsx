@@ -9,6 +9,7 @@ import "slick-carousel/slick/slick-theme.css";
 import useFetchAll from "@/lib/hooks/useFetchAll";
 import SkeletonOne from "../skeletonOne";
 import { truncateDescription, truncateDescriptionNew } from "@/lib/utils";
+import { team } from "@/data/team";
 //import { destinationData } from "@/data/destinationData";
 
 
@@ -58,17 +59,17 @@ export default function Destinations() {
   };
 
   return (
-    <section className="psektion bg-pamojaaccent space-y-5">
+    <section className="psektion md:pt-32 space-y-5">
       <div className="respons">
         <div className="sektion md:grid-cols-5">
           <div></div>
           <div className="col-span-3">
-            <Title place="" subHeading="Destinations" first="Safari Getaways" />
-            <HomeParagraph
+            <Title place="" subHeading="The Heart" first="Our Team" />
+            {/* <HomeParagraph
               className="text-center"
               content="
             On these sweet mornings, hearing the sounds of birds and wild animals, a wonderful serenity will take possession of your entire soul, which you will enjoy with all your heart. In this spot, you can be close to nature and feel the allure of life. "
-            />
+            /> */}
           </div>
           <div></div>
         </div>
@@ -84,17 +85,16 @@ export default function Destinations() {
               <p className="text-center py-5">
                 Something went wrong, please contact admins
               </p>
-            ) : data.length < 1 ? (
-              <p className="text-center py-5">No Destiantions found.</p>
+            ) : team?.length < 1 ? (
+              <p className="text-center py-5">No Team found.</p>
             ) : (
-              data.map((destination, id) => (
+              team?.map((destination, id) => (
                 <DestinationCard
                   key={destination.id}
-                  src={destination.img}
+                  src={destination.src}
                   alt={destination.title}
-                  name={destination.title}
-                  brief={truncateDescriptionNew(destination.desc, 20)}
-                  href={`/destinations/${destination.slug}`}
+                  name={destination.name}
+                  title={destination.title}
                 />
               ))
             )}

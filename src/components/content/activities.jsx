@@ -59,7 +59,7 @@ export default function Activities() {
   };
 
   return (
-    <section className="psektion ">
+    <section className="psektion md:pb-32 ">
       <div className="respons sektion md:gap-0 md:grid-cols-6">
         <div className=""></div>
         <div className="col-span-2 md:px-5 md:grid md:content-center bg-pamojasecondary p-10 content-center">

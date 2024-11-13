@@ -1,51 +1,45 @@
-import React from 'react'
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
-import { StarRating } from './starRating'
-import { FaBed, FaHeart, FaPlus, FaWifi } from 'react-icons/fa6'
-import Link from 'next/link'
-import { Separator } from './ui/separator'
-import Image from 'next/image'
-import { ButtonLink, ButtonOne } from './buttons'
-import { HomeParagraph } from './texties'
-import { FaConciergeBell, FaParking, FaSwimmingPool } from 'react-icons/fa'
-import { Button } from './ui/button'
-import { Description } from '@radix-ui/react-dialog'
+import React from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { StarRating } from "./starRating";
+import { FaBed, FaHeart, FaPlus, FaWifi } from "react-icons/fa6";
+import Link from "next/link";
+import { Separator } from "./ui/separator";
+import Image from "next/image";
+import { ButtonOne } from "./buttons";
+import { HomeParagraph } from "./texties";
+import { FaConciergeBell, FaParking, FaSwimmingPool } from "react-icons/fa";
+import { Button } from "./ui/button";
 
 export const ReviewsCard = () => {
   return (
-    <div className='bg-pamojasecondary rounded-lg space-y-4 p-5 mx-2 '>
-              {/* Top section */}
-               <div className="flex items-center justify-between">
-                  <div className='flex items-center space-x-2'>
-                  <Avatar>
-                    <AvatarImage src="https://github.com/shadcn.png" />
-                    <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
-                 
-                  <div className="flex flex-col space-y-1">
-                  <h5 className='gilda_display text-sm'> George P.</h5>
-                  <StarRating/>
-                  </div>
-                  </div>
+    <div className="bg-pamojatertiary rounded-none space-y-4 p-5 mx-2 ">
+      {/* start rating */}
 
-                  <div>
-                    <Link href=""> <FaHeart className='text-lg hover:text-pamojaprimary'/></Link>
-                  
-                  </div>
-               </div>
+      {/* title */}
+      <h3 className="gilda_display text-lg font-bold"> Best Suppliers.</h3>
 
-               {/* start rating */}
-              <Separator className="bg-pamojaprimary"/>
+      {/* content */}
+      <h5 className="barlow">
+        It was the best place i could recomdend tto anyone heading to ngorongoro
+        and all over the world.
+      </h5>
+      <Separator className="bg-pamojaprimary" />
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-2">
+          <Avatar>
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
 
-               {/* title */}
-               <h3 className='gilda_display text-lg font-bold'> Best Lodging.</h3>
-               
-               {/* content */}
-               <h5 className='barlow'> It was the best place i could recomdend tto anyone heading to ngorongoro and all over the world.</h5>
-
-            </div>
-  )
-}
+          <div className="flex flex-col space-y-1">
+            <h5 className="gilda_display text-sm"> George P.</h5>
+            <StarRating />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export const BlogCard = ({ href, src, type, title, date }) => {
   return (
@@ -80,7 +74,7 @@ export const BlogCard = ({ href, src, type, title, date }) => {
   );
 };
 
-export const UniqueCard = ({  src,desc, subTitle, title }) => {
+export const UniqueCard = ({ src, desc, subTitle, title }) => {
   return (
     <div className=" border border-pamojaprimary">
       <div className="relative text-white">
@@ -112,7 +106,7 @@ export const UniqueCard = ({  src,desc, subTitle, title }) => {
   );
 };
 
-export const RoomCard = ({ src,name, level,price }) => {
+export const RoomCard = ({ src, name, level, price }) => {
   return (
     <div className="relative  drop-shadow-md border border-pamojaprimary mx-2">
       <Image
@@ -152,36 +146,33 @@ export const RoomCard = ({ src,name, level,price }) => {
   );
 };
 
-
-export const DestinationCard = ({ src,alt,name,brief,href }) => {
+export const DestinationCard = ({ src, alt, name,title }) => {
   return (
     <div className="relative mx-2">
       <Image
         src={src}
         alt={alt}
         width={1200}
-        height={340}
+        height={260}
         style={{
           maxWidth: "100%",
-          height: "360px",
+          height: "260px",
           objectFit: "cover",
         }}
         className=" max-w-full rounded-none"
       />
 
-      <div className="absolute inset-0 p-5 bg-black space-y-5 bg-opacity-40 flex flex-col justify-center items-center text-white text-center ">
-        <h3 className="text-2xl gilda_display font-bold">
-          <Link href={href}>{name}</Link>
+      <div className=" inset-0 p-5 bg-black space-y-5 bg-opacity-40 flex flex-col justify-center items-center text-white text-center ">
+        <h3 className="text-lg gilda_display font-bold">
+         {name}
         </h3>
 
-        <p className="text-sm text-pamojatertiary">
-         {brief}
-        </p>
-        <ButtonLink className={"rounded-none text-center text-lg px-5 py-1.5  bg-pamojaprimary hover:bg-pamojadark gilda_display"} href={href}  name="Explore"  />
+        <p className="text-xs text-pamojatertiary">{title}</p>
+        {/* <ButtonLink className={"rounded-none text-center text-lg px-5 py-1.5  bg-pamojaprimary hover:bg-pamojadark gilda_display"} href={href}  name="Explore"  /> */}
       </div>
     </div>
   );
-}
+};
 
 // export const DestinationCard = () => {
 //   return (
@@ -213,7 +204,7 @@ export const DestinationCard = ({ src,alt,name,brief,href }) => {
 //   );
 // };
 
-export const ExperiencesCard =()=>{
+export const ExperiencesCard = () => {
   return (
     <div className="bg-pamojaprimary rounded-none shadow-lg max-w-md  mx-2">
       <div className="relative">
@@ -241,7 +232,6 @@ export const ExperiencesCard =()=>{
           </h3>
         </Link>
         <p className="text-md barlow text-white text-justify tracking-tight">
-      
           All 14 Cottages Overlook Beautiful Active Farm, And The Ngorongoro
           Forest...
         </p>
@@ -265,7 +255,7 @@ export const ExperiencesCard =()=>{
       </div>
     </div>
   );
-}
+};
 
 export const AccomodationCard = ({
   src,
@@ -332,4 +322,3 @@ export const AccomodationCard = ({
     </div>
   );
 };
-

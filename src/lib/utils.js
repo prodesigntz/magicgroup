@@ -41,11 +41,11 @@ export function truncateDescription  (content, wordLimit) {
   };
 
   export function truncateDescriptionNew(desc, wordLimit) {
-    const words = desc.split(" ");
-    if (words.length <= wordLimit) {
+    const words = desc?.split(" ");
+    if (words?.length <= wordLimit) {
       return desc;
     }
-    return words.slice(0, wordLimit).join(" ") + "...";
+    return words?.slice(0, wordLimit).join(" ") + "...";
   }
 
 

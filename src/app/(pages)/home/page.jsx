@@ -8,7 +8,7 @@ import Testimonials from "@/components/content/textimonials";
 import React from "react";
 // import Gallery from "@/components/content/gallery";
 // import Hero from "@/components/content/hero";
-import ImageGallerySelectionCloudinary from "@/components/cloudinaryComponents/imageGallerySelectionCloudinary";
+//import ImageGallerySelectionCloudinary from "@/components/cloudinaryComponents/imageGallerySelectionCloudinary";
 //import HeroFramer from "@/components/content/heroFramer";
 import HeroFramerPlane from "@/components/content/heroFramerPlane";
 import SuccessSection from "@/components/content/successSection";
@@ -27,11 +27,10 @@ export default function Home() {
       <Programs/>
       <Activities/>
       <Contact/>
-      {/* <Accomplishment/> */}
+      <Destinations/> 
       <Testimonials/>    
-      <Destinations/>
       <BlogSection/>
-      <ImageGallerySelectionCloudinary/>
+      {/* <ImageGallerySelectionCloudinary/> */}
       {/* <Gallery/> */}
     </main>
     );

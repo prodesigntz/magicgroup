@@ -78,28 +78,18 @@ export default function Contact() {
       setLoading(false);
     };
   return (
-    <section className="psektion text-white bg-[url('/images/pamoja/bornfire.jpeg')] bg-cover bg-center  bg-slate-700 bg-blend-overlay bg-no-repeat">
-      <div className="respons sektion md:grid-cols-3 ">
-        <div></div>
-        <div className="">
-          <Title place="" subHeading="Contact Us" first="Lets Get in Touch" />
-          {/* <div className=" flex items-center space-x-5">
-              <Button className="rounded-full text-xl p-6 bg-prosecondary md:border-prosecondary">Enroll Now</Button>
-              <Button variant="outline" className="rounded-full text-xl p-6 hover:bg-prosecondary bg-transparent hover:border-prosecondary hover:text-white">Get Intouch</Button>
-          </div>   */}
-        </div>
-      </div>
-
+    <section className="bg-[#f7f7f7] relative shadow-lg">
       {/* <div className="bg-clouds p-60 -mb-80"></div>   */}
 
-      <div className="respons sektion md:grid-cols-4">
-        <div></div>
-        <form
-          className="col-span-2 p-5 text-pamojadark bg-white shadow-md space-y-5"
-          onSubmit={handleSubmit}
-        >
-          <div className="sektion md:grid-cols-3">
-            <div className="space-y-5">
+      <div className="respons sektion md:grid-cols-5">
+        <div className="md:-mt-10 md:-mb-10 col-span-2 p-5 md:py-12 text-pamojadark bg-pamojasecondary shadow-md space-y-5">
+          <Title
+            className="md:text-start"
+            subHeading="Contact Us"
+            first="Request Quote"
+          />
+          <form className=" space-y-5" onSubmit={handleSubmit}>
+            <div className="col space-y-5">
               <Input
                 type="text"
                 name="fullname"
@@ -136,8 +126,6 @@ export default function Contact() {
                 required
                 className="w-full px-4 py-2 border border-pamojaprimary rounded-none"
               />
-            </div>
-            <div className="col-span-2 space-y-5">
               <div className="flex items-center space-x-3">
                 <div className="flex items-center justify-between space-x-2">
                   {/* <Checkbox
@@ -203,28 +191,34 @@ export default function Contact() {
                 className="w-full px-4 py-2 rounded-none border border-pamojaprimary"
               />
             </div>
-          </div>
 
-          {/* Success and Error Messages */}
-          {successMessage && (
-            <p className="text-green-500 text-center">{successMessage}</p>
-          )}
-          {errorMessage && (
-            <p className="text-red-500 text-center">{errorMessage}</p>
-          )}
+            {/* Success and Error Messages */}
+            {successMessage && (
+              <p className="text-green-500 text-center">{successMessage}</p>
+            )}
+            {errorMessage && (
+              <p className="text-red-500 text-center">{errorMessage}</p>
+            )}
 
-          {/* Submit Button */}
-          <div className="flex justify-center md:justify-start">
-            <button
-              type="submit"
-              className="rounded-none text-center text-lg px-5 py-1.5 bg-pamojaprimary hover:bg-pamojadark gilda_display"
-              disabled={loading}
-            >
-              {loading ? "Sending..." : "Send"}
-            </button>
-          </div>
-        </form>
-        <div></div>
+            {/* Submit Button */}
+            <div className="flex justify-center md:justify-start">
+              <button
+                type="submit"
+                className="rounded-none text-center text-lg text-pamojasecondary px-5 py-1.5 bg-pamojaprimary hover:bg-pamojadark gilda_display"
+                disabled={loading}
+              >
+                {loading ? "Sending..." : "Send Message"}
+              </button>
+            </div>
+          </form>
+        </div>
+        <div className="col-span-3 content-center">
+          <Title
+            className="md:text-start text-pamojasecondary"
+            subHeading="Learn More"
+            first="FAQs"
+          />
+        </div>
       </div>
     </section>
   );
