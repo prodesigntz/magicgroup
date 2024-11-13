@@ -10,10 +10,10 @@ export default function NavBar() {
   return (
     <nav className="bg-transparent shadow-md">
      
-      <div className=" py-2 px-5 ">
+      <div className="">
         <div className="respons flex items-center justify-between">
           {/* logo  */}
-          <Link href="/" className="font-bold">
+          <Link href="/" className="font-bold ">
             <Image
               src="/logo.png"
               alt="blog"
@@ -49,7 +49,7 @@ export default function NavBar() {
               variant="pamoja-primary"
               className=" bg-pamojaprimary hover:bg-pamojadark rounded-none text-white"
             >
-              <ButtonOne name="Book Now" />
+              <ButtonOne name="Get Quote" />
             </Button>
           </div>
           <MobileNav />

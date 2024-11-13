@@ -27,14 +27,14 @@ export const Footer = () => {
               className=" max-w-full max-h-50 rounded-md relative"
             />
           </Link>
-          {/* <h5 className="font-bold">PAMOJA AFRICA</h5> */}
+          {/* <h5 className="font-bold">Magic Group</h5> */}
           <h5 className="text-sm ">
             We are firm believers in the preservation of the land and its value
             as a home for future generations.
           </h5>
           <h5 className="pt-2 text-sm  ">
             {new Date().getFullYear()} © Copyright{" "}
-            <Link href="https://pamojaafricatz.co.tz">Pamoja Africa</Link>. By
+            <Link href="https://magicgroup.com">Magic Group</Link>. By
             <Link href="https://prodesign.co.tz" className="pl-1 text-red-500">
               Pro Design
             </Link>

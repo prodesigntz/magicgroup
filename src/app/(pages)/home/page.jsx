@@ -9,8 +9,10 @@ import React from "react";
 // import Gallery from "@/components/content/gallery";
 // import Hero from "@/components/content/hero";
 import ImageGallerySelectionCloudinary from "@/components/cloudinaryComponents/imageGallerySelectionCloudinary";
-import HeroFramer from "@/components/content/heroFramer";
+//import HeroFramer from "@/components/content/heroFramer";
 import HeroFramerPlane from "@/components/content/heroFramerPlane";
+import SuccessSection from "@/components/content/successSection";
+//import SuccessSection from "@/components/content/successSection";
 // import Hero2 from "@/components/content/hero2";
 
 export default function Home() {
@@ -20,6 +22,7 @@ export default function Home() {
       {/* <Hero/> */}
       {/* <HeroFramer/> */}
       <HeroFramerPlane/>
+      <SuccessSection/>
       <Intro/>
       <Programs/>
       <Activities/>

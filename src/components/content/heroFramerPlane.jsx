@@ -7,10 +7,11 @@ import { ButtonOne } from "../buttons";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { truncateDescription } from "@/lib/utils";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
+import { FaArrowLeft, FaArrowRight, FaEnvelope, FaMapLocationDot, FaPhone } from "react-icons/fa6";
 import useFetchAll from "@/lib/hooks/useFetchAll";
 import Image from "next/image";
 import SkeletonOne from "../skeletonOne";
+import Socialmedias from "../socialmedias";
 
 export default function HeroFramerPlane() {
   const router = useRouter();
@@ -64,7 +65,7 @@ export default function HeroFramerPlane() {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-white bg-cover bg-top bg-slate-700/40 bg-blend-overlay bg-no-repeat min-h-screen "
+        className="text-white bg-cover bg-top bg-slate-700/40 bg-blend-overlay bg-no-repeat min-h-40"
         style={{
           backgroundImage: `url(${
             data && data.length > 0 ? data[currentIndex]?.img : ""
@@ -72,15 +73,57 @@ export default function HeroFramerPlane() {
         }}
       >
         {/* <NavBar /> */}
+        <div className="">
+          <div className="hidden sektion respons md:grid-cols-5 py-4">
+            <div className="col-span-2">
+              <Socialmedias />
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <div className="">
+                <FaPhone />
+              </div>
+              <div className="flex-col">
+                <div className="text-sm text-white">+255 700 000 000</div>
+                <div className="text-xs text-slate-300">Call for help</div>
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <div className="">
+                <FaEnvelope />
+              </div>
+              <div className="flex-col">
+                <div className="text-sm text-white">info@magicgroup.com</div>
+                <div className="text-xs text-slate-300">Drop us a line</div>
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <div className="">
+                <FaMapLocationDot />
+              </div>
+              <div className="flex-col">
+                <div className="text-sm text-white">Dar es Salaam</div>
+                <div className="text-xs text-slate-300">Get Dirction</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="respons py-2 px-2 bg-black/40">
+            <NavBar />
+          </div>
+        </div>
         {isLoading ? (
           <div className="psektion respons">
             <SkeletonOne />
           </div>
         ) : (
-          <div className="psektion md:py-48 respons sektion md:grid-cols-5 items-center">
+          <div className="psektion md:py-32 respons sektion md:grid-cols-5 items-center">
+            <div className=""></div>
             <div className="col-span-3 content-center">
               <HeaderTitle
-                className="md:text-start"
+                className=""
                 subHeading="Luxury Camps & Lodges"
                 first={data[currentIndex]?.name || ""}
               />
@@ -89,10 +132,10 @@ export default function HeroFramerPlane() {
                 onClick={() =>
                   router.push(`/accomodations/${data[currentIndex]?.slug}`)
                 }
-                className="justify-center md:justify-start mt-5"
+                className="justify-center  mt-5"
               />
               {/* Buttons for previous/next */}
-              <div className="flex items-center justify-center md:justify-start space-x-4 mt-20">
+              <div className="flex items-center justify-center  space-x-4 mt-20">
                 <button
                   onClick={handlePrev}
                   className="bg-pamojaprimary text-pamojaaccent p-2 rounded-full hover:bg-opacity-80 transition"
@@ -108,7 +151,7 @@ export default function HeroFramerPlane() {
               </div>
             </div>
 
-            <div className="col-span-2 flex flex-col space-y-10">
+            <div className=" flex flex-col space-y-10">
               <div className="hidden md:flex items-center overflow-hidden flex-col">
                 {/* <div
                   className="flex  transition-transform duration-500"

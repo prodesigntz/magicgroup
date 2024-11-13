@@ -75,7 +75,11 @@ export default function Page({ params }) {
   }, [slug]);
 
   if (!property) {
-    return <div><DashboardDataLoader/></div>; // Add a loading spinner or message if needed
+    return (
+      <div>
+        <DashboardDataLoader />
+      </div>
+    ); // Add a loading spinner or message if needed
   }
 
   // Extract propertyID from the fetched property
@@ -86,10 +90,9 @@ export default function Page({ params }) {
     <main className="">
       {/* hero section */}
       <div className="relative p-5">
-       
         <Image
-          src={property?.img }
-          alt="Pamoja Africa"
+          src={property?.img}
+          alt="Magic Group"
           width={2000}
           height={440}
           style={{
@@ -160,16 +163,12 @@ export default function Page({ params }) {
         <PropertyActivities  />
       </div> */}
 
-
-
       {/* unique features - bg overlay */}
       <PropertyUnique property={property} />
-
 
       {/* frequent asked questions */}
       <PropertyFAQs property={property} />
 
-     
       {/* gallery */}
       <div className="psektion">
         <div className="respons sektion md:grid-cols-5">

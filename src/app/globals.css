@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 /* color codes */
-/* pro-primary: 226, 76%, 23% ; */
-/* pro-secondary: 4, 86%, 49% ; org */
+/* pro-primary: 41, 99%, 56% ; #feb922 */
+/* pro-secondary: 210, 9%, 23% ; org #353a3f */
 
 @layer base {
   :root {
@@ -28,11 +28,11 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
     --radius: 0.75rem;
-    --pamoja-primary: 37, 35%, 57%;
-    --pamoja-secondary: 37, 83%, 86%;
-    --pamoja-tertiary: 33, 43%, 96%;
-    --pamoja-accent: 60, 33%, 94%;
-    --pamoja-dark: 37, 59%, 27%;
+    --pamoja-primary: 41, 99%, 56%;
+    --pamoja-secondary: 210, 9%, 23%;
+    --pamoja-tertiary: 28, 24%, 89%;
+    --pamoja-accent: 228, 45%, 13%;
+    --pamoja-dark: 41, 79%, 51%;
   }
 
   .dark {
@@ -56,11 +56,11 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 48%;
 
-    --pamoja-primary: 37, 35%, 57%;
-    --pamoja-secondary: 37, 83%, 86%;
-    --pamoja-tertiary: 33, 43%, 96%;
-    --pamoja-accent: 60, 33%, 94%;
-    --pamoja-dark: 37, 59%, 27%;
+    --pamoja-primary: 41, 99%, 56%;
+    --pamoja-secondary: 210, 9%, 23%;
+    --pamoja-tertiary: 28, 24%, 89%;
+    --pamoja-accent: 228, 45%, 13%;
+    --pamoja-dark: 41, 79%, 51%;
   }
 }
 

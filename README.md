@@ -1,3 +1,3 @@
-This is a Pamoja Africa Lodge Official Website 
+This is a Magic Group Lodge Official Website
 
 ## Getting Started

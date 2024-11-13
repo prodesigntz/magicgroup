@@ -1,9 +1,9 @@
-import Socialmedias from '@/components/socialmedias';
-import { StarRating } from '@/components/starRating';
-import { HeaderTitle, HomeParagraph, Title } from '@/components/texties';
-import { Separator } from '@/components/ui/separator';
-import Image from 'next/image';
-import React from 'react'
+import Socialmedias from "@/components/socialmedias";
+import { StarRating } from "@/components/starRating";
+import { HeaderTitle, HomeParagraph, Title } from "@/components/texties";
+import { Separator } from "@/components/ui/separator";
+import Image from "next/image";
+import React from "react";
 
 export default function About() {
   return (
@@ -12,11 +12,11 @@ export default function About() {
         <HeaderTitle
           className="text-pamojadark"
           subHeading="Authentic, Positive and Positive Impact"
-          first="Pamoja Africa "
+          first="Magic Group "
         />
         <HomeParagraph
           className="md:text-center"
-          content={`At Pamoja Africa, our ethos is built on the foundational pillars of Earth, Mankind, and Conservation. Anchored in the Kiswahili term "Pamoja," meaning "Together as One on the Planet," we are dedicated to responsible tourism that not only honors but also actively conserves the breathtaking natural beauty and rich cultural heritage of Tanzania.`}
+          content={`At Magic Group, our ethos is built on the foundational pillars of Earth, Mankind, and Conservation. Anchored in the Kiswahili term "Pamoja," meaning "Together as One on the Planet," we are dedicated to responsible tourism that not only honors but also actively conserves the breathtaking natural beauty and rich cultural heritage of Tanzania.`}
         />
         <div className="space-y-3">
           <Title className="" first="Earth" />
@@ -40,7 +40,7 @@ export default function About() {
           </div>
           <div className="col-span-2 space-y-5 md:text-start">
             {/* title */}
-            <HomeParagraph content="Pamoja Africa allows you to reconnect with the planet's diversity. It allows you to escape to a place where the ancient rhythms of the seasons, rather than the clock and calendar, govern life. It presents a hopeful vision that combines conservation, research, and an unrivaled safari experience. Everything we do is guided by our mission statement: to leave the world in a better state than we found it." />
+            <HomeParagraph content="Magic Group allows you to reconnect with the planet's diversity. It allows you to escape to a place where the ancient rhythms of the seasons, rather than the clock and calendar, govern life. It presents a hopeful vision that combines conservation, research, and an unrivaled safari experience. Everything we do is guided by our mission statement: to leave the world in a better state than we found it." />
             {/* description */}
             <div className="space-y-3">
               <h2 className="text-sm  gilda_display  ">
@@ -68,7 +68,7 @@ export default function About() {
           />
           <div className="absolute -mt-10 p-5 left-10 right-10 bg-pamojasecondary">
             <Title className="" first="We are a familly " />
-            <HomeParagraph content="At Pamoja Africa, we envision a future where tourism serves as a catalyst for positive change. By standing Together as One on the Planet, we invite each guest to experience the magic of Tanzania and to join us in conserving its treasures for generations to come. Together, we can create a legacy of environmental stewardship, cultural appreciation, and sustainable growth that benefits all." />
+            <HomeParagraph content="At Magic Group, we envision a future where tourism serves as a catalyst for positive change. By standing Together as One on the Planet, we invite each guest to experience the magic of Tanzania and to join us in conserving its treasures for generations to come. Together, we can create a legacy of environmental stewardship, cultural appreciation, and sustainable growth that benefits all." />
           </div>
         </div>
       </div>

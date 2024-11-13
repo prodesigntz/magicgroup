@@ -24,7 +24,7 @@ export default function NavBarBar() {
       <div className=" py-5 md:py-8 px-5 ">
         <div className="respons flex items-center justify-between">
           {/* logo  */}
-          <div className="font-bold"> Pamoja Africa</div>
+          <div className="font-bold"> Magic Group</div>
           {/* webHeader  */}
           <div className="hidden md:block">
             <ul className="flex items-center space-x-3">

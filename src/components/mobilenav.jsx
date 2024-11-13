@@ -29,7 +29,7 @@ export function MobileNav() {
         </SheetTrigger>
         <SheetContent>
           <SheetHeader>
-            <SheetTitle>PAMOJA AFRICA</SheetTitle>
+            <SheetTitle>Magic Group</SheetTitle>
           </SheetHeader>
           <div className="pt-5">
             <ul className="flex flex-col space-y-3 gilda_display">
