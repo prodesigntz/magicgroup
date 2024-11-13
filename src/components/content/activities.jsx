@@ -10,6 +10,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { ExperiencesCard } from "../cards";
 import useFetchAll from "@/lib/hooks/useFetchAll";
 import SkeletonOne from "../skeletonOne";
+import Link from "next/link";
 
 export default function Activities() {
  
@@ -59,47 +60,41 @@ export default function Activities() {
 
   return (
     <section className="psektion ">
-      <div className="respons sektion md:grid-cols-3">
-        <div className="md:px-5 md:grid md:content-center">
+      <div className="respons sektion md:gap-0 md:grid-cols-6">
+        <div className=""></div>
+        <div className="col-span-2 md:px-5 md:grid md:content-center bg-pamojasecondary p-10 content-center">
           <Title
-            className="md:text-start"
-            subHeading="Adventures"
-            first="Experiences"
+            className="md:text-start text-pamojaprimary"
+            subHeading="Sustainability"
+            first="Committed to keep people healthy & safe"
           />
           <HomeParagraph
-            className=" "
-            content="Our company name “Pamoja” is derived from the Kiswahili word “As One,” and it is the spirit and understanding of this concept that drives our company philosophy to make."
+            className="text-white "
+            content="Benefit of the socie where we operate. A success website obusly needs great design to be one"
           />
           <div className=" flex justify-center md:justify-start ">
-            <ButtonOne name="Explore More" href="" />
+            <Link
+              href="/contact"
+              className="py-3 px-5 bg-pamojaprimary text-pamojasecondary"
+            >
+              Work With Us
+            </Link>
           </div>
         </div>
-        <div className="col-span-2 ">
-          <Slider {...settings}>
-            {isLoading ? (
-              // Render 3 skeletons
-              Array.from({ length: 4 }).map((_, index) => (
-                <SkeletonOne key={index} />
-              ))
-            ) : !didSucceed ? (
-              <p className="text-center py-5">
-                Something went wrong, please contact admin.
-              </p>
-            ) : data.length < 1 ? (
-              <p className="text-center py-5">No Experiences found.</p>
-            ) : (
-              data.map((experience, id) => (
-                <ExperiencesCard
-                  key={experience.id}
-                  href={experience.href}
-                  icon={experience.icon}
-                  type={experience.type}
-                  amount={experience.amount}
-                />
-              ))
-            )}
-          </Slider>
+        <div className="col-span-2 bg-pamojaprimary p-10 content-center ">
+          <Title
+            className="md:text-start text-pamojasecondary"
+            // subHeading="Sustainability"
+            first="We are best in the field"
+          />
+          <HomeParagraph
+            className="text-pamojasecondary "
+            content="Benefit of the socie where we operate. A success website obusly needs great design to be one"
+          />
+
+          <h5>List of company categories</h5>
         </div>
+        <div className=""></div>
       </div>
     </section>
   );

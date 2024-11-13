@@ -9,9 +9,9 @@ import { StarRating } from "../starRating";
 export default function Intro() {
   return (
     <section className="psektion bg-gradient-to-t from-[#ffefe2] to-white">
-      <div className="respons sektion md:grid-cols-3">
+      <div className="respons sektion md:grid-cols-5">
         {/* image introduction */}
-        <div className="content-center grid grid-cols-3">
+        {/* <div className="content-center grid grid-cols-3">
           <div className="col-span-2">
             <Image
               src="/images/accomodations/oleaswimming.jpeg"
@@ -52,31 +52,33 @@ export default function Intro() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
+       <div className=""></div>
 
         {/* Introduction about */}
-        <div className="col-span-2 ">
+        <div className="col-span-3 ">
           <Title
-            className=" md:text-start "
+            className=""
             subHeading="Authentic Experiences, Positive Impacts"
-            first="Magic Group"
+            first="Magic Group of Companies"
           />
           <HomeParagraph
-            className="md:text-start barlow"
+            className="md:text-center barlow"
             content=" Our company name “Pamoja” is derived from the Kiswahili word “As One,” and it is the spirit and understanding of this concept that drives our company philosophy to make a difference on the planet earth by protecting nature, as well as our unique and welcoming hospitality to all. "
           />
           <HomeParagraph
-            className="md:text-start barlow"
+            className="md:text-center barlow"
             content=" Our lodge is located on the outskirts of Karatu, a farming town. It is an eco-friendly luxury lodge located next to the famous Ngorongoro Crater and aims to harmonize with the environment through its natural unobtrusive design and positioning."
           />
           <HomeParagraph
-            className="md:text-start barlow"
+            className="md:text-center barlow"
             content=" We are firm believers in the preservation of the land and its value as a home for future generations. We accomplish this by sharing our extensive knowledge and enthusiasm with everyone."
           />
-          <div className=" flex justify-center md:justify-start space-x-5">
+          <div className=" flex justify-center space-x-5">
             <ButtonOne name="Explore More" href="" />
           </div>
         </div>
+        <div className=""></div>
       </div>
     </section>
   );

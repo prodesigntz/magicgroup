@@ -14,7 +14,7 @@ import { truncateDescription } from "@/lib/utils";
 
 export default function Programs() {
    const { isLoading, data } = useFetchAll("Properties");
-   console.log("Properies data section", data);
+   console.log("Companies data section", data);
   //const sliderRef = useRef(null);
 
 
@@ -66,18 +66,14 @@ export default function Programs() {
     };
 
   return (
-    <section className="psektion bg-[#ffefe2]">
-      
+    <section className="psektion bg-white">
+      {/* bg-[#ffefe2] */}
       <div className="respons space-y-10">
         {/* top column */}
         <div className="sektion md:grid-cols-3">
           <div></div>
           <div>
-            <Title
-              place=""
-              subHeading="OUR CAMPS & LODGES"
-              first="Accomodations"
-            />
+            <Title place="" subHeading="Our Keys" first="Companies" />
             {/* <HomeParagraph place="center" content="Lorem ipsum dolor sit amet consectetur adipisicing elit."/> */}
           </div>
           <div></div>
@@ -97,7 +93,7 @@ export default function Programs() {
                     address={property.address}
                     locate={property.location}
                     title={property.name}
-                    desc={truncateDescription(property.desc, 16)}
+                    desc={truncateDescription(property.desc, 10)}
                     href={`/accomodations/${property.slug}`}
                   />
                 ))}
