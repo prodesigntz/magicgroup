@@ -121,23 +121,42 @@ function AddStaff() {
             {successMessage && (
               <p style={{ color: "green" }}>{successMessage}</p>
             )}
-            <form onSubmit={handleSubmit}>
-              <div className="mb-4">
-                <label
-                  className="block text-slate-700 text-sm font-bold mb-2"
-                  htmlFor="email"
-                >
-                  Add Email
-                </label>
-                <input
-                  className="shadow bg-white appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Email"
-                  required
-                />
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="sektion md:grid-cols-2">
+                <div className="mb-4">
+                  <label
+                    className="block text-slate-700 text-sm font-bold mb-2"
+                    htmlFor="email"
+                  >
+                    Add Email
+                  </label>
+                  <input
+                    className="shadow bg-white appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Email"
+                    required
+                  /></div>
+                  <div className="mb-4">
+                    <label
+                      className="block text-slate-700 text-sm font-bold mb-2"
+                      htmlFor="password"
+                    >
+                      Add Password
+                    </label>
+                    <input
+                      className="shadow bg-white appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
+                      type="password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      placeholder="Password"
+                      required
+                    />
+                  </div>
+                
               </div>
 
               <div className="sektion md:grid-cols-2">
@@ -176,41 +195,7 @@ function AddStaff() {
                   />
                 </div>
               </div>
-
-              <div className="sektion md:grid-cols-2">
-                <div className="mb-4">
-                  <label
-                    className="block text-slate-700 text-sm font-bold mb-2"
-                    htmlFor="password"
-                  >
-                    Add Password
-                  </label>
-                  <input
-                    className="shadow bg-white appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    placeholder="Password"
-                    required
-                  />
-                </div>
-                <div className="mb-4">
-                  <label
-                    className="block text-slate-700 text-sm font-bold mb-2"
-                    htmlFor="profilePicture"
-                  >
-                    Upload Profile Picture
-                  </label>
-                  <input
-                    type="file"
-                    onChange={handleProfilePictureChange}
-                    className="w-full px-4 py-2"
-                  />
-                </div>
-              </div>
-
-              <div className="sektion md:grid-cols-2">
+  <div className="sektion md:grid-cols-3">
                 <div className="mb-4">
                   <label
                     className="block text-slate-700 text-sm font-bold mb-2"
@@ -219,7 +204,7 @@ function AddStaff() {
                     Select Role
                   </label>
                   <select
-                    className="bg-pamojaaccent py-2 px-3 rounded"
+                    className="bg-pamojatertiary py-2 px-3 rounded"
                     name="role"
                     value={formData.role}
                     onChange={handleChange}
@@ -241,7 +226,7 @@ function AddStaff() {
                         Select Property
                       </label>
                       <select
-                        className="bg-pamojaaccent py-2 px-3 rounded"
+                        className="bg-pamojatertiary py-2 px-3 rounded"
                         name="propertyID"
                         value={formData.propertyID}
                         onChange={handleChange}
@@ -267,7 +252,7 @@ function AddStaff() {
                         Select Department
                       </label>
                       <select
-                        className="bg-pamojaaccent py-2 px-3 rounded"
+                        className="bg-pamojatertiary py-2 px-3 rounded"
                         name="department"
                         value={formData.department}
                         onChange={handleChange}
@@ -288,10 +273,44 @@ function AddStaff() {
                   </>
                 )}
               </div>
+              <div className="sektion md:grid-cols-2">
+                {/* <div className="mb-4">
+                  <label
+                    className="block text-slate-700 text-sm font-bold mb-2"
+                    htmlFor="password"
+                  >
+                    Add Password
+                  </label>
+                  <input
+                    className="shadow bg-white appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="Password"
+                    required
+                  />
+                </div> */}
+                <div className="mb-4 flex items-center ">
+                  <label
+                    className="block text-slate-700 text-sm font-bold mb-2"
+                    htmlFor="profilePicture"
+                  >
+                    Upload Profile Picture
+                  </label>
+                  <input
+                    type="file"
+                    onChange={handleProfilePictureChange}
+                    className="w-full px-4 py-2"
+                  />
+                </div>
+              </div>
+
+            
 
               <div className="flex justify-center">
                 <button
-                  className="bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  className="bg-pamojaprimary text-pamojasecondary font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   type="submit"
                 >
                   Add Staff

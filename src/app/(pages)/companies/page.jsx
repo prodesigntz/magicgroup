@@ -70,9 +70,9 @@ export default function Programs() {
           <div></div>
           <div>
             <Title
-              place=""
-              subHeading="OUR CAMPS & LODGES"
-              first="Accomodations"
+              className="md:text-start"
+              subHeading="Our Key"
+              first="Companies"
             />
             {/* <HomeParagraph place="center" content=" 
             Lorem ipsum dolor sit amet consectetur adipisicing elit."/> */}

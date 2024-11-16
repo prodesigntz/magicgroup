@@ -94,7 +94,7 @@ export default function UploadImagesCloudinaryForm({ slug }) {
     <div>
       <form
         onSubmit={handleSubmit}
-        className="bg-pamojaaccent flex flex-col space-y-5 p-5 border border-pamojaprimary"
+        className="bg-pamojatertiary flex flex-col space-y-5 p-5 border border-pamojaprimary"
       >
         {error && <p className="text-red-500">{error}</p>}
         <div className="sektion md:grid-cols-3">

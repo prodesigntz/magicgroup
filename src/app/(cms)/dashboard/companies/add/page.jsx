@@ -26,45 +26,47 @@ export default function AddProperty({ params }) {
     slogan: "",
     phones: [],
     emails: [],
-    amenities: [{ name: "", icon: "" }],
+    //amenities: [{ name: "", icon: "" }],
     socialMedias: [{ name: "", icon: "", link: "" }],
     departments: [],
     location: "",
-    address: "",
-    destination: "",
-    noRooms: "",
-    rooms: [
-      {
-        name: "",
-        price: "",
-        desc: "",
-        img: null,
-        imgPreview: null,
-        capacity: "",
-        beds: "",
-        available: "",
-        facilities: [],
-      },
-    ],
-    gallery: [{ img: null, imgPreview: null, title: "", dst: "", desc: "" }],
-    faq: [{ title: "", desc: "" }],
-    highlights: [
-      { img: null, imgPreview: null, title: "", subTitle: "", desc: "" },
-    ],
+    address:"",
+    destination:"",
+    //noRooms: "",
+    // rooms: [
+    //   {
+    //     name: "",
+    //     price: "",
+    //     desc: "",
+    //     img: null,
+    //     imgPreview: null,
+    //     capacity: "",
+    //     beds: "",
+    //     available: "",
+    //     facilities: [],
+    //   },
+    //],
+    //gallery: [{ img: null, imgPreview: null, title: "", dst: "", desc: "" }],
+   // faq: [{ title: "", desc: "" }],
+    // highlights: [
+    //   { img: null, imgPreview: null, title: "", subTitle: "", desc: "" },
+    // ],
     img: null,
     imgPreview: null,
     isPublished: false,
-    bookings: [],
+    bookings:[]
   });
 
   const router = useRouter();
 
   // temporary satte
-  const [newEmail, setNewEmail] = useState("");
-  const [newPhone, setNewPhone] = useState("");
-  const [newDepartment, setNewDepartment] = useState("");
-  const [socialMediaInput, setSocialMediaInput] = useState("");
-  const [amenitiesInput, setAmenitiesInput] = useState("");
+    const [newEmail, setNewEmail] = useState("");
+    const [newPhone, setNewPhone] = useState("");
+    const [newDepartment, setNewDepartment] = useState("");
+    const [socialMediaInput, setSocialMediaInput] = useState("");
+    const [amenitiesInput, setAmenitiesInput] = useState("");
+
+
 
   // Fetch existing property data if propertyID is provided
   useEffect(() => {
@@ -73,17 +75,16 @@ export default function AddProperty({ params }) {
         setIsLoading(true);
         try {
           const { didSucceed, document } = await getSingleDocument(
-            "Properties",
+            "properties",
             propertyID
           );
           if (didSucceed) {
-           // console.log("Fetched data", document);
-            setFormData({ formData, ...document });
+            setFormData({ ...formData, ...document   });
           } else {
-            setError("Failed to fetch Property data.");
+            setError("Failed to fetch Company data.");
           }
         } catch (fetchError) {
-          setError(`Error fetching Property data: ${fetchError.message}`);
+          setError(`Error fetching Company data: ${fetchError.message}`);
         }
         setIsLoading(false);
       };
@@ -107,7 +108,7 @@ export default function AddProperty({ params }) {
     }
   };
 
-  // Handle property save
+  // Handle Company save
   const handlePropertySave = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -138,12 +139,12 @@ export default function AddProperty({ params }) {
       }
 
       if (result.didSucceed) {
-        router.push("/dashboard/properties");
+        router.push("/dashboard/companies");
       } else {
-        setError("Failed to save Property.");
+        setError("Failed to save Company.");
       }
     } catch (error) {
-      console.error("Property save error:", error.message);
+      console.error("Company save error:", error.message);
       setError(error.message);
     } finally {
       setIsLoading(false);
@@ -154,24 +155,24 @@ export default function AddProperty({ params }) {
     <main>
       <div className="bg-white shadow-lg rounded-lg p-8 w-full">
         <h1 className="text-2xl font-bold text-center text-slate-700 mb-6">
-          {propertyID ? "Update Property" : "Create a Property"}
+          {propertyID ? "Update Company" : "Create a Company"}
         </h1>
         <form onSubmit={handlePropertySave} className="space-y-5">
           {/* Add form fields for name, description, and other fields similarly */}
-          <div className="bg-pamojaaccent shadow-sm rounded-xs p-5">
+          <div className="bg-pamojatertiary shadow-sm rounded-xs p-5">
             <div className="sektion md:grid-cols-4">
               <div className="col-span-2 mb-4">
                 <label
                   className="block text-slate-700 text-sm font-bold mb-2"
                   htmlFor="name"
                 >
-                  Property Name
+                  Company Name
                 </label>
                 <input
                   className="shadow bg-white appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="name"
                   type="text"
-                  placeholder="Enter Property Name"
+                  placeholder="Enter Company Name"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
@@ -183,7 +184,7 @@ export default function AddProperty({ params }) {
                   className="block text-slate-700 text-sm font-bold mb-2"
                   htmlFor="norooms"
                 >
-                  Property Location
+                  Company Location
                 </label>
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -196,12 +197,12 @@ export default function AddProperty({ params }) {
                   required
                 />
               </div>
-              <div className="mb-4">
+              {/* <div className="mb-4">
                 <label
                   className="block text-slate-700 text-sm font-bold mb-2"
                   htmlFor="norooms"
                 >
-                  No. Property Rooms
+                  No. Company Rooms
                 </label>
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -213,14 +214,14 @@ export default function AddProperty({ params }) {
                   onChange={handleChange}
                   required
                 />
-              </div>
+              </div> */}
             </div>
           </div>
 
-          <div className="bg-pamojaaccent shadow-sm rounded-xs p-5">
+          <div className="bg-pamojatertiary shadow-sm rounded-xs p-5">
             <div className="sektion md:grid-cols-4">
               <AddHoldStateCard
-                title="Property Emails"
+                title="Company Emails"
                 name="emails"
                 valueState={newEmail}
                 onChangeState={setNewEmail}
@@ -230,7 +231,7 @@ export default function AddProperty({ params }) {
                 type="email" // Input type
               />
               <AddHoldStateCard
-                title="Property Phone"
+                title="Company Phone"
                 name="phones"
                 valueState={newPhone}
                 onChangeState={setNewPhone}
@@ -252,7 +253,7 @@ export default function AddProperty({ params }) {
             </div>
           </div>
 
-          <div className="bg-pamojaaccent shadow-sm rounded-xs p-5">
+          <div className="bg-pamojatertiary shadow-sm rounded-xs p-5">
             <div className="sektion md:grid-cols-6">
               <div className="col-span-2">
                 <AddHoldStateWithIconCard
@@ -267,9 +268,9 @@ export default function AddProperty({ params }) {
                   iconOptions={iconOptions} // Pass the icon options here
                 />
               </div>
-              <div className="col-span-2">
+              {/* <div className="col-span-2">
                 <AddHoldStateWithIconCard
-                  title="Property Amenities"
+                  title="Company Amenities"
                   name="amenities"
                   valueState={amenitiesInput}
                   onChangeState={setAmenitiesInput}
@@ -279,14 +280,14 @@ export default function AddProperty({ params }) {
                   type="text" // Input type
                   iconOptions={iconOptions} // Pass the icon options here
                 />
-              </div>
+              </div> */}
               <div className="col-span-2"></div>
               {/* <div className="col-span-2 mb-4">
                 <label
                   className="block text-slate-700 text-sm font-bold mb-2"
                   htmlFor="icons"
                 >
-                  Property Amenities
+                  Company Amenities
                 </label>
                 <div className="flex item-center space-x-1 shadow appearance-none border rounded  py-1 px-1 text-slate-700 leading-tight focus:outline-none focus:shadow-outline">
                   <select name="icons" id="icons">
@@ -299,7 +300,7 @@ export default function AddProperty({ params }) {
                     className="w-full appearance-none bg-slate-200 py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline rounded"
                     id="amenities"
                     type="text"
-                    placeholder="Enter Property Amenities"
+                    placeholder="Enter Company Amenities"
                     name="amenities"
                     value={formData.amenities}
                     onChange={handleChange}
@@ -312,19 +313,19 @@ export default function AddProperty({ params }) {
               </div> */}
             </div>
           </div>
-          <div className="sektion md:grid-cols-3 bg-pamojaaccent">
+          <div className="sektion md:grid-cols-3 bg-pamojatertiary">
             <div className="mb-4  shadow-sm rounded-xs p-5">
               <label
                 className="block text-slate-700 text-sm font-bold mb-2"
                 htmlFor="slogan"
               >
-                Property Slogan
+                Company Slogan
               </label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="slogan"
                 type="text"
-                placeholder="Enter Property Slogan"
+                placeholder="Enter Company Slogan"
                 name="slogan"
                 value={formData.slogan}
                 onChange={handleChange}
@@ -336,13 +337,13 @@ export default function AddProperty({ params }) {
                 className="block text-slate-700 text-sm font-bold mb-2"
                 htmlFor="slogan"
               >
-                Property Address
+                Company Address
               </label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="address"
                 type="text"
-                placeholder="Enter Property Address"
+                placeholder="Enter Company Address"
                 name="address"
                 value={formData.address}
                 onChange={handleChange}
@@ -350,18 +351,18 @@ export default function AddProperty({ params }) {
               />
             </div>
           </div>
-          <div className="mb-4 bg-pamojaaccent shadow-sm rounded-xs p-5">
+          <div className="mb-4 bg-pamojatertiary shadow-sm rounded-xs p-5">
             <label
               className="block text-slate-700 text-sm font-bold mb-2"
               htmlFor="name"
             >
-              Property Description
+              Company Description
             </label>
             <textarea
               className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
               id="desc"
               type="text"
-              placeholder="Enter Property Name"
+              placeholder="Enter Company Name"
               name="desc"
               value={formData.desc}
               onChange={handleChange}
@@ -370,12 +371,12 @@ export default function AddProperty({ params }) {
           </div>
 
           {/* Single Image Upload*/}
-          <div className="mb-4 bg-pamojaaccent shadow-sm rounded-xs p-5">
+          <div className="mb-4 bg-pamojatertiary shadow-sm rounded-xs p-5">
             <label
               className="block text-slate-700 text-sm font-bold mb-2"
               htmlFor="img"
             >
-              Property Featured Image
+              Company Featured Image
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -412,11 +413,11 @@ export default function AddProperty({ params }) {
             >
               {isLoading
                 ? propertyID
-                  ? "Updating Property..."
-                  : "Creating Property..."
+                  ? "Updating Company..."
+                  : "Creating Company..."
                 : propertyID
-                ? "Update Property"
-                : "Create Property"}
+                ? "Update Company"
+                : "Create Company"}
             </button>
           </div>
         </form>

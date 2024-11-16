@@ -34,7 +34,7 @@ export default function RootLayout({ children }) {
         <div className=" w-64 space-y-5 p-5 hidden md:block max-h-full bg-pamojatertiary">
           <div className="bg-pamojaprimary p-5  rounded-lg  sticky top-0 z-20 shadow-md ">
             <h1 className="gilda_display text-lg font-bold antialiased">
-              PAMOJA
+              Magic Group
             </h1>
           </div>
           <SideBar />

@@ -56,7 +56,7 @@ export const DataTabs = ({ propertyID, data }) => {
   return (
     <div className="">
       <Tabs defaultValue="Rooms">
-        <TabsList className="bg-pamojaaccent rounded-none">
+        <TabsList className="bg-pamojatertiary rounded-none">
           <TabsTrigger value="Rooms" className="">
             Rooms
           </TabsTrigger>
@@ -75,7 +75,6 @@ export const DataTabs = ({ propertyID, data }) => {
             </TabsContent>
 
             <TabsContent value="Gallery">
-
               <PropertyImageGalleryCloudinary slug={slug} />
             </TabsContent>
             <TabsContent value="Faqs">

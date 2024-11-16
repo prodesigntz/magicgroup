@@ -11,7 +11,7 @@ import { createDocument } from "@/firebase/databaseOperations";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DashboardDataLoader from "@/components/dashboard/dashboard-data-loader";
-import { AllProperties } from "@/app/(cms)/dashboard/properties/allProperties";
+import { AllProperties } from "@/app/(cms)/dashboard/companies/allProperties";
 import useFetchAll from "@/lib/hooks/useFetchAll";
 import PropertyContactDetails from "@/components/contactus/propertyContactDetails";
 

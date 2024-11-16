@@ -16,8 +16,8 @@ import Link from "next/link";
 import { FaCircle, FaEnvelope, FaPlus } from "react-icons/fa6";
 import { renderIcon } from "@/data/iconOptions";
 import { Separator } from "@/components/ui/separator";
-import { DataTabs } from "@/app/(cms)/dashboard/properties/dataTabs";
-import { AddRoomSheet } from "@/components/accomodation/addRoomSheet";
+import { DataTabs } from "@/app/(cms)/dashboard/companies/dataTabs";
+import { AddProductSheet } from "@/components/accomodation/addProductSheet";
 import { AddHighlightSheet } from "@/components/accomodation/addHighlightsSheet";
 import { AddFAQSheet } from "@/components/accomodation/addFaqsSheet";
 import { AddExperienceSheet } from "@/components/accomodation/addExperienceSheet ";
@@ -39,11 +39,11 @@ export default function ViewProperty({ params }) {
     slogan: "",
     phones: [],
     emails: [],
-    amenities: [{ name: "", icon: "" }],
+    /// amenities: [{ name: "", icon: "" }],
     socialMedias: [{ name: "", icon: "", link: "" }],
     departments: [],
     location: "",
-    noRooms: "",
+    /// noRooms: "",
     rooms: [
       {
         name: "",
@@ -69,7 +69,6 @@ export default function ViewProperty({ params }) {
   });
 
   const router = useRouter();
-
 
   // Fetch existing property data if propertyID is provided
   useEffect(() => {
@@ -98,7 +97,7 @@ export default function ViewProperty({ params }) {
     }
   }, [propertyID]);
 
-  const slug = getSlug(formData.name);
+  const slug = getSlug(formData?.name);
   //console.log("Slug", Slug);
 
   // Handle change for dynamic form fields
@@ -190,39 +189,39 @@ export default function ViewProperty({ params }) {
                     type="submit"
                     disabled={isLoading}
                   >
-                    <Link href={`/dashboard/properties/${propertyID}`}>
+                    <Link href={`/dashboard/companies/${propertyID}`}>
                       Edit Property
                     </Link>
                   </button>
                 </div>
                 <div className="absolute bottom-5 left-5 right-5 bg-slate-700/25 p-2 space-y-3">
                   <h1 className="text-2xl drop-shadow-lg font-bold text-center md:text-start text-white ">
-                    {formData.name}
+                    {formData?.name}
                   </h1>
                   <p className="text-lg drop-shadow-md font-semibold text-center md:text-start text-white">
-                    {formData.slogan}
+                    {formData?.slogan}
                   </p>
                 </div>
               </div>
 
               <div className="space-y-2 content-center">
                 <p className="text-sm">
-                  {truncateDescription(formData.desc, 28)}
+                  {truncateDescription(formData?.desc, 28)}
                 </p>
                 <p className="text-sm">
                   <span className="font-bold">Location</span>:{" "}
-                  {formData.address || " "}
+                  {formData?.address || " "}
                 </p>
-                <p className="text-sm">
+                {/* <p className="text-sm">
                   <span className="font-bold">Rooms</span>:{" "}
-                  {formData.noRooms || ""} Rooms
-                </p>
+                  {formData?.noRooms || ""} Rooms
+                </p> */}
                 <div className="flex flex-col space-y-1">
                   <h1 className="text-lg drop-shadow-md font-semibold text-center md:text-start">
                     Phone Contacts:
                   </h1>
                   <ul className="">
-                    {formData.phones.map((contact, index) => (
+                    {formData?.phones?.map((contact, index) => (
                       <li className="" key={index}>
                         {contact || ""}
                       </li>
@@ -236,30 +235,30 @@ export default function ViewProperty({ params }) {
             {/* center */}
             <div className="sektion md:grid-cols-4">
               {/* Amenities */}
-              <div className="bg-pamojaaccent shadow-sm rounded-xs p-2">
+              {/* <div className="bg-pamojatertiary shadow-sm rounded-xs p-2">
                 <h1 className="text-lg drop-shadow-md font-semibold text-center md:text-start">
                   Property Amenites
                 </h1>
                 <ul className="">
-                  {formData.amenities.map((data, index) => (
+                  {formData?.amenities?.map((data, index) => (
                     <li
                       className="text-sm flex items-center space-x-1"
                       key={index}
                     >
-                      <span> {renderIcon(data.icon)}</span>{" "}
-                      <span> {data.value || ""}</span>
+                      <span> {renderIcon(data?.icon)}</span>{" "}
+                      <span> {data?.value || ""}</span>
                     </li>
                   ))}
                 </ul>
-              </div>
+              </div> */}
 
               {/* Social Media */}
-              <div className="bg-pamojaaccent shadow-sm rounded-xs p-2">
+              <div className="bg-pamojatertiary shadow-sm rounded-xs p-2">
                 <h1 className="text-lg drop-shadow-md font-semibold text-center md:text-start">
                   Property Departments
                 </h1>
                 <ul className="">
-                  {formData.departments.map((dept, index) => (
+                  {formData?.departments?.map((dept, index) => (
                     <li
                       className="text-sm space-x-2 flex items-center"
                       key={index}
@@ -274,12 +273,12 @@ export default function ViewProperty({ params }) {
               </div>
 
               {/* emails */}
-              <div className="bg-pamojaaccent shadow-sm rounded-xs p-2">
+              <div className="bg-pamojatertiary shadow-sm rounded-xs p-2">
                 <h1 className="text-lg drop-shadow-md font-semibold text-center md:text-start">
                   Property Emails
                 </h1>
                 <ul className="">
-                  {formData.emails.map((email, index) => (
+                  {formData?.emails?.map((email, index) => (
                     <li
                       className="text-sm flex items-center space-x-1"
                       key={index}
@@ -294,12 +293,12 @@ export default function ViewProperty({ params }) {
               </div>
 
               {/* Deaprtmetns */}
-              <div className="bg-pamojaaccent shadow-sm rounded-xs p-2">
+              <div className="bg-pamojatertiary shadow-sm rounded-xs p-2">
                 <h1 className="text-lg drop-shadow-md font-semibold text-center md:text-start">
                   Social Medias
                 </h1>
                 <ul className="flex flex-wrap">
-                  {formData.socialMedias.map((social, index) => (
+                  {formData?.socialMedias?.map((social, index) => (
                     <Link href={`${social.link}`} className="p-1" key={index}>
                       <span> {renderIcon(social.icon)}</span>
                     </Link>
@@ -313,7 +312,7 @@ export default function ViewProperty({ params }) {
             <div className="py-5">
               <h3 className="text-lg font-bold mb-3">Add Property Features:</h3>
               <div className="flex items-center space-x-3">
-                <AddRoomSheet propertyID={propertyID} />
+                <AddProductSheet propertyID={propertyID} />
                 <AddHighlightSheet propertyID={propertyID} />
                 <AddFAQSheet propertyID={propertyID} />
                 <AddExperienceSheet propertyID={propertyID} />

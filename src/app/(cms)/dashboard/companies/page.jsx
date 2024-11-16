@@ -44,12 +44,12 @@ export default function Page() {
       <SharedDashHeader
         title="Properties"
         btnTitle="New Property"
-        onClick={() => router.push("/dashboard/properties/add")}
+        onClick={() => router.push("/dashboard/companies/add")}
       />
       {/* tabs */}
       <div className="">
         <Tabs defaultValue="Properties">
-          <TabsList className="bg-pamojaaccent rounded-none">
+          <TabsList className="bg-pamojatertiary rounded-none">
             <TabsTrigger value="Properties" className="">
               All
             </TabsTrigger>

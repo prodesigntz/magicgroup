@@ -47,7 +47,7 @@ export default function NavBar() {
             <Button
               asChild
               variant="pamoja-primary"
-              className=" bg-pamojaprimary hover:bg-pamojadark rounded-none text-white"
+              className=" bg-pamojaprimary hover:bg-pamojadark rounded-none text-pamojasecondary"
             >
               <ButtonOne name="Get Quote" />
             </Button>

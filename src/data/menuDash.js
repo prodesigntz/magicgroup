@@ -9,62 +9,62 @@ export const menuDashItem = [
     ],
   },
   {
-    name: "Properties",
+    name: "Companies",
     subMenu: [
       {
-        name: "List Properties",
-        path: "/dashboard/properties",
+        name: "List Companies",
+        path: "/dashboard/companies",
       },
       {
-        name: "Add Properties",
-        path: "/dashboard/properties/add",
+        name: "Add Companies",
+        path: "/dashboard/companies/add",
       },
     ],
   },
+  // {
+  //   name: "Bookings",
+  //   subMenu: [
+  //     {
+  //       name: "List Bookings",
+  //       path: "/dashboard/bookings",
+  //     },
+  //     // {
+  //     //   name: "Add Destination",
+  //     //   path: "/dashboard/bookings/add",
+  //     // },
+  //   ],
+  // },
   {
-    name: "Bookings",
+    name: "Services",
     subMenu: [
       {
-        name: "List Bookings",
-        path: "/dashboard/bookings",
-      },
-      {
-        name: "Add Destination",
-        path: "/dashboard/bookings/add",
-      },
-    ],
-  },
-  {
-    name: "Destinations",
-    subMenu: [
-      {
-        name: "List Destinations",
-        path: "/dashboard/destinations",
+        name: "List Services",
+        path: "/dashboard/services",
       },
       {
         name: "Add Bookings",
-        path: "/dashboard/destinations/add",
+        path: "/dashboard/services/add",
       },
     ],
   },
-  {
-    name: "Tasks",
-    subMenu: [
-      {
-        name: "Home",
-        path: "",
-      },
-    ],
-  },
-  {
-    name: "Leave",
-    subMenu: [
-      {
-        name: "Home",
-        path: "",
-      },
-    ],
-  },
+  // {
+  //   name: "Tasks",
+  //   subMenu: [
+  //     {
+  //       name: "Home",
+  //       path: "",
+  //     },
+  //   ],
+  // },
+  // {
+  //   name: "Leave",
+  //   subMenu: [
+  //     {
+  //       name: "Home",
+  //       path: "",
+  //     },
+  //   ],
+  // },
   {
     name: "Messages",
     subMenu: [
@@ -86,7 +86,7 @@ export const menuDashItem = [
         path: "/dashboard/blogs",
       },
       {
-        name: "Add Staff",
+        name: "Add Blog",
         path: "/dashboard/blogs/add",
       },
     ],

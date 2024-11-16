@@ -26,13 +26,13 @@ export default function AddProperty({ params }) {
     slogan: "",
     phones: [],
     emails: [],
-    amenities: [{ name: "", icon: "" }],
+   /// amenities: [{ name: "", icon: "" }],
     socialMedias: [{ name: "", icon: "", link: "" }],
     departments: [],
     location: "",
-    address:"",
-    destination:"",
-    noRooms: "",
+    address: "",
+    destination: "",
+    ///noRooms: "",
     rooms: [
       {
         name: "",
@@ -54,19 +54,17 @@ export default function AddProperty({ params }) {
     img: null,
     imgPreview: null,
     isPublished: false,
-    bookings:[]
+    bookings: [],
   });
 
   const router = useRouter();
 
   // temporary satte
-    const [newEmail, setNewEmail] = useState("");
-    const [newPhone, setNewPhone] = useState("");
-    const [newDepartment, setNewDepartment] = useState("");
-    const [socialMediaInput, setSocialMediaInput] = useState("");
-    const [amenitiesInput, setAmenitiesInput] = useState("");
-
-
+  const [newEmail, setNewEmail] = useState("");
+  const [newPhone, setNewPhone] = useState("");
+  const [newDepartment, setNewDepartment] = useState("");
+  const [socialMediaInput, setSocialMediaInput] = useState("");
+  //const [amenitiesInput, setAmenitiesInput] = useState("");
 
   // Fetch existing property data if propertyID is provided
   useEffect(() => {
@@ -75,11 +73,12 @@ export default function AddProperty({ params }) {
         setIsLoading(true);
         try {
           const { didSucceed, document } = await getSingleDocument(
-            "properties",
+            "Properties",
             propertyID
           );
           if (didSucceed) {
-            setFormData({ formData, ...document   });
+           // console.log("Fetched data", document);
+            setFormData({ ...formData, ...document });
           } else {
             setError("Failed to fetch Property data.");
           }
@@ -139,7 +138,7 @@ export default function AddProperty({ params }) {
       }
 
       if (result.didSucceed) {
-        router.push("/dashboard/properties");
+        router.push("/dashboard/companies");
       } else {
         setError("Failed to save Property.");
       }
@@ -159,7 +158,7 @@ export default function AddProperty({ params }) {
         </h1>
         <form onSubmit={handlePropertySave} className="space-y-5">
           {/* Add form fields for name, description, and other fields similarly */}
-          <div className="bg-pamojaaccent shadow-sm rounded-xs p-5">
+          <div className="bg-pamojatertiary shadow-sm rounded-xs p-5">
             <div className="sektion md:grid-cols-4">
               <div className="col-span-2 mb-4">
                 <label
@@ -197,7 +196,7 @@ export default function AddProperty({ params }) {
                   required
                 />
               </div>
-              <div className="mb-4">
+              {/* <div className="mb-4">
                 <label
                   className="block text-slate-700 text-sm font-bold mb-2"
                   htmlFor="norooms"
@@ -214,11 +213,11 @@ export default function AddProperty({ params }) {
                   onChange={handleChange}
                   required
                 />
-              </div>
+              </div> */}
             </div>
           </div>
 
-          <div className="bg-pamojaaccent shadow-sm rounded-xs p-5">
+          <div className="bg-pamojatertiary shadow-sm rounded-xs p-5">
             <div className="sektion md:grid-cols-4">
               <AddHoldStateCard
                 title="Property Emails"
@@ -253,7 +252,7 @@ export default function AddProperty({ params }) {
             </div>
           </div>
 
-          <div className="bg-pamojaaccent shadow-sm rounded-xs p-5">
+          <div className="bg-pamojatertiary shadow-sm rounded-xs p-5">
             <div className="sektion md:grid-cols-6">
               <div className="col-span-2">
                 <AddHoldStateWithIconCard
@@ -268,7 +267,7 @@ export default function AddProperty({ params }) {
                   iconOptions={iconOptions} // Pass the icon options here
                 />
               </div>
-              <div className="col-span-2">
+              {/* <div className="col-span-2">
                 <AddHoldStateWithIconCard
                   title="Property Amenities"
                   name="amenities"
@@ -280,7 +279,7 @@ export default function AddProperty({ params }) {
                   type="text" // Input type
                   iconOptions={iconOptions} // Pass the icon options here
                 />
-              </div>
+              </div> */}
               <div className="col-span-2"></div>
               {/* <div className="col-span-2 mb-4">
                 <label
@@ -313,7 +312,8 @@ export default function AddProperty({ params }) {
               </div> */}
             </div>
           </div>
-          <div className="sektion md:grid-cols-3 bg-pamojaaccent">
+
+          <div className="sektion md:grid-cols-3 bg-pamojatertiary">
             <div className="mb-4  shadow-sm rounded-xs p-5">
               <label
                 className="block text-slate-700 text-sm font-bold mb-2"
@@ -351,7 +351,8 @@ export default function AddProperty({ params }) {
               />
             </div>
           </div>
-          <div className="mb-4 bg-pamojaaccent shadow-sm rounded-xs p-5">
+
+          <div className="mb-4 bg-pamojatertiary shadow-sm rounded-xs p-5">
             <label
               className="block text-slate-700 text-sm font-bold mb-2"
               htmlFor="name"
@@ -371,7 +372,7 @@ export default function AddProperty({ params }) {
           </div>
 
           {/* Single Image Upload*/}
-          <div className="mb-4 bg-pamojaaccent shadow-sm rounded-xs p-5">
+          <div className="mb-4 bg-pamojatertiary shadow-sm rounded-xs p-5">
             <label
               className="block text-slate-700 text-sm font-bold mb-2"
               htmlFor="img"
@@ -407,7 +408,7 @@ export default function AddProperty({ params }) {
           {error && <p className="text-red-500 text-xs italic mb-4">{error}</p>}
           <div className="flex items-center justify-between mb-4">
             <button
-              className="bg-pamojaprimary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-pamojaprimary text-pamojasecondary font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
               disabled={isLoading}
             >

@@ -42,7 +42,7 @@ export default function Page() {
       <SharedDashHeader
         title="Properties"
         btnTitle="New Staff"
-        onClick={() => router.push("/dashboard/properties/add")}
+        onClick={() => router.push("/dashboard/staffs/add")}
       />
       {/* tabs */}
       <div className="">

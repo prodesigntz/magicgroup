@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
       <section className=" text-white bg-[url('/images/accomodations/oleaout.jpeg')] bg-cover bg-center  bg-slate-700 bg-blend-overlay bg-no-repeat">
        
       </section>
-      <div className="bg-pamojadark">
+      <div className="bg-pamojasecondary">
         <NavBar />
       </div>
       {children}

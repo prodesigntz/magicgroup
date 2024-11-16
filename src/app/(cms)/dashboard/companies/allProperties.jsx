@@ -1,7 +1,5 @@
-import { AddRoomSheet } from "@/components/accomodation/addRoomSheet";
 import PaginationSet from "@/components/paginationSet";
 import { Button } from "@/components/ui/button";
-// import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -16,15 +14,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { FaEdit } from "react-icons/fa";
-// import { FaEdit } from "react-icons/fa";
-// import { FaEye, FaTrash } from "react-icons/fa6";
-// import { IoDuplicate } from "react-icons/io5";
+import { FaEye } from "react-icons/fa6";
 
-export const AllRooms = ({propertyID, data }) => {
+export const AllProperties = ({ data }) => {
   const router = useRouter();
-  console.log("data in all rooms ", data.rooms);
-
-
+  console.log("data in all properties ", data);
 
   // pagination data
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,35 +26,28 @@ export const AllRooms = ({propertyID, data }) => {
 
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
-  const currentPosts = data?.rooms?.slice(firstPostIndex, lastPostIndex);
+  const currentPosts = data.slice(firstPostIndex, lastPostIndex);
 
-  /// state to handle edit
-  const [selectedRoom, setSelectedRoom] = useState(null); 
-   const handleEditRoom = (room) => {
-     setSelectedRoom(room); // Set the room to be edited
-   };
-
-  if (data?.rooms?.length < 1) {
+  if (data.length < 1) {
     return (
       <div className="w-full h-60 flex justify-center items-center">
-        <span>Property List Is Empty</span>
+        <span>Company List Is Empty</span>
       </div>
     );
   }
 
-  //    const handleDelete = async (postId) => {
-  //      const { didSucceed } = await deleteDocument("Blogpost", postId);
-  //      if (didSucceed) {
-  //        setData((prevData) => prevData.filter((post) => post.id !== postId));
-  //      } else {
-  //        console.error("Failed to delete post");
-  //      }
-  //    };
+//    const handleDelete = async (postId) => {
+//      const { didSucceed } = await deleteDocument("Blogpost", postId);
+//      if (didSucceed) {
+//        setData((prevData) => prevData.filter((post) => post.id !== postId));
+//      } else {
+//        console.error("Failed to delete post");
+//      }
+//    };
   return (
-    <div className="space-y-5">
-      {/* <AddRoomSheet propertyID={propertyID} /> */}
+    <>
       <Table className="">
-        <TableCaption> List of Properties</TableCaption>
+        <TableCaption> List of Company</TableCaption>
 
         {/* table header */}
         <TableHeader>
@@ -68,7 +55,8 @@ export const AllRooms = ({propertyID, data }) => {
             <TableHead>Sno.</TableHead>
             <TableHead>Image</TableHead>
             <TableHead>Title</TableHead>
-            <TableHead>Beds</TableHead>
+            <TableHead>Rooms</TableHead>
+            <TableHead>Bookings</TableHead>
 
             <TableHead>Actions</TableHead>
           </TableRow>
@@ -76,12 +64,12 @@ export const AllRooms = ({propertyID, data }) => {
 
         {/* table row */}
         <TableBody>
-          {currentPosts?.map((item, index) => (
+          {currentPosts.map((item, index) => (
             <TableRow key={index}>
               <TableCell>{++index}</TableCell>
               <TableCell>
                 <Image
-                  src={item?.img[0] || ""}
+                  src={item?.img || ""}
                   alt="property"
                   width={80}
                   height={60}
@@ -97,33 +85,51 @@ export const AllRooms = ({propertyID, data }) => {
                 <h3 className="text-base">{item?.name}</h3>
               </TableCell>
               <TableCell className="">
-                <h3>{item?.beds}</h3>
+                <h3>
+                  {item?.rooms.length > 1 ? (
+                    <>{item?.rooms.length}</>
+                  ) : (
+                    <>0 room</>
+                  )}
+                </h3>
+              </TableCell>
+              <TableCell className="">
+                <h3>
+                  {item?.bookings.length > 1 ? (
+                    <>{item?.bookings.length}</>
+                  ) : (
+                    <>0 booking</>
+                  )}
+                </h3>
               </TableCell>
 
               <TableCell className=" items-center space-x-1">
                 <Button
-                  onClick={() => handleEditRoom(item)}
+                  onClick={() =>
+                    router.push(`/dashboard/companies/${item?.id}`)
+                  }
                   className="bg-pamojaprimary text-white hover:bg-pamojaaccent hover:text-pamojadark"
                 >
                   <FaEdit />
                 </Button>
                 {/* <Button className="bg-prosecondary text-procolor hover:text-white hover:bg-proprimary">
                   <FaTrash />
-                </Button> */}
-                {/* <Button className="bg-prosecondary text-procolor hover:text-white hover:bg-proprimary">
+                </Button>
+                <Button className="bg-prosecondary text-procolor hover:text-white hover:bg-proprimary">
                   <IoDuplicate />
-                </Button>  */}
-                {/* <Button
+                </Button> */}
+                <Button
                   asChild
                   className="bg-pamojaprimary text-white hover:bg-pamojaaccent hover:text-pamojadark"
                 >
                   <Link
-                    href={`/dashboard/properties/viewProperty/${item?.id}`}
-                 
+                    href={`/dashboard/companies/viewProperty/${item?.id}`}
+                    //target="_blank"
+                    // rel="noopener noreferrer"
                   >
                     <FaEye />
                   </Link>
-                </Button> */}
+                </Button>
               </TableCell>
             </TableRow>
           ))}
@@ -132,11 +138,11 @@ export const AllRooms = ({propertyID, data }) => {
 
       {/* Paginations */}
       <PaginationSet
-        totalPosts={data?.rooms?.length}
+        totalPosts={data.length}
         postsPerPage={postsPerPage}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
-    </div>
+    </>
   );
 };

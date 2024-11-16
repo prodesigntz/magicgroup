@@ -11,7 +11,7 @@ import { updateDocumentArray } from "@/firebase/databaseOperations"; // Firebase
 import { imageUploadToFirebase } from "@/firebase/fileOperations"; // Helper function for image upload
 import { useRouter } from "next/navigation";
 
-export const AddRoomSheet = ({ propertyID, room = null, title = "Room" }) => {
+export const AddProductSheet = ({ propertyID, room = null, title = "Product" }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false); // State for managing sheet visibility
 
@@ -20,10 +20,7 @@ export const AddRoomSheet = ({ propertyID, room = null, title = "Room" }) => {
     name: room?.name || "",
     price: room?.price || "",
     desc: room?.desc || "",
-    capacity: room?.capacity || "",
-    beds: room?.beds || "",
     available: room?.available || "",
-    facilities: room?.facilities || [], // Array for room facilities
     img: null, // Image files for upload
     imgPreview: room?.img || [], // Array of image previews, use existing if editing
   });
@@ -34,18 +31,6 @@ export const AddRoomSheet = ({ propertyID, room = null, title = "Room" }) => {
     setRoomData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleFacilityChange = (index, value) => {
-    const updatedFacilities = [...roomData.facilities];
-    updatedFacilities[index] = value;
-    setRoomData({ ...roomData, facilities: updatedFacilities });
-  };
-
-  const handleAddFacility = () => {
-    setRoomData({
-      ...roomData,
-      facilities: [...roomData.facilities, ""],
-    });
-  };
 
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files); // Convert FileList to array
@@ -82,10 +67,7 @@ export const AddRoomSheet = ({ propertyID, room = null, title = "Room" }) => {
         name: roomData.name,
         price: roomData.price,
         desc: roomData.desc,
-        capacity: roomData.capacity,
-        beds: roomData.beds,
         available: roomData.available,
-        facilities: roomData.facilities,
         img: uploadedImgUrls,
         createdAt: room ? room.createdAt : new Date(), // Keep original createdAt if editing
       };
@@ -117,10 +99,7 @@ export const AddRoomSheet = ({ propertyID, room = null, title = "Room" }) => {
         name: room.name,
         price: room.price,
         desc: room.desc,
-        capacity: room.capacity,
-        beds: room.beds,
         available: room.available,
-        facilities: room.facilities,
         imgPreview: room.img, // Existing images when editing
       });
     }
@@ -146,10 +125,10 @@ export const AddRoomSheet = ({ propertyID, room = null, title = "Room" }) => {
             <SheetDescription>Please fill in the room details</SheetDescription>
           </SheetHeader>
           <form onSubmit={handleRoomSubmit} className="space-y-4">
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid md:grid-cols-3 gap-4">
               {/* Room Name */}
               <div>
-                <label htmlFor="name">Room Name</label>
+                <label htmlFor="name">Product Name</label>
                 <input
                   type="text"
                   name="name"
@@ -163,14 +142,27 @@ export const AddRoomSheet = ({ propertyID, room = null, title = "Room" }) => {
 
               {/* Room Price */}
               <div>
-                <label htmlFor="price">Price (USD)</label>
+                <label htmlFor="price">Price </label>
                 <input
                   type="number"
                   name="price"
                   value={roomData.price}
                   onChange={handleRoomChange}
-                  placeholder="Enter room price"
+                  placeholder="Enter  price"
                   required
+                  className="w-full px-4 py-2 border"
+                />
+              </div>
+
+              {/* Room Price */}
+              <div>
+                <label htmlFor="available">Available</label>
+                <input
+                  type="number"
+                  name="available"
+                  value={roomData.available}
+                  onChange={handleRoomChange}
+                  placeholder="Enter number of available "
                   className="w-full px-4 py-2 border"
                 />
               </div>
@@ -183,78 +175,11 @@ export const AddRoomSheet = ({ propertyID, room = null, title = "Room" }) => {
                 name="desc"
                 value={roomData.desc}
                 onChange={handleRoomChange}
-                placeholder="Enter room description"
+                placeholder="Enter description"
                 className="w-full px-4 py-2 border"
               />
             </div>
 
-            <div className="grid md:grid-cols-3 gap-4">
-              {/* Room Capacity */}
-              <div>
-                <label htmlFor="capacity">Capacity</label>
-                <input
-                  type="number"
-                  name="capacity"
-                  value={roomData.capacity}
-                  onChange={handleRoomChange}
-                  placeholder="Enter room capacity"
-                  className="w-full px-4 py-2 border"
-                />
-              </div>
-
-              {/* Number of Beds */}
-              <div>
-                <label htmlFor="beds">Beds</label>
-                <input
-                  type="number"
-                  name="beds"
-                  value={roomData.beds}
-                  onChange={handleRoomChange}
-                  placeholder="Enter number of beds"
-                  className="w-full px-4 py-2 border"
-                />
-              </div>
-
-              {/* Room Availability */}
-              <div>
-                <label htmlFor="available">Available</label>
-                <input
-                  type="number"
-                  name="available"
-                  value={roomData.available}
-                  onChange={handleRoomChange}
-                  placeholder="Enter number of available rooms"
-                  className="w-full px-4 py-2 border"
-                />
-              </div>
-            </div>
-
-            {/* Facilities */}
-            <div>
-              <label>Facilities</label>
-              {roomData.facilities.map((facility, index) => (
-                <div key={index} className="flex items-center space-x-2 mb-2">
-                  <input
-                    type="text"
-                    value={facility}
-                    onChange={(e) =>
-                      handleFacilityChange(index, e.target.value)
-                    }
-                    placeholder="Enter facility"
-                    className="w-full px-4 py-2 border"
-                  />
-                  {index === roomData.facilities.length - 1 && (
-                    <button
-                      type="button"
-                      onClick={handleAddFacility}
-                      className="bg-pamojaprimary text-white font-bold py-2 px-4 rounded"
-                    >
-                      Add
-                    </button>
-                  )}
-                </div>
-              ))}
-            </div>
 
             {/* Image Upload */}
             <div>
@@ -286,7 +211,7 @@ export const AddRoomSheet = ({ propertyID, room = null, title = "Room" }) => {
                 type="submit"
                 className="bg-pamojaprimary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
-                {room ? "Update Room" : "Add Room"}
+                {room ? "Update Product" : "Add Product"}
               </button>
             </div>
           </form>

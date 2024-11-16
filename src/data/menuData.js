@@ -4,17 +4,17 @@ export const menuData = [
     link: "/about",
   },
   {
-    name: "Accomodations",
-    link: "/accomodations",
+    name: "Companies",
+    link: "/companies",
   },
-  {
-    name: "Destinations",
-    link: "/destinations",
-  },
-  {
-    name: "Experiences",
-    link: "/",
-  },
+  // {
+  //   name: "Destinations",
+  //   link: "/destinations",
+  // },
+  // {
+  //   name: "Experiences",
+  //   link: "/",
+  // },
   {
     name: "Contact",
     link: "/contact",
