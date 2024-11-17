@@ -15,6 +15,7 @@ export default function Programs() {
   const [properties, setProperties] = useState([]);
  const { isLoading, data, error, didSucceed } = useFetchAll("Properties");
 
+  console.log(data);
   const settings = {
     dots: true,
     autoplay: true,
@@ -61,6 +62,7 @@ export default function Programs() {
       },
     ],
   };
+
 
   return (
     <section className="psektion bg-[#ffefe2]">

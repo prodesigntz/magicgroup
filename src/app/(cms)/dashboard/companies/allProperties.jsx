@@ -55,7 +55,7 @@ export const AllProperties = ({ data }) => {
             <TableHead>Sno.</TableHead>
             <TableHead>Image</TableHead>
             <TableHead>Title</TableHead>
-            <TableHead>Rooms</TableHead>
+            {/* <TableHead>Rooms</TableHead> */}
             <TableHead>Bookings</TableHead>
 
             <TableHead>Actions</TableHead>
@@ -84,7 +84,7 @@ export const AllProperties = ({ data }) => {
               <TableCell className="">
                 <h3 className="text-base">{item?.name}</h3>
               </TableCell>
-              <TableCell className="">
+              {/* <TableCell className="">
                 <h3>
                   {item?.rooms.length > 1 ? (
                     <>{item?.rooms.length}</>
@@ -92,7 +92,7 @@ export const AllProperties = ({ data }) => {
                     <>0 room</>
                   )}
                 </h3>
-              </TableCell>
+              </TableCell> */}
               <TableCell className="">
                 <h3>
                   {item?.bookings.length > 1 ? (
