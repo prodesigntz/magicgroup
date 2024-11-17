@@ -1,4 +1,4 @@
-import { AddHighlightSheet } from "@/components/accomodation/addHighlightsSheet";
+import { AddHighlightSheet } from "@/components/accomodation/addServiceSheet";
 import PaginationSet from "@/components/paginationSet";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,7 +20,7 @@ import { FaEdit } from "react-icons/fa";
 // import { FaEye, FaTrash } from "react-icons/fa6";
 // import { IoDuplicate } from "react-icons/io5";
 
-export const AllHighlights = ({ propertyID,data }) => {
+export const AllHighlights = ({ propertyID, data }) => {
   const router = useRouter();
   console.log("data in all highlights ", data);
 
@@ -91,17 +91,11 @@ export const AllHighlights = ({ propertyID,data }) => {
               <TableCell className="">
                 <h3>{item?.title}</h3>
               </TableCell>
-             
 
               <TableCell className=" items-center space-x-1">
-                <Button
-              
-                  className="bg-pamojaprimary text-white hover:bg-pamojaaccent hover:text-pamojadark"
-                >
+                <Button className="bg-pamojaprimary text-white hover:bg-pamojaaccent hover:text-pamojadark">
                   <FaEdit />
                 </Button>
-              
-              
               </TableCell>
             </TableRow>
           ))}

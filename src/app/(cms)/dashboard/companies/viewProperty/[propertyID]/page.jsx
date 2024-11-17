@@ -18,7 +18,7 @@ import { renderIcon } from "@/data/iconOptions";
 import { Separator } from "@/components/ui/separator";
 import { DataTabs } from "@/app/(cms)/dashboard/companies/dataTabs";
 import { AddProductSheet } from "@/components/accomodation/addProductSheet";
-import { AddHighlightSheet } from "@/components/accomodation/addHighlightsSheet";
+import { AddHighlightSheet, AddServiceSheet } from "@/components/accomodation/addServiceSheet";
 import { AddFAQSheet } from "@/components/accomodation/addFaqsSheet";
 import { AddExperienceSheet } from "@/components/accomodation/addExperienceSheet ";
 import UploadImagesCloudinaryForm from "@/components/cloudinaryComponents/uploadImagesCloudinary";
@@ -313,7 +313,7 @@ export default function ViewProperty({ params }) {
               <h3 className="text-lg font-bold mb-3">Add Property Features:</h3>
               <div className="flex items-center space-x-3">
                 <AddProductSheet propertyID={propertyID} />
-                <AddHighlightSheet propertyID={propertyID} />
+                <AddServiceSheet propertyID={propertyID} />
                 <AddFAQSheet propertyID={propertyID} />
                 <AddExperienceSheet propertyID={propertyID} />
               </div>

@@ -13,7 +13,7 @@ import {
 } from "@/firebase/databaseOperations"; // Firebase function for updating documents
 import { imageUploadToFirebase } from "@/firebase/fileOperations"; // Import helper function
 
-export const AddHighlightSheet = ({ propertyID, title = "Highlight" }) => {
+export const AddServiceSheet = ({ propertyID, title = "Service" }) => {
   const [isOpen, setIsOpen] = useState(false); // Manage sheet visibility
   const [highlights, setHighlights] = useState([
     { img: null, imgPreview: null, title: "", subTitle: "", desc: "" },
