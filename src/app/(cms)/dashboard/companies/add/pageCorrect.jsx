@@ -26,32 +26,31 @@ export default function AddProperty({ params }) {
     slogan: "",
     phones: [],
     emails: [],
-    /// amenities: [{ name: "", icon: "" }],
+    category: "",
     socialMedias: [{ name: "", icon: "", link: "" }],
     departments: [],
     location: "",
-    category: "",
     address: "",
     destination: "",
-    ///noRooms: "",
-    rooms: [
-      {
-        name: "",
-        price: "",
-        desc: "",
-        img: null,
-        imgPreview: null,
-        capacity: "",
-        beds: "",
-        available: "",
-        facilities: [],
-      },
-    ],
-    gallery: [{ img: null, imgPreview: null, title: "", dst: "", desc: "" }],
-    faq: [{ title: "", desc: "" }],
-    highlights: [
-      { img: null, imgPreview: null, title: "", subTitle: "", desc: "" },
-    ],
+    //noRooms: "",
+    // rooms: [
+    //   {
+    //     name: "",
+    //     price: "",
+    //     desc: "",
+    //     img: null,
+    //     imgPreview: null,
+    //     capacity: "",
+    //     beds: "",
+    //     available: "",
+    //     facilities: [],
+    //   },
+    //],
+    //gallery: [{ img: null, imgPreview: null, title: "", dst: "", desc: "" }],
+    // faq: [{ title: "", desc: "" }],
+    // highlights: [
+    //   { img: null, imgPreview: null, title: "", subTitle: "", desc: "" },
+    // ],
     img: null,
     imgPreview: null,
     logo: null,
@@ -67,7 +66,7 @@ export default function AddProperty({ params }) {
   const [newPhone, setNewPhone] = useState("");
   const [newDepartment, setNewDepartment] = useState("");
   const [socialMediaInput, setSocialMediaInput] = useState("");
-  //const [amenitiesInput, setAmenitiesInput] = useState("");
+  //const [category, setCategory] = useState("");
 
   // Fetch existing property data if propertyID is provided
   useEffect(() => {
@@ -76,7 +75,7 @@ export default function AddProperty({ params }) {
         setIsLoading(true);
         try {
           const { didSucceed, document } = await getSingleDocument(
-            "Properties",
+            "properties",
             propertyID
           );
           if (didSucceed) {
@@ -100,89 +99,59 @@ export default function AddProperty({ params }) {
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle image uploads
-  const handleImageChange = (e, field) => {
+  // Handle image change
+  const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const imgPreview = URL.createObjectURL(file);
-      setFormData((prev) => ({
-        ...prev,
-        [field]: file,
-        [`${field}Preview`]: imgPreview,
-      }));
+      setFormData({
+        ...formData,
+        img: file,
+        imgPreview,
+        logo: file,
+        logoPreview,
+      });
     }
   };
 
-  // Add and remove from array fields
-  const addToFieldArray = (field, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: [...prev[field], value],
-    }));
-  };
-
-  const removeFromFieldArray = (field, index) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: prev[field].filter((_, i) => i !== index),
-    }));
-  };
-
-  // Handle property save
+  // Handle Company save
   const handlePropertySave = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
 
     try {
-      // Upload images if needed
-      const imageUrl =
-        formData.img && typeof formData.img !== "string"
-          ? await imageUploadToFirebase(formData.img, "propertyImages")
-          : formData.img;
+      let imageUrl = formData.img;
 
-      const logoUrl =
-        formData.logo && typeof formData.logo !== "string"
-          ? await imageUploadToFirebase(formData.logo, "propertyLogos")
-          : formData.logo;
+      if (formData.img && typeof formData.img !== "string") {
+        imageUrl = await imageUploadToFirebase(formData.img, "propertyImages");
+      }
 
-      // Prepare the data object
       const slug = getSlug(formData.name);
+
       const propertyData = {
         ...formData,
         img: imageUrl,
-        logo: logoUrl,
         slug,
         updatedAt: new Date(),
-        createdAt: propertyID ? formData.createdAt : new Date(), // Only for new companies
       };
 
-      // Save to database
-      // const result = propertyID
-      // /  ? await updateDocument("Properties", propertyID, propertyData)
-      //   : await createDocument(propertyData, "Properties");
-           let result;
-           if (propertyID) {
-             result = await updateDocument(
-               "Properties",
-               propertyID,
-               propertyData
-             );
-           } else {
-             propertyData.createdAt = new Date();
-             result = await createDocument(propertyData, "Properties");
-           }
+      let result;
+      if (propertyID) {
+        result = await updateDocument("Properties", propertyID, propertyData);
+      } else {
+        propertyData.createdAt = new Date();
+        result = await createDocument(propertyData, "Properties");
+      }
 
       if (result.didSucceed) {
         router.push("/dashboard/companies");
       } else {
-        throw new Error("Failed to save company.");
+        setError("Failed to save Company.");
       }
-    } catch (err) {
-      // console.error(err);
-      // setError(`Error: ${err.message}`);
-      console.error("Company save error:", err.message);
-      setError(err.message);
+    } catch (error) {
+      console.error("Company save error:", error.message);
+      setError(error.message);
     } finally {
       setIsLoading(false);
     }
@@ -192,7 +161,7 @@ export default function AddProperty({ params }) {
     <main>
       <div className="bg-white shadow-lg rounded-lg p-8 w-full">
         <h1 className="text-2xl font-bold text-center text-slate-700 mb-6">
-          {propertyID ? "Update Property" : "Create a Property"}
+          {propertyID ? "Update Company" : "Create a Company"}
         </h1>
         <form onSubmit={handlePropertySave} className="space-y-5">
           {/* Add form fields for name, description, and other fields similarly */}
@@ -219,7 +188,7 @@ export default function AddProperty({ params }) {
               <div className="mb-4">
                 <label
                   className="block text-slate-700 text-sm font-bold mb-2"
-                  htmlFor="norooms"
+                  htmlFor="location"
                 >
                   Company Location
                 </label>
@@ -368,7 +337,6 @@ export default function AddProperty({ params }) {
               </div> */}
             </div>
           </div>
-
           <div className="sektion md:grid-cols-3 bg-pamojatertiary">
             <div className="mb-4  shadow-sm rounded-xs p-5">
               <label
@@ -407,7 +375,6 @@ export default function AddProperty({ params }) {
               />
             </div>
           </div>
-
           <div className="mb-4 bg-pamojatertiary shadow-sm rounded-xs p-5">
             <label
               className="block text-slate-700 text-sm font-bold mb-2"
@@ -441,7 +408,7 @@ export default function AddProperty({ params }) {
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="img"
                   type="file"
-                  onChange={(e) => handleImageChange(e, "img")}
+                  onChange={handleImageChange}
                 />
                 {formData.imgPreview && (
                   <div className="mt-2">
@@ -472,7 +439,7 @@ export default function AddProperty({ params }) {
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="logo"
                   type="file"
-                  onChange={(e) => handleImageChange(e, "logo")}
+                  onChange={handleImageChange}
                 />
                 {formData.logoPreview && (
                   <div className="mt-2">
@@ -499,17 +466,17 @@ export default function AddProperty({ params }) {
           {error && <p className="text-red-500 text-xs italic mb-4">{error}</p>}
           <div className="flex items-center justify-between mb-4">
             <button
-              className="bg-pamojaprimary text-pamojasecondary font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-pamojaprimary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
               disabled={isLoading}
             >
               {isLoading
                 ? propertyID
-                  ? "Updating Property..."
-                  : "Creating Property..."
+                  ? "Updating Company..."
+                  : "Creating Company..."
                 : propertyID
-                ? "Update Property"
-                : "Create Property"}
+                ? "Update Company"
+                : "Create Company"}
             </button>
           </div>
         </form>

@@ -26,12 +26,12 @@ export default function AddProperty({ params }) {
     slogan: "",
     phones: [],
     emails: [],
-    //amenities: [{ name: "", icon: "" }],
+    category: "",
     socialMedias: [{ name: "", icon: "", link: "" }],
     departments: [],
     location: "",
-    address:"",
-    destination:"",
+    address: "",
+    destination: "",
     //noRooms: "",
     // rooms: [
     //   {
@@ -47,26 +47,26 @@ export default function AddProperty({ params }) {
     //   },
     //],
     //gallery: [{ img: null, imgPreview: null, title: "", dst: "", desc: "" }],
-   // faq: [{ title: "", desc: "" }],
+    // faq: [{ title: "", desc: "" }],
     // highlights: [
     //   { img: null, imgPreview: null, title: "", subTitle: "", desc: "" },
     // ],
     img: null,
     imgPreview: null,
+    logo: null,
+    logoPreview: null,
     isPublished: false,
-    bookings:[]
+    bookings: [],
   });
 
   const router = useRouter();
 
   // temporary satte
-    const [newEmail, setNewEmail] = useState("");
-    const [newPhone, setNewPhone] = useState("");
-    const [newDepartment, setNewDepartment] = useState("");
-    const [socialMediaInput, setSocialMediaInput] = useState("");
-    const [amenitiesInput, setAmenitiesInput] = useState("");
-
-
+  const [newEmail, setNewEmail] = useState("");
+  const [newPhone, setNewPhone] = useState("");
+  const [newDepartment, setNewDepartment] = useState("");
+  const [socialMediaInput, setSocialMediaInput] = useState("");
+  //const [category, setCategory] = useState("");
 
   // Fetch existing property data if propertyID is provided
   useEffect(() => {
@@ -79,7 +79,7 @@ export default function AddProperty({ params }) {
             propertyID
           );
           if (didSucceed) {
-            setFormData({ ...formData, ...document   });
+            setFormData({ ...formData, ...document });
           } else {
             setError("Failed to fetch Company data.");
           }
@@ -99,53 +99,94 @@ export default function AddProperty({ params }) {
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle image change
-  const handleImageChange = (e) => {
+  // Handle image uploads
+  const handleImageChange = (e, field) => {
     const file = e.target.files[0];
     if (file) {
       const imgPreview = URL.createObjectURL(file);
-      setFormData({ ...formData, img: file, imgPreview });
+      setFormData((prev) => ({
+        ...prev,
+        [field]: file,
+        [`${field}Preview`]: imgPreview,
+      }));
     }
   };
 
+  // Add and remove from array fields
+  const addToFieldArray = (field, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: [...prev[field], value],
+    }));
+  };
+
+  const removeFromFieldArray = (field, index) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: prev[field].filter((_, i) => i !== index),
+    }));
+  };
+
+  // Handle image change
+  ///  const handleImageChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     const imgPreview = URL.createObjectURL(file);
+  //     setFormData({
+  //       ...formData,
+  //       img: file,
+  //       imgPreview,
+  //       logo: file,
+  //       logoPreview,
+  //     });
+  //   }
+  // };
+
   // Handle Company save
+  // Handle form submission
   const handlePropertySave = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
 
     try {
-      let imageUrl = formData.img;
+      // Upload images if needed
+      const imageUrl =
+        formData.img && typeof formData.img !== "string"
+          ? await imageUploadToFirebase(formData.img, "propertyImages")
+          : formData.img;
 
-      if (formData.img && typeof formData.img !== "string") {
-        imageUrl = await imageUploadToFirebase(formData.img, "propertyImages");
-      }
+      const logoUrl =
+        formData.logo && typeof formData.logo !== "string"
+          ? await imageUploadToFirebase(formData.logo, "propertyLogos")
+          : formData.logo;
 
+      // Prepare the data object
       const slug = getSlug(formData.name);
-
       const propertyData = {
         ...formData,
         img: imageUrl,
+        logo: logoUrl,
         slug,
         updatedAt: new Date(),
+        createdAt: propertyID ? undefined : new Date(), // Only for new companies
       };
 
-      let result;
-      if (propertyID) {
-        result = await updateDocument("Properties", propertyID, propertyData);
-      } else {
-        propertyData.createdAt = new Date();
-        result = await createDocument(propertyData, "Properties");
-      }
+      // Save to database
+      const result = propertyID
+        ? await updateDocument("Properties", propertyID, propertyData)
+        : await createDocument(propertyData, "Properties");
 
       if (result.didSucceed) {
         router.push("/dashboard/companies");
       } else {
-        setError("Failed to save Company.");
+        throw new Error("Failed to save company.");
       }
-    } catch (error) {
-      console.error("Company save error:", error.message);
-      setError(error.message);
+    } catch (err) {
+      // console.error(err);
+      // setError(`Error: ${err.message}`);
+       console.error("Company save error:", err.message);
+       setError(err.message);
     } finally {
       setIsLoading(false);
     }
@@ -182,7 +223,7 @@ export default function AddProperty({ params }) {
               <div className="mb-4">
                 <label
                   className="block text-slate-700 text-sm font-bold mb-2"
-                  htmlFor="norooms"
+                  htmlFor="location"
                 >
                   Company Location
                 </label>
@@ -193,6 +234,24 @@ export default function AddProperty({ params }) {
                   placeholder="Enter Location"
                   name="location"
                   value={formData.location}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  className="block text-slate-700 text-sm font-bold mb-2"
+                  htmlFor="category"
+                >
+                  Company Category
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="category"
+                  type="text"
+                  placeholder="Enter Category"
+                  name="category"
+                  value={formData.category}
                   onChange={handleChange}
                   required
                 />
@@ -372,34 +431,69 @@ export default function AddProperty({ params }) {
 
           {/* Single Image Upload*/}
           <div className="mb-4 bg-pamojatertiary shadow-sm rounded-xs p-5">
-            <label
-              className="block text-slate-700 text-sm font-bold mb-2"
-              htmlFor="img"
-            >
-              Company Featured Image
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="img"
-              type="file"
-              onChange={handleImageChange}
-            />
-            {formData.imgPreview && (
-              <div className="mt-2">
-                <Image
-                  src={formData.imgPreview}
-                  alt="Current Featured Image"
-                  width={280}
-                  height={260}
-                  style={{
-                    maxWidth: "100%",
-                    height: "160px",
-                    objectFit: "cover",
-                  }}
-                  className=" max-w-full max-h-50 rounded-md"
+            <div className="sektion md:grid-cols-2">
+              <div className="">
+                <label
+                  className="block text-slate-700 text-sm font-bold mb-2"
+                  htmlFor="img"
+                >
+                  Company Featured Image
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="img"
+                  type="file"
+                  onChange={(e) => handleImageChange(e, "img")}
                 />
+                {formData.imgPreview && (
+                  <div className="mt-2">
+                    <Image
+                      src={formData.imgPreview}
+                      alt="Current Featured Image"
+                      width={280}
+                      height={260}
+                      style={{
+                        maxWidth: "100%",
+                        height: "160px",
+                        objectFit: "cover",
+                      }}
+                      className=" max-w-full max-h-50 rounded-md"
+                    />
+                  </div>
+                )}
               </div>
-            )}
+
+              <div className="">
+                <label
+                  className="block text-slate-700 text-sm font-bold mb-2"
+                  htmlFor="logo"
+                >
+                  Company Logo Image
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="logo"
+                  type="file"
+                  onChange={(e) => handleImageChange(e, "logo")}
+                />
+                {formData.logoPreview && (
+                  <div className="mt-2">
+                    <Image
+                      src={formData.logoPreview}
+                      alt="Current Featured Image"
+                      width={280}
+                      height={260}
+                      style={{
+                        maxWidth: "100%",
+                        height: "160px",
+                        objectFit: "cover",
+                      }}
+                      className=" max-w-full max-h-50 rounded-md"
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
 
           {/* Continue adding other input fields like price, desc, etc. */}
