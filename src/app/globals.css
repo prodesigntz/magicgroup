@@ -152,6 +152,7 @@
   background-color: #ddd;
 }
 
+
 .editor-input {
   /* min-height: 200px;
   padding: 8px;
@@ -166,3 +167,16 @@
   pointer-events: none;
 }
 
+/* .editor-heading-h2 {
+} */
+
+button {
+  padding: 8px;
+  border: none;
+  background: #f0f0f0;
+  cursor: pointer;
+  border-radius: 4px;
+}
+button:hover {
+  background: #ddd;
+}

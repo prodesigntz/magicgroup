@@ -42,10 +42,11 @@ export default function Page() {
         btnTitle="New Post"
         onClick={() => router.push("/dashboard/blogs/add")}
       />
+
       {/* tabs */}
       <div className="">
         <Tabs defaultValue="Published">
-          <TabsList className="bg-pamojaaccent rounded-none">
+          <TabsList className="bg-pamojatertiary rounded-none">
             <TabsTrigger value="Properties" className="">
               All
             </TabsTrigger>

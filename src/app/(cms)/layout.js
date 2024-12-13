@@ -9,11 +9,6 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import DashboardDataLoader from "@/components/dashboard/dashboard-data-loader";
 
-// export const metadata = {
-//   title: "Napanda Safaris",
-//   description: "Your Gateway to Extraordinary African Adventures",
-// };
-
 export default function RootLayout({ children }) {
   const router = useRouter();
   const { authUser, isFetchingAuthUser } = useAppContext();

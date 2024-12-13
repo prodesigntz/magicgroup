@@ -112,12 +112,12 @@ export const AddServiceSheet = ({ propertyID, title = "Service" }) => {
               {propertyID ? `Edit ${title}` : `Add ${title}`}
             </SheetTitle>
             <SheetDescription>
-              Please fill in the highlight details
+              Please fill in the Services details
             </SheetDescription>
           </SheetHeader>
           <form onSubmit={handleHighlightSubmit} className="space-y-4">
             {highlights.map((highlight, index) => (
-              <div key={index} className="space-y-4 bg-pamojaaccent p-5">
+              <div key={index} className="space-y-4 bg-pamojatertiary p-5">
                 {/* Title */}
                 <div>
                   <label htmlFor={`title-${index}`}>Title</label>
@@ -146,7 +146,7 @@ export const AddServiceSheet = ({ propertyID, title = "Service" }) => {
                 </div>
 
                 {/* Description */}
-                <div>
+                 <div>
                   <label htmlFor={`desc-${index}`}>Description</label>
                   <textarea
                     name="desc"

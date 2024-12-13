@@ -44,6 +44,7 @@ export const AllProperties = ({ data }) => {
 //        console.error("Failed to delete post");
 //      }
 //    };
+
   return (
     <>
       <Table className="">
@@ -78,7 +79,7 @@ export const AllProperties = ({ data }) => {
                     height: "60px",
                     objectFit: "cover",
                   }}
-                  className=" max-w-full max-h-50 rounded-md"
+                  className="max-w-full max-h-50 rounded-md"
                 />
               </TableCell>
               <TableCell className="">

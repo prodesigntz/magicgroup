@@ -38,15 +38,15 @@ export default function Page() {
       {/* title & add destination button */}
 
       <SharedDashHeader
-        title="Destinations"
-        btnTitle="New Destination"
-        onClick={() => router.push("/dashboard/destinations/add")}
+        title="Services"
+        btnTitle="New Services"
+        onClick={() => router.push("/dashboard/services/add")}
       />
       {/* tabs */}
       <div className="">
         <Tabs defaultValue="Published">
-          <TabsList className="bg-pamojaaccent rounded-none">
-            <TabsTrigger value="Destinations" className="">
+          <TabsList className="bg-pamojatertiary rounded-none">
+            <TabsTrigger value="Services" className="">
               All
             </TabsTrigger>
             <TabsTrigger value="Published">Published</TabsTrigger>
@@ -56,7 +56,7 @@ export default function Page() {
             <DashboardDataLoader />
           ) : (
             <>
-              <TabsContent value="Destinations">
+              <TabsContent value="Services">
                 <AllDestinations data={data} />
               </TabsContent>
               <TabsContent value="Published">

@@ -42,7 +42,7 @@ export const menuDashItem = [
         path: "/dashboard/services",
       },
       {
-        name: "Add Bookings",
+        name: "Add Services",
         path: "/dashboard/services/add",
       },
     ],

@@ -103,6 +103,7 @@ export default function BlogSection() {
                   type={blog.category}
                   src={blog.img}
                   title={blog.title}
+                  desc={blog.desc}
                  // date={blog.createdAt}
                 />
               ))

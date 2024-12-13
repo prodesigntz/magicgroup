@@ -57,13 +57,13 @@ export const BlogCard = ({ href, src, type, title, date }) => {
         }}
       />
       <div className=" bg-black space-y-5 bg-opacity-30 flex flex-col  text-pamojadark ">
-        <p className="absolute p-5 bg-pamojaaccent flex flex-col left-5 top-0">
+        {/* <p className="absolute p-5 bg-pamojaaccent flex flex-col left-5 top-0">
           <span className="gilda_display">DEC</span>
           <span className="gilda_display text-3xl">25</span>
-          {/* <span className="gilda_display text-3xl">{date}</span> */}
-        </p>
+          <span className="gilda_display text-3xl">{date}</span>
+        </p> */}
 
-        <div className="absolute bg-pamojaaccent p-5 left-5 right-5 bottom-5 ">
+        <div className="absolute bg-black/40 p-5 left-5 right-5 bottom-5 ">
           <h2 className="text-2xl babylonica ">{type}</h2>
           <Link href={href}>
             <h3 className="text-2xl gilda_display font-bold">{title}</h3>

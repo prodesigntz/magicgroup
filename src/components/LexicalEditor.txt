@@ -1,0 +1,116 @@
+import React, { useState } from "react";
+import { LexicalComposer } from "@lexical/react/LexicalComposer";
+import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
+import { ContentEditable } from "@lexical/react/LexicalContentEditable";
+import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
+import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
+import { LinkPlugin, TOGGLE_LINK_COMMAND } from "@lexical/link";
+import { BoldPlugin, ItalicPlugin, UnderlinePlugin } from "@lexical/rich-text";
+import {TablePlugin} from "@lexical/table";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+
+import { $getSelection, $isRangeSelection } from "lexical";
+
+// Placeholder Component
+const Placeholder = () => (
+  <div className="editor-placeholder">Start typing...</div>
+);
+
+// Toolbar Component
+const Toolbar = () => {
+  const [editor] = useLexicalComposerContext();
+  const [url, setUrl] = useState("");
+
+  const insertLink = () => {
+    if (url) {
+      editor.dispatchCommand(TOGGLE_LINK_COMMAND, url);
+      setUrl("");
+    } else {
+      alert("Enter a valid URL");
+    }
+  };
+
+  return (
+    <div className="toolbar">
+      <button
+        className="toolbar-button"
+        onClick={() => editor.dispatchCommand("bold", true)}
+      >
+        <b>B</b>
+      </button>
+      <button
+        className="toolbar-button"
+        onClick={() => editor.dispatchCommand("italic", true)}
+      >
+        <i>I</i>
+      </button>
+      <button
+        className="toolbar-button"
+        onClick={() => editor.dispatchCommand("underline", true)}
+      >
+        <u>U</u>
+      </button>
+      <input
+        type="text"
+        value={url}
+        onChange={(e) => setUrl(e.target.value)}
+        placeholder="Enter URL"
+        className="toolbar-input"
+      />
+      <button className="toolbar-button" onClick={insertLink}>
+        Add Link
+      </button>
+    </div>
+  );
+};
+
+const LexicalEditor = ({ initialContent = "", onChange }) => {
+const editorConfig = {
+  namespace: "MyEditor",
+  theme: {
+    paragraph: "editor-paragraph",
+    text: {
+      bold: "font-bold",
+      italic: "italic",
+      underline: "underline",
+      link: "editor-link",
+    },
+  },
+  onError: (error) => {
+    console.error("Lexical Error:", error);
+  },
+};
+
+
+  return (
+    <LexicalComposer initialConfig={editorConfig}>
+      <div className="editor-container">
+        {/* Toolbar */}
+        <Toolbar />
+
+        {/* Editor Plugins */}
+        <RichTextPlugin
+          contentEditable={<ContentEditable className="editor-input" />}
+          placeholder={<Placeholder />}
+          ErrorBoundary={() => <div>Something went wrong.</div>}
+        />
+        <OnChangePlugin
+          onChange={(editorState) => {
+            editorState.read(() => {
+              const content = JSON.stringify(editorState); // Serialize editor state
+              onChange(content);
+            });
+          }}
+        />
+        <HistoryPlugin />
+        <BoldPlugin />
+        <ItalicPlugin />
+        <UnderlinePlugin />
+        <TablePlugin />
+        <LinkPlugin />
+      </div>
+    </LexicalComposer>
+  );
+};
+
+export default LexicalEditor;

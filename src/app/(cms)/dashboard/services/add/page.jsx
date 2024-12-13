@@ -22,6 +22,7 @@ export default function AddDestination({ params }) {
     title: "",
     desc: "",
     category: "",
+    company:"",
     img: null,
     imgPreview: null, // Added for image preview
     isPublished: false,

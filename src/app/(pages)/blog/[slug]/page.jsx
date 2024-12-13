@@ -7,7 +7,7 @@ import React, { useState, useEffect } from "react";
 
 export default function Page({params}) {
   const { slug } = useParams();
-   const [property, setProperty] = useState(null);
+  const [property, setProperty] = useState(null);
 
   // Fetch property data by slug
   useEffect(() => {
@@ -27,34 +27,39 @@ export default function Page({params}) {
         if (didSucceed) {
           setProperty(document);
         } else {
-          console.error("Failed to fetch property post");
+          console.error("Failed to fetch blog post");
         }
       } catch (error) {
-        console.error("Error fetching property post:", error);
+        console.error("Error fetching blog post:", error);
       }
     };
 
     fetchPropertyData();
   }, [slug]);
 
+  console.log("",property);
+
   return (
     <div className="">
       <div className="psektion respons">
         <div className="relative">
           <Image
-            width={2000}
-            height={520}
-            src={property?.img}
-            alt="CEO Pamoja Olea"
-            className="h-96 w-full rounded object-cover"
+              width={2000}
+              height={520}
+              src={property?.img}
+              alt="CEO Pamoja Olea"
+              className="h-96 w-full rounded object-cover"
           />
-          <div className="absolute -mt-10 p-5 left-10 right-10 bg-pamojasecondary">  <Title className="" first={property?.title} /></div>
+          <div className="absolute bottom-4 p-3 left-10 right-10 bg-black/40">
+            <Title className="text-white" first={property?.title}/>
+          </div>
+        </div>
+        <div className="psektion respons">
+
+          <HomeParagraph className="text-black" content={property?.desc}/>
         </div>
       </div>
-      <div className="psektion respons">
-      
-        <HomeParagraph content={property?.desc} />
-      </div>
+
     </div>
   );
 }

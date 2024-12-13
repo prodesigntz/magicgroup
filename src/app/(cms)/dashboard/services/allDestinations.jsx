@@ -43,7 +43,7 @@ export const AllDestinations = ({ data: initialData }) => {
   if (data.length < 1) {
     return (
       <div className="w-full h-60 flex justify-center items-center">
-        <span>Destinations List Is Empty</span>
+        <span>Services List Is Empty</span>
       </div>
     );
   }
@@ -51,7 +51,7 @@ export const AllDestinations = ({ data: initialData }) => {
   return (
     <>
       <Table className="">
-        <TableCaption> List of Blogs</TableCaption>
+        <TableCaption> List of Services</TableCaption>
 
         {/* table header */}
         <TableHeader>

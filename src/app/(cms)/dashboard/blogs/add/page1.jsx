@@ -11,8 +11,9 @@ import {
 import { imageUploadToFirebase } from "@/firebase/fileOperations";
 import { getSlug } from "@/lib/utils";
 import Image from "next/image";
-import RichTextEditor from "@/components/slateEditor/RichTextEditor";
-////import RichTextEditor from "@/components/theEditor/RichTextEditor"; // Import the RichTextEditor component
+import Toolbars from "@/components/theEditor/Toolbars";
+//import Editor from "@/components/theEditor/editor";
+//import Toolbars from "@/components/theEditor/Toolbars";
 
 export default function AddPost({ params }) {
   const { postId } = useParams();
@@ -91,7 +92,7 @@ export default function AddPost({ params }) {
 
       const blogData = {
         title: formData.title,
-        desc: formData.desc, // Save rich text content here
+        desc: formData.desc, // Save Lexical content here
         author: authUser?.username || "Anonymous",
         category: formData.category,
         img: imageUrl,
@@ -153,11 +154,19 @@ export default function AddPost({ params }) {
             >
               Content
             </label>
-            <RichTextEditor
+            {/* <EditorComponent
               initialValue={formData.desc}
+              onEditorChange={handleEditorChange}
+            /> */}
+
+            {/* <Editor
+              initialContent={formData.desc}
               onChange={handleEditorChange}
-            />
+            /> */}
+
+            <Toolbars />
           </div>
+
           <div className="mb-4">
             <label
               className="block text-slate-700 text-sm font-bold mb-2"
