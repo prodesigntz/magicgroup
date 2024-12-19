@@ -11,10 +11,20 @@ import {
 import { imageUploadToFirebase } from "@/firebase/fileOperations";
 import { getSlug } from "@/lib/utils";
 import Image from "next/image";
+import { TextInput } from "@/components/textInput";
+import { Switch } from "@/components/ui/switch";
 
 export default function EditPost({ params }) {
-  const { postId } = useParams();
+  ///const { postId } = useParams();
+
+  const postId = params.postID;
+
+  /// console.log("Post ID:...", postId);
+
+  // console.log("Params:...", params);
+
   //console.log("Post ID:...", postId);
+
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const { authUser } = useAppContext();
@@ -36,9 +46,11 @@ export default function EditPost({ params }) {
       const fetchPost = async () => {
         setIsLoading(true);
         const { didSucceed, document } = await getSingleDocument(
-          "Blogpost",
+          "Blogposts",
           postId
         );
+
+        console.log("Document Data.....:", document);
 
         if (didSucceed) {
           setFormData({
@@ -94,7 +106,8 @@ export default function EditPost({ params }) {
         category: formData.category,
         img: imageUrl,
         updatedAt: new Date(),
-        isPublished: formData.isPublished,
+        // isPublished: formData.isPublished,
+        isPublished:false,
         slug,
       };
 
@@ -126,23 +139,24 @@ export default function EditPost({ params }) {
           {postId ? "Update Blog Post" : "Create a Blog Post"}
         </h1>
         <form onSubmit={handleBlogSave}>
-          <div className="mb-4">
+          <TextInput
+            label="Title"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            placeholder="Enter Title Here"
+            required
+          />
+          <div className="mb-4 relative">
             <label
               className="block text-slate-700 text-sm font-bold mb-2"
-              htmlFor="title"
+              htmlFor="desc"
             >
-              Title
+              Slug
             </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="title"
-              type="text"
-              placeholder="Enter Title Here"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              required
-            />
+            <p className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline">
+              {getSlug(formData.title)}
+            </p>
           </div>
           <div className="mb-4">
             <label
@@ -161,24 +175,14 @@ export default function EditPost({ params }) {
               required
             />
           </div>
-          <div className="mb-4">
-            <label
-              className="block text-slate-700 text-sm font-bold mb-2"
-              htmlFor="category"
-            >
-              Category
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="category"
-              type="text"
-              placeholder="Category"
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              required
-            />
-          </div>
+          <TextInput
+            label="Category"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            placeholder="Enter Category Here"
+            required
+          />
           <div className="mb-4">
             <label
               className="block text-slate-700 text-sm font-bold mb-2"
@@ -209,6 +213,18 @@ export default function EditPost({ params }) {
               </div>
             )}
           </div>
+{/* 
+          <div className="mb-4">
+            <Switch
+              checked={formData.isPublished}
+              onCheckedChange={(value) =>
+                setFormData({ ...formData, isPublished: value })
+              }
+              disabled={isLoading}
+              aria-readonly={isLoading}
+            />
+            <label htmlFor="isPublished">Is Published</label>
+          </div> */}
 
           {error && <p className="text-red-500 text-xs italic mb-4">{error}</p>}
 

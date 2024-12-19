@@ -141,10 +141,24 @@ export default function AddProperty({ params }) {
           ? await imageUploadToFirebase(formData.img, "propertyImages")
           : formData.img;
 
-      const logoUrl =
+        // if (formData.img && typeof formData.img !== "string") {
+        //       imageUrl = await imageUploadToFirebase(
+        //         formData.img,
+        //         "propertyImages"
+        //       );
+        //     }
+
+       const logoUrl =
         formData.logo && typeof formData.logo !== "string"
           ? await imageUploadToFirebase(formData.logo, "propertyLogos")
           : formData.logo;
+
+        // if (formData.img && typeof formData.img !== "string") {
+        //   imageUrl = await imageUploadToFirebase(
+        //     formData.logo,
+        //     "propertyLogos"
+        //   );
+        // }
 
       // Prepare the data object
       const slug = getSlug(formData.name);

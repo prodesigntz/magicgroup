@@ -9,12 +9,10 @@ import {
   getSingleDocument,
 } from "@/firebase/databaseOperations";
 import { imageUploadToFirebase } from "@/firebase/fileOperations";
-import { getSlug } from "@/lib/utils";
+import { getSlug, serializeToHtml } from "@/lib/utils";
 import Image from "next/image";
-//import Toolbars from "@/components/theEditor/Toolbars";
-import Editor from "@/components/theEditor/Editor";
-//import Editor from "@/components/theEditor/editor";
-//import Toolbars from "@/components/theEditor/Toolbars";
+import RichTextEditor from "@/components/slateEditor/RichTextEditor";
+import { TextInput } from "@/components/textInput";
 
 export default function AddPost({ params }) {
   const { postId } = useParams();
@@ -67,6 +65,7 @@ export default function AddPost({ params }) {
 
   const handleEditorChange = (content) => {
     setFormData({ ...formData, desc: content });
+    //console.log(content);
   };
 
   const handleImageChange = (e) => {
@@ -90,10 +89,18 @@ export default function AddPost({ params }) {
       }
 
       const slug = getSlug(formData.title);
+      /// const htmlContent = serializeToHtml(formData.desc);
+
+      // Make sure formData.desc is the correct format
+      const htmlContent =
+        typeof formData.desc === "string"
+          ? formData.desc
+          : serializeToHtml(formData.desc);
 
       const blogData = {
         title: formData.title,
-        desc: formData.desc, // Save Lexical content here
+        desc: formData.desc, // Save rich text content here
+        htmlContent,
         author: authUser?.username || "Anonymous",
         category: formData.category,
         img: imageUrl,
@@ -123,8 +130,7 @@ export default function AddPost({ params }) {
     }
   };
 
-  // console.log("formData", formData);
-  
+
   return (
     <main>
       <div className="bg-white shadow-lg rounded-lg p-8 w-full">
@@ -132,24 +138,26 @@ export default function AddPost({ params }) {
           {postId ? "Update Blog Post" : "Create a Blog Post"}
         </h1>
         <form onSubmit={handleBlogSave}>
-          <div className="mb-4">
+          <TextInput
+            label="Title"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            placeholder="Enter Title Here"
+            required
+          />
+          <div className="mb-4 relative">
             <label
               className="block text-slate-700 text-sm font-bold mb-2"
-              htmlFor="title"
+              htmlFor="desc"
             >
-              Title
+              Slug
             </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="title"
-              type="text"
-              placeholder="Enter Title Here"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              required
-            />
+            <p className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline">
+              {getSlug(formData.title)}
+            </p>
           </div>
+
           <div className="mb-4 relative">
             <label
               className="block text-slate-700 text-sm font-bold mb-2"
@@ -157,31 +165,21 @@ export default function AddPost({ params }) {
             >
               Content
             </label>
-           
-            
-            <Editor onChange={handleEditorChange} />
-
-        
-          </div>
-
-          <div className="mb-4">
-            <label
-              className="block text-slate-700 text-sm font-bold mb-2"
-              htmlFor="category"
-            >
-              Category
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="category"
-              type="text"
-              placeholder="Category"
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              required
+            <RichTextEditor
+              newValue={formData.desc}
+              onChange={handleEditorChange}
             />
           </div>
+
+          <TextInput
+            label="Category"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            placeholder="Enter Category Here"
+            required
+          />
+
           <div className="mb-4">
             <label
               className="block text-slate-700 text-sm font-bold mb-2"

@@ -47,6 +47,16 @@ const fetchDocuments = async (collName) => {
   }
 };
 
+// const updateDocument = async (collName, docId, data) => {
+//   try {
+//     await updateDoc(doc(db, collName, docId), data);
+//     return { didSucceed: true };
+//   } catch (error) {
+//     console.error("Error updating document:", error);
+//     return { didSucceed: false };
+//   }
+// };
+
 const updateDocument = async (collName, docId, data) => {
   try {
     await updateDoc(doc(db, collName, docId), data);

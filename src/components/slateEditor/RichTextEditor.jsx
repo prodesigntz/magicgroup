@@ -1,246 +1,163 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { createEditor, Transforms, Text, Editor } from "slate";
+import { createEditor, Transforms } from "slate";
 import { Slate, Editable, withReact } from "slate-react";
 import { withHistory } from "slate-history";
-import { FaBold, FaItalic, FaUnderline, FaStrikethrough } from "react-icons/fa";
-import { FaAlignLeft, FaAlignCenter, FaAlignRight } from "react-icons/fa";
+
+import { ToolBars } from "./ToolBars";
+
+//import  EditorButton  from "./EditorButton";
 
 
-const RichTextEditor = () => {
+
+// Main Editor Component
+const RichTextEditor = ({newValue,  onChange }) => {
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
+
+  ///console.log(editor);
+
   const initialValue = [
     {
       type: "paragraph",
       children: [{ text: "Start typing..." }],
     },
   ];
-  const [value, setValue] = useState(initialValue);
+
+  const [value, setValue] = useState(initialValue );
 
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
   const renderElement = useCallback((props) => <Element {...props} />, []);
 
-  // const toggleFormat = (format) => {
-  //   const isActive = isFormatActive(editor, format);
-  //   Transforms.setNodes(
-  //     editor,
-  //     { [format]: isActive ? null : true },
-  //     { match: Text.isText, split: true }
-  //   );
-  // };
-
-  // const isFormatActive = (editor, format) => {
-  //   const [match] = Array.from(
-  //     editor.nodes(editor, {
-  //       match: (n) => n[format] === true,
-  //       universal: true,
-  //     })
-  //   );
-  //   return !!match;
-  // };
-
-const toggleFormat = (editor, format) => {
-  const isActive = isFormatActive(editor, format);
-
-  Transforms.setNodes(
-    editor,
-    { [format]: isActive ? undefined : true }, // Toggle the format
-    { match: Text.isText, split: true } // Ensure it applies to text nodes
-  );
-};
-
-const isFormatActive = (editor, format) => {
-  const [match] = Editor.nodes(editor, {
-    match: (node) => node[format] === true, // Check if the format is active
-    mode: "all", // Look through all text nodes
-  });
-  return !!match; // Return true if a match is found
-};
-
+  const handleKeyDown = (event, editor) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      // Instead of directly inserting text, insert a new paragraph
+      Transforms.insertNodes(editor, {
+        type: "paragraph",
+        children: [{ text: "" }],
+      });
+    }
+  };
 
   return (
-    <div>
-      {/* Toolbar */}
-      <div className="toolbar">
-        <button
-          type="button"
-          aria-label="Bold"
-          aria-pressed={isFormatActive(editor, "bold")}
-          onMouseDown={(event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            toggleFormat(editor,"bold");
-          }}
-        >
-          <FaBold />
-        </button>
-
-        <button
-          type="button"
-          aria-label="Italic"
-          aria-pressed={isFormatActive(editor, "italic")}
-          onMouseDown={(event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            toggleFormat(editor,"italic");
-          }}
-        >
-          <FaItalic />
-        </button>
-
-        <button
-          type="button"
-          onMouseDown={(event) => {
-            event.preventDefault(); // Prevent default behavior
-            event.stopPropagation();  // Prevent default behavior
-            toggleFormat(editor,"underline"); // Toggle underline
-          }}
-        >
-          <FaUnderline />
-        </button>
-        <button
-          type="button"
-          onMouseDown={(event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            toggleFormat(editor, "strikethrough");
-          }}
-        >
-          <FaStrikethrough />
-        </button>
-        {/* Alignment Buttons */}
-        <button
-          type="button"
-          onMouseDown={(event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            Transforms.setNodes(
-              editor,
-              { align: "left" },
-              {
-                match: (n) =>
-                  Editor.isBlock(editor, n) && n.type === "paragraph",
-              }
-            );
-          }}
-        >
-          <FaAlignLeft />
-        </button>
-        <button
-          type="button"
-          onMouseDown={(event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            Transforms.setNodes(
-              editor,
-              { align: "center" },
-              {
-                match: (n) =>
-                  Editor.isBlock(editor, n) && n.type === "paragraph",
-              }
-            );
-          }}
-        >
-          <FaAlignCenter />
-        </button>
-        <button
-          type="button"
-          onMouseDown={(event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            Transforms.setNodes(
-              editor,
-              { align: "right" },
-              {
-                match: (n) =>
-                  Editor.isBlock(editor, n) && n.type === "paragraph",
-              }
-            );
-          }}
-        >
-          <FaAlignRight />
-        </button>
-      </div>
+    <div className="shadow appearance-none border rounded w-full text-slate-700 leading-tight focus:outline-none focus:shadow-outline">
       {/* Editor */}
+
       <Slate
         editor={editor}
         initialValue={initialValue}
         value={value}
-        onChange={(newValue) => setValue(newValue)}
+        onChange={(newValue) => {
+          setValue(newValue);
+          console.log("val", newValue);
+        }}
       >
+        <ToolBars editor={editor} />
         <Editable
+          // className="min-h-[200px] w-full bg-slate-400 focus:outline-none prose prose-sm sm:prose lg:prose-lg p-2"
+          onKeyDown={(event) => handleKeyDown(event, editor)}
           renderLeaf={renderLeaf}
           renderElement={renderElement}
           placeholder="Start typing..."
-          onKeyDown={(event) => {
-            if (!event.ctrlKey) {
-              return;
-            }
-            switch (event.key) {
-              case "b": {
-                event.preventDefault();
-                toggleFormat(editor, "bold");
-                break;
-              }
-              case "i": {
-                event.preventDefault();
-                toggleFormat(editor, "italic");
-                break;
-              }
-              case "u": {
-                event.preventDefault();
-                toggleFormat(editor, "underline");
-                break;
-              }
-              default:
-                break;
-            }
-          }}
         />
       </Slate>
     </div>
   );
 };
 
-// Leaf Renderer for Text Formatting
+// Leaf Renderer for Inline Formatting
 const Leaf = ({ attributes, children, leaf }) => {
-  if (leaf.bold) {
-    children = <strong>{children}</strong>;
-  }
-  if (leaf.italic) {
-    children = <em>{children}</em>;
-  }
-  if (leaf.underline) {
-    children = <u>{children}</u>;
-  }
-  if (leaf.strikethrough) {
-    children = <s>{children}</s>;
-  }
+  if (leaf.bold) children = <strong className="font-bold">{children}</strong>;
+  if (leaf.italic) children = <em className="italic">{children}</em>;
+  if (leaf.underline) children = <u className="underline">{children}</u>;
+  if (leaf.strikethrough) children = <s className="line-through">{children}</s>;
+  if (leaf.type === "link") {
+      return (
+        <a
+          {...attributes}
+          style={{
+            color: "blue",
+            textDecoration: "underline",
+          }}
+        >
+          {children}
+        </a>
+      );
+    };
   return <span {...attributes}>{children}</span>;
 };
 
 // Block Renderer for Custom Elements
 const Element = ({ attributes, children, element }) => {
-  switch (element.align) {
-    case "left":
+  switch (element.type) {
+    case "heading-one":
       return (
-        <div style={{ textAlign: "left" }} {...attributes}>
+        <h1 {...attributes} className="text-4xl font-bold mb-4 mt-6">
           {children}
-        </div>
+        </h1>
       );
-    case "center":
+    case "heading-two":
       return (
-        <div style={{ textAlign: "center" }} {...attributes}>
+        <h2 {...attributes} className="text-3xl font-bold mb-3 mt-5">
           {children}
-        </div>
+        </h2>
       );
-    case "right":
+    case "heading-three":
       return (
-        <div style={{ textAlign: "right" }} {...attributes}>
+        <h3 {...attributes} className="text-2xl font-bold mb-3 mt-4">
           {children}
-        </div>
+        </h3>
       );
+    case "blockquote":
+      return (
+        <blockquote
+          {...attributes}
+          className="pl-4 border-l-4 border-gray-300 italic my-4 text-gray-600"
+        >
+          {children}
+        </blockquote>
+      );
+    case "numbered-list":
+      return (
+        <ol {...attributes} className="list-decimal pl-8 my-4 space-y-1">
+          {children}
+        </ol>
+      );
+    case "bulleted-list":
+      return (
+        <ul {...attributes} className="list-disc pl-8 my-4 space-y-1">
+          {children}
+        </ul>
+      );
+  
+    case "list-item":
+      return (
+        <li
+          {...attributes}
+          className="pl-1 hover:bg-gray-50 rounded transition-colors duration-200"
+        >
+          {children}
+        </li>
+      );
+
+    case "link":
+      return (
+        <a
+          {...attributes}
+          href={element.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:text-blue-800 underline"
+        >
+          {children}
+        </a>
+      );
+ 
     default:
-      return <p {...attributes}>{children}</p>;
+      return (
+        <div style={{ textAlign: element.align || "left" }} {...attributes}>
+          {children}
+        </div>
+      );
   }
 };
 
