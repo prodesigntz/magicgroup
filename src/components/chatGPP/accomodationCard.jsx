@@ -4,7 +4,7 @@ import { FaBed,  FaWifi } from 'react-icons/fa6';
 import { Separator } from '../ui/separator';
 import Link from 'next/link';
 
-const AccommodationCard = ({ img, address, title, desc, href }) => (
+const AccommodationCard = ({ img,logo, address, title, desc, href }) => (
   <div className="bg-pamojatertialy rounded-none shadow-lg max-w-md mx-auto">
     <div className="relative bg-black bg-opacity-40">
       <Image
@@ -23,8 +23,8 @@ const AccommodationCard = ({ img, address, title, desc, href }) => (
         {/* <h2 className="text-sm">{address || " "}</h2> */}
         <div className="border border-pamojaprimary bg-white shadow-lg">
         <Image
-          src={img}
-          alt="Pamoja Ole Farm Lodge"
+          src={logo}
+          alt={title}
           className=""
           width={100}
           height={100}

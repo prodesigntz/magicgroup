@@ -12,9 +12,9 @@ import SkeletonOne from "../skeletonOne";
 import { truncateDescription } from "@/lib/utils";
 //import DemoSlider from "../framerComponents/demoSlider";
 
-export default function Programs() {
+export default function CompanyServices() {
    const { isLoading, data } = useFetchAll("Properties");
-   //console.log("Companies data section", data);
+   console.log("Companies data section", data);
   //const sliderRef = useRef(null);
 
 
@@ -66,14 +66,14 @@ export default function Programs() {
     };
 
   return (
-    <section className="psektion bg-white">
+    <section className="psektion bg-white md:pb-32 ">
       {/* bg-[#ffefe2] */}
       <div className="respons space-y-10">
         {/* top column */}
         <div className="sektion md:grid-cols-3">
           <div></div>
           <div>
-            <Title place="" subHeading="Our Keys" first="Companies" />
+            <Title place="" subHeading="Our Keys" first="Services" />
             {/* <HomeParagraph place="center" content="Lorem ipsum dolor sit amet consectetur adipisicing elit."/> */}
           </div>
           <div></div>
@@ -94,8 +94,7 @@ export default function Programs() {
                     locate={property.location}
                     title={property.name}
                     desc={truncateDescription(property.desc, 10)}
-                    logo={property.logo}
-                    href={`/companies/${property.slug}`}
+                    href={`/accomodations/${property.slug}`}
                   />
                 ))}
           </div>
@@ -110,9 +109,9 @@ export default function Programs() {
                 address={property.address}
                 locate={property.location}
                 title={property.name}
-                logo={property.logo}
                 desc={truncateDescription(property.desc, 16)}
-                href={`/companies/${property.slug}`}
+                // desc={property.desc}
+                href={`/accomodations/${property.slug}`}
               />
             ))}
           </Slider>

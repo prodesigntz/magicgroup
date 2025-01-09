@@ -12,6 +12,7 @@ import React from "react";
 //import HeroFramer from "@/components/content/heroFramer";
 import HeroFramerPlane from "@/components/content/heroFramerPlane";
 import SuccessSection from "@/components/content/successSection";
+import CompanyServices from "@/components/content/companyServices";
 //import SuccessSection from "@/components/content/successSection";
 // import Hero2 from "@/components/content/hero2";
 
@@ -26,6 +27,7 @@ export default function Home() {
       <Intro/>
       <Programs/>
       <Activities/>
+      <CompanyServices/>
       <Contact/>
       <Destinations/> 
       <Testimonials/>    
