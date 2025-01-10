@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 //import { Button } from "@components/ui/button";
 //import { blogData } from "@/data/blog";
-import { RoomCard } from "@/components/cards";
+import { RoomCard, UniqueCard } from "@/components/cards";
 import { Title } from "@/components/texties";
 import { Button } from "@/components/ui/button";
 import { ButtonOne } from "@/components/buttons";
@@ -65,25 +65,25 @@ export default function PropertyRooms({ property }) {
   };
 
   return (
-    <section className="psektion ">
+    <section className="psektion bg-pamojaaccent space-y-5">
       <div className="respons">
         {/* top column */}
         <div className="sektion md:grid-cols-2">
           <div className="flex md:justify-start">
             <Title
-              className="md:text-start"
-              subHeading="Accomodation"
-              first="Our Rooms"
+              className="md:text-start text-white"
+              subHeading="We provide the best"
+              first="Our Products"
             />
           </div>
           <div className="flex md:justify-end">
-            <Button
+            {/* <Button
               asChild
               variant="pro-primary"
               className=" bg-proprimary rounded-none text-white"
             >
               <ButtonOne name="Book Now" />
-            </Button>
+            </Button> */}
           </div>
         </div>
 
@@ -117,7 +117,7 @@ export default function PropertyRooms({ property }) {
         </div> */}
 
         {/* bottom column */}
-        <div>
+        <div className="">
           <Slider {...settings}>
             {isLoading ? (
               // Render 3 skeletons
@@ -141,6 +141,8 @@ export default function PropertyRooms({ property }) {
                   price={room.price}
                   level={room.level}
                 />
+
+             
               ))
             )}
           </Slider>

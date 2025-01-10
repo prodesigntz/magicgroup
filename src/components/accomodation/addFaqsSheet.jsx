@@ -47,6 +47,7 @@ export const AddFAQSheet = ({ propertyID, title = "FAQ" }) => {
         await updateDocumentArrayOrg("Properties", propertyID, updateData);
         console.log("FAQs saved successfully");
         setIsOpen(false); // Close the sheet after saving
+        router.push(`/dashboard/companies/viewProperty/${propertyID}`);
       } else {
         console.error("Property ID is required to add FAQs");
       }

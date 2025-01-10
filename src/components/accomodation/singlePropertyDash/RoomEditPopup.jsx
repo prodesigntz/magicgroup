@@ -59,7 +59,7 @@ export default function RoomEditPopup({ propertyID, existingRoom = null }) {
     }
   };
 
-  // Save Room
+  // Save Product
   const handleRoomSave = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -83,11 +83,11 @@ export default function RoomEditPopup({ propertyID, existingRoom = null }) {
         facilities: formData.facilities.split(",").map((item) => item.trim()),
       };
 
-      // Update room array using the method
+      // Update Product array using the method
       const result = await updateDocumentArray(
         "Properties",
         propertyID,
-        "rooms",
+        "products",
         newRoom
       );
 
@@ -104,7 +104,7 @@ export default function RoomEditPopup({ propertyID, existingRoom = null }) {
           facilities: "",
         });
       } else {
-        setError("Failed to save room data.");
+        setError("Failed to save Product data.");
       }
     } catch (error) {
       setError(error.message);
@@ -117,17 +117,17 @@ export default function RoomEditPopup({ propertyID, existingRoom = null }) {
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline">
-          {existingRoom ? "Edit Room" : "Add New Room"}
+          {existingRoom ? "Edit Product" : "Add New Product"}
         </Button>
       </DialogTrigger>
       <DialogContent>
-        <DialogTitle>{existingRoom ? "Edit Room" : "Add New Room"}</DialogTitle>
+        <DialogTitle>{existingRoom ? "Edit Product" : "Add New Product"}</DialogTitle>
         <form onSubmit={handleRoomSave}>
           <div className="mb-4">
             <Input
-              label="Room Name"
+              label="Product Name"
               name="name"
-              placeholder="Room Name"
+              placeholder="Product Name"
               value={formData.name}
               onChange={handleChange}
               required
@@ -145,9 +145,9 @@ export default function RoomEditPopup({ propertyID, existingRoom = null }) {
           </div>
           <div className="mb-4">
             <Textarea
-              label="Room Description"
+              label="Product Description"
               name="desc"
-              placeholder="Room Description"
+              placeholder="Product Description"
               value={formData.desc}
               onChange={handleChange}
               required
@@ -157,7 +157,7 @@ export default function RoomEditPopup({ propertyID, existingRoom = null }) {
             <Input
               label="Capacity"
               name="capacity"
-              placeholder="Room Capacity"
+              placeholder="Product Capacity"
               value={formData.capacity}
               onChange={handleChange}
               required
@@ -196,7 +196,7 @@ export default function RoomEditPopup({ propertyID, existingRoom = null }) {
           <div className="mb-4">
             <Input
               type="file"
-              label="Room Image"
+              label="Product Image"
               name="img"
               onChange={handleImageChange}
             />
@@ -204,7 +204,7 @@ export default function RoomEditPopup({ propertyID, existingRoom = null }) {
               <div className="mt-2">
                 <img
                   src={formData.imgPreview}
-                  alt="Room Image"
+                  alt="Product Image"
                   width={150}
                   height={100}
                   style={{ objectFit: "cover" }}
@@ -219,7 +219,7 @@ export default function RoomEditPopup({ propertyID, existingRoom = null }) {
                 ? existingRoom
                   ? "Updating..."
                   : "Saving..."
-                : "Save Room"}
+                : "Save Product"}
             </Button>
           </div>
         </form>

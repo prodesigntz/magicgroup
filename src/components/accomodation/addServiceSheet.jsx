@@ -83,10 +83,11 @@ export const AddServiceSheet = ({ propertyID, title = "Service" }) => {
           highlights: uploadedImgUrls, // Store the updated highlights with image URLs
         };
         await updateDocumentArrayOrg("Properties", propertyID, updateData);
-        console.log("Highlights saved successfully");
+        console.log("Service saved successfully");
         setIsOpen(false); // Close the sheet after saving
+        router.push(`/dashboard/companies/viewProperty/${propertyID}`);
       } else {
-        console.error("Property ID is required to add highlights");
+        console.error("Companies ID is required to add highlights");
       }
     } catch (error) {
       console.error("Error saving highlights:", error);

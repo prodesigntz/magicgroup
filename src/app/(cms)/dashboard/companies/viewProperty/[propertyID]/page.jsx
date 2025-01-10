@@ -319,16 +319,16 @@ export default function ViewProperty({ params }) {
                 <AddProductSheet propertyID={propertyID} />
                 <AddServiceSheet propertyID={propertyID} />
                 <AddFAQSheet propertyID={propertyID} />
-                <AddExperienceSheet propertyID={propertyID} />
+                {/* <AddExperienceSheet propertyID={propertyID} /> */}
               </div>
             </div>
             <Separator />
 
             {/* image gallery upload */}
-            <div className="py-5">
+            {/* <div className="py-5">
               <h3 className="text-lg font-bold mb-3">Image Gallery Upload:</h3>
               <UploadImagesCloudinaryForm slug={slug} />
-            </div>
+            </div> */}
             {/* image gallery upload */}
 
             {/* bottom pad */}

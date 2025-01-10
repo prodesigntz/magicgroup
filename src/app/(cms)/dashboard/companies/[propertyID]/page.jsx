@@ -488,7 +488,7 @@ export default function AddProperty({ params }) {
                   type="file"
                   onChange={(e) => handleImageChange(e, "logo")}
                 />
-                {formData.logoPreview && (
+                {formData?.logoPreview && (
                   <div className="mt-2">
                     <Image
                       src={formData.logoPreview}
@@ -519,11 +519,11 @@ export default function AddProperty({ params }) {
             >
               {isLoading
                 ? propertyID
-                  ? "Updating Property..."
-                  : "Creating Property..."
+                  ? "Updating Company..."
+                  : "Creating Company..."
                 : propertyID
-                ? "Update Property"
-                : "Create Property"}
+                ? "Update Company"
+                : "Create Company"}
             </button>
           </div>
         </form>

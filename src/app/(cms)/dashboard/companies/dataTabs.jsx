@@ -58,10 +58,10 @@ export const DataTabs = ({ propertyID, data }) => {
       <Tabs defaultValue="Rooms">
         <TabsList className="bg-pamojatertiary rounded-none">
           <TabsTrigger value="Rooms" className="">
-            Rooms
+            Products
           </TabsTrigger>
 
-          <TabsTrigger value="Gallery">Gallery </TabsTrigger>
+          {/* <TabsTrigger value="Gallery">Gallery </TabsTrigger> */}
           <TabsTrigger value="Faqs">Faqs</TabsTrigger>
           <TabsTrigger value="Highlights">Highlights </TabsTrigger>
         </TabsList>
@@ -74,9 +74,9 @@ export const DataTabs = ({ propertyID, data }) => {
               <AllRooms propertyID={propertyID} data={data} />
             </TabsContent>
 
-            <TabsContent value="Gallery">
+            {/* <TabsContent value="Gallery">
               <PropertyImageGalleryCloudinary slug={slug} />
-            </TabsContent>
+            </TabsContent> */}
             <TabsContent value="Faqs">
               <AllFaqs propertyID={propertyID} data={data?.faq} />
             </TabsContent>

@@ -5,7 +5,7 @@ import { Separator } from '../ui/separator';
 import Link from 'next/link';
 
 const AccommodationCard = ({ img,logo, address, title, desc, href }) => (
-  <div className="bg-pamojatertialy rounded-none shadow-lg max-w-md mx-auto">
+  <div className="bg-white rounded-none shadow-lg max-w-md mx-auto">
     <div className="relative bg-black bg-opacity-40">
       <Image
         src={img}

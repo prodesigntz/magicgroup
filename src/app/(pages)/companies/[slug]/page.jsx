@@ -29,6 +29,8 @@ import {
 } from "@/firebase/databaseOperations";
 import DashboardDataLoader from "@/components/dashboard/dashboard-data-loader";
 import PropertyGalleryCloud from "@/components/accomodation/singleAccomodation/propertyGalleryCloud";
+import { ButtonOne } from "@/components/buttons";
+import { Button } from "@/components/ui/button";
 
 export default function Page({ params }) {
   const { slug } = useParams();
@@ -146,14 +148,36 @@ export default function Page({ params }) {
       </div>
 
       {/* booking form - pass propertyID to AccomodationBookForm */}
-      <AccomodationBookForm propertyID={propertyID} />
+      {/* <AccomodationBookForm propertyID={propertyID} /> */}
 
       {/* intro */}
-      <div className="md:pt-10">
-        <PropertyIntro property={property} />
+      {/* <div className="md:pt-10"> */}
+      <div className="">
+      <PropertyIntro property={property} />
       </div>
       {/* amenities and reviews - bg overlay */}
-      <PropertyAmenities property={property} />
+      {/* <PropertyAmenities property={property} /> */}
+
+      <div className="bg-gradient-to-tr from-slate-950 to-yellow-400 psektion ">
+        <div className="respons sektion md:grid-cols-8  md:content-center">
+          <div className="col-span-6"> <Title
+              className="md:text-start text-white"
+              first="Your Trusted Partner"
+            /></div>
+<div className="col-span-2"> <div className="flex md:justify-end md:content-center">
+            <Button
+              asChild
+              variant="pro-primary"
+              className=" bg-proprimary rounded-none text-white"
+            >
+              <ButtonOne name="Contact Us Now" />
+            </Button>
+          </div></div>        </div>
+      </div>
+
+      {/* unique features - bg overlay */}
+      <PropertyUnique property={property} />
+
 
       {/* rooms */}
       <PropertyRooms property={property} />
@@ -163,8 +187,7 @@ export default function Page({ params }) {
         <PropertyActivities  />
       </div> */}
 
-      {/* unique features - bg overlay */}
-      <PropertyUnique property={property} />
+     
 
       {/* frequent asked questions */}
       <PropertyFAQs property={property} />

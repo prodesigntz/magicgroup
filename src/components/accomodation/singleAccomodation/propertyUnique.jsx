@@ -1,4 +1,4 @@
-import { DestinationCard, UniqueCard } from '@/components/cards';
+import { DestinationCard, RoomCard, UniqueCard } from '@/components/cards';
 import { HomeParagraph, Title } from '@/components/texties';
 import Image from 'next/image';
 import React from 'react'
@@ -48,15 +48,15 @@ export default function PropertyUnique({property}) {
 //   };
 
   return (
-    <section className="psektion bg-pamojaaccent space-y-5">
+    <section className="psektion  space-y-5">
       <div className="respons">
         <div className="sektion md:grid-cols-5">
           <div></div>
           <div className="col-span-3">
-            <Title place="" subHeading="Special" first="What is Unique?" />
+            <Title place="" subHeading="Our Services" first="What is Unique?" />
             <HomeParagraph
               className="md:text-center"
-              content="On these sweet mornings, hearing the sounds of birds and wild animals, a wonderful serenity will take possession of your entire soul, which you will enjoy with all your heart. In this spot, you can be close to nature and feel the allure of life."
+              content="By delivering distinctive value that meets or exceeds customer expectations in ways competitors cannot replicate."
             />
           </div>
           <div></div>
@@ -71,7 +71,9 @@ export default function PropertyUnique({property}) {
               subTitle={item.subTitle}
               title={item.title}
             />
-          ))}</>:<h1>No Highlights</h1>}
+
+           
+          ))}</>:<h1>No <Services></Services></h1>}
         </div>
       </div>
     </section>

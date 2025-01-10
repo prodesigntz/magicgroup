@@ -77,15 +77,15 @@ export const AddProductSheet = ({ propertyID, room = null, title = "Product" }) 
         await updateDocumentArray(
           "Properties",
           propertyID,
-          "rooms",
+          "products",
           roomDataWithImages,
           room ? room.name : null // Use room name to update specific room if editing
         );
         console.log("Room and images saved successfully");
         setIsOpen(false); // Close the sheet after saving
-        router.push(`/dashboard/properties/viewProperty/${propertyID}`);
+        router.push(`/dashboard/companies/viewProperty/${propertyID}`);
       } else {
-        console.error("Property ID is required to add or update a room");
+        console.error("Company ID is required to add or update a product");
       }
     } catch (error) {
       console.error("Error saving room and uploading images:", error);
