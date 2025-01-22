@@ -9,14 +9,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { deleteDocument } from "@/firebase/databaseOperations";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { FaEdit } from "react-icons/fa";
-import { FaEye } from "react-icons/fa6";
+import { FaEye, FaTrash } from "react-icons/fa6";
 
-export const AllProperties = ({ data }) => {
+export const AllProperties = ({ data, postId }) => {
   const router = useRouter();
   console.log("data in all properties ", data);
 
@@ -36,14 +37,14 @@ export const AllProperties = ({ data }) => {
     );
   }
 
-//    const handleDelete = async (postId) => {
-//      const { didSucceed } = await deleteDocument("Blogpost", postId);
-//      if (didSucceed) {
-//        setData((prevData) => prevData.filter((post) => post.id !== postId));
-//      } else {
-//        console.error("Failed to delete post");
-//      }
-//    };
+  const handleDelete = async (postId) => {
+    const { didSucceed } = await deleteDocument("Property", postId);
+    if (didSucceed) {
+      router.refresh();
+    } else {
+      console.error("Failed to delete company");
+    }
+  };
 
   return (
     <>
@@ -104,33 +105,39 @@ export const AllProperties = ({ data }) => {
                 </h3>
               </TableCell>
 
-              <TableCell className=" items-center space-x-1">
+              <TableCell className="flex items-center space-x-1">
                 <Button
                   onClick={() =>
                     router.push(`/dashboard/companies/${item?.id}`)
                   }
-                  className="bg-pamojaprimary text-white hover:bg-pamojaaccent hover:text-pamojadark"
+                  className="h-10 w-10 bg-pamojaprimary text-white hover:bg-pamojaaccent hover:text-pamojadark"
                 >
-                  <FaEdit />
+                  <FaEdit size={10} className="h-10 w-10 text-white" />
                 </Button>
-                {/* <Button className="bg-prosecondary text-procolor hover:text-white hover:bg-proprimary">
-                  <FaTrash />
-                </Button>
-                <Button className="bg-prosecondary text-procolor hover:text-white hover:bg-proprimary">
-                  <IoDuplicate />
-                </Button> */}
+               
                 <Button
                   asChild
-                  className="bg-pamojaprimary text-white hover:bg-pamojaaccent hover:text-pamojadark"
+                  className="h-10 w-10 bg-pamojaprimary text-white hover:bg-pamojaaccent hover:text-pamojadark"
                 >
                   <Link
                     href={`/dashboard/companies/viewProperty/${item?.id}`}
                     //target="_blank"
                     // rel="noopener noreferrer"
                   >
-                    <FaEye />
+                    <FaEye size={8} className="h-10 w-10 text-white" />
                   </Link>
                 </Button>
+           
+                <Button
+                  asChild
+                  className="h-10 w-10 bg-pamojaprimary text-white hover:bg-pamojaaccent hover:text-pamojadark"
+                  onClick={() => handleDelete(item?.id)}
+                >
+                
+                    <FaTrash size={10} className="h-10 w-10 text-white"/>
+               
+                </Button>
+              
               </TableCell>
             </TableRow>
           ))}

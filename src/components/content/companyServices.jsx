@@ -10,6 +10,8 @@ import { accomodationData } from "@/data/accomodationData";
 import useFetchAll from "@/lib/hooks/useFetchAll";
 import SkeletonOne from "../skeletonOne";
 import { truncateDescription } from "@/lib/utils";
+import { DataTabs } from "@/app/(cms)/dashboard/companies/dataTabs";
+import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
 //import DemoSlider from "../framerComponents/demoSlider";
 
 export default function CompanyServices() {
@@ -79,6 +81,20 @@ export default function CompanyServices() {
           <div></div>
         </div>
 
+        <div className="respons  ">
+          <div className="md:flex md:items-center md:justify-center">
+          <Tabs>
+             <TabsList  className="bg-pamojatertiary space-x-5 py-4 rounded-none">
+              {data?.map((company) => (
+                <TabsTrigger  value={company?.slug}>
+                  {company?.name}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
+          </div>
+        </div>
+
         {/* bottom column */}
         <div className="hidden md:flex flex-col space-y-10">
           <div className="sektion md:grid-cols-3">
@@ -88,13 +104,13 @@ export default function CompanyServices() {
                 ))
               : data?.map((property) => (
                   <AccommodationCard
-                    key={property.id}
-                    img={property.img}
-                    address={property.address}
-                    locate={property.location}
-                    title={property.name}
-                    desc={truncateDescription(property.desc, 10)}
-                    href={`/accomodations/${property.slug}`}
+                  key={property?.id}
+                img={property?.img}
+                address={property?.address}
+                locate={property?.location}
+                title={property?.name}
+                    desc={truncateDescription(property?.desc, 10)}
+                    href={`/accomodations/${property?.slug}`}
                   />
                 ))}
           </div>
@@ -102,16 +118,16 @@ export default function CompanyServices() {
 
         <div className="md:hidden slider-container">
           <Slider {...settings}>
-            {data.map((property) => (
+            {data?.map((property) => (
               <AccommodationCard
-                key={property.id}
-                img={property.img}
-                address={property.address}
-                locate={property.location}
-                title={property.name}
-                desc={truncateDescription(property.desc, 16)}
+                key={property?.id}
+                img={property?.img}
+                address={property?.address}
+                locate={property?.location}
+                title={property?.name}
+                desc={truncateDescription(property?.desc, 16)}
                 // desc={property.desc}
-                href={`/accomodations/${property.slug}`}
+                href={`/accomodations/${property?.slug}`}
               />
             ))}
           </Slider>

@@ -103,7 +103,7 @@ export default function Programs() {
 
         <div className="md:hidden slider-container">
           <Slider {...settings}>
-            {data.map((property) => (
+            {data?.map((property) => (
               <AccommodationCard
                 key={property.id}
                 img={property.img}

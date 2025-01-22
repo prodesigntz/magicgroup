@@ -44,7 +44,7 @@ export default function HeroFramerPlane() {
 
   // Calculate displayed slides
   const displayedSlides =
-    data && data.length > 0
+    data && data?.length > 0
       ? [
           ...data.slice(currentIndex, currentIndex + getVisibleCards),
           ...data.slice(
