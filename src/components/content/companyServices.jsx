@@ -9,6 +9,7 @@ import useFetchAll from "@/lib/hooks/useFetchAll";
 import SkeletonOne from "../skeletonOne";
 import { truncateDescription } from "@/lib/utils";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
+import AccommodationServiceCard from "../chatGPP/accomodationServiceCard";
 //import DemoSlider from "../framerComponents/demoSlider";
 
 export default function CompanyServices() {
@@ -88,6 +89,8 @@ export default function CompanyServices() {
                 </TabsTrigger>
               ))}
             </TabsList>
+
+            
           </Tabs>
           </div>
         </div>
@@ -100,7 +103,7 @@ export default function CompanyServices() {
                   <SkeletonOne key={index} />
                 ))
               : data?.map((property) => (
-                  <AccommodationCard
+                  <AccommodationServiceCard
                     key={property?.id}
                     img={property?.img}
                     address={property?.address}
@@ -116,7 +119,7 @@ export default function CompanyServices() {
         <div className="md:hidden slider-container">
           <Slider {...settings}>
             {data?.map((property) => (
-              <AccommodationCard
+              <AccommodationServiceCard
                 key={property?.id}
                 img={property?.img}
                 address={property?.address}

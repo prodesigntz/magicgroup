@@ -109,7 +109,7 @@ export default function Programs() {
         </div>
 
         <div className="md:hidden slider-container">
-          {/* <Slider {...settings}>
+          <Slider {...settings}>
             {data?.map((property) => (
               <AccommodationCard
                 key={property?.id}
@@ -117,12 +117,12 @@ export default function Programs() {
                 address={property?.address}
                 locate={property?.location}
                 title={property?.name}
-                logo={property?.logo}
+                logo={property?.logo || ""}
                 desc={truncateDescription(property?.desc, 16)}
                 href={`/companies/${property?.slug}`}
               />
             ))}
-          </Slider> */}
+          </Slider>
         </div>
       </div>
     </section>
