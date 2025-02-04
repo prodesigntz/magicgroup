@@ -1,12 +1,10 @@
 "use client"
-import React, { useRef, useEffect } from "react";
-import { HomeParagraph, Title } from '@/components/texties'
-import { Button } from "@/components/ui/button";
+import React, {  } from "react";
+import { Title } from '@/components/texties'
 import AccommodationCard from "@/components/chatGPP/accomodationCard";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { accomodationData } from "@/data/accomodationData";
 import useFetchAll from "@/lib/hooks/useFetchAll";
 import SkeletonOne from "../skeletonOne";
 import { truncateDescription } from "@/lib/utils";
@@ -14,9 +12,7 @@ import { truncateDescription } from "@/lib/utils";
 
 export default function Programs() {
    const { isLoading, data } = useFetchAll("Properties");
-   //console.log("Companies data section", data);
-  //const sliderRef = useRef(null);
-
+   //console.log("Companies details here", data);
 
     const settings = {
       dots: true,
@@ -87,35 +83,46 @@ export default function Programs() {
                   <SkeletonOne key={index} />
                 ))
               : data?.map((property) => (
+                  // <AccommodationCard
+                  //   key={property?.id}
+                  //   img={property?.img}
+                  //   address={property?.address}
+                  //   locate={property?.location}
+                  //   title={property?.name}
+                  //   desc={truncateDescription(property?.desc, 10)}
+                  //   logo={property?.logo}
+                  //   href={`/companies/${property?.slug}`}
+                  // />
+
                   <AccommodationCard
-                    key={property.id}
-                    img={property.img}
-                    address={property.address}
-                    locate={property.location}
-                    title={property.name}
-                    desc={truncateDescription(property.desc, 10)}
-                    logo={property.logo}
-                    href={`/companies/${property.slug}`}
-                  />
+                  key={property?.id}
+                  img={property?.img}
+                  address={property?.address}
+                  locate={property?.location}
+                  title={property?.name}
+                  logo={property?.logo || ""}
+                  desc={truncateDescription(property?.desc, 10)}
+                  href={`/accomodations/${property?.slug}`}
+                />
                 ))}
           </div>
         </div>
 
         <div className="md:hidden slider-container">
-          <Slider {...settings}>
+          {/* <Slider {...settings}>
             {data?.map((property) => (
               <AccommodationCard
-                key={property.id}
-                img={property.img}
-                address={property.address}
-                locate={property.location}
-                title={property.name}
-                logo={property.logo}
-                desc={truncateDescription(property.desc, 16)}
-                href={`/companies/${property.slug}`}
+                key={property?.id}
+                img={property?.img}
+                address={property?.address}
+                locate={property?.location}
+                title={property?.name}
+                logo={property?.logo}
+                desc={truncateDescription(property?.desc, 16)}
+                href={`/companies/${property?.slug}`}
               />
             ))}
-          </Slider>
+          </Slider> */}
         </div>
       </div>
     </section>

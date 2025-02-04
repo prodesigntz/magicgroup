@@ -1,22 +1,19 @@
 "use client"
-import React, { useRef, useEffect } from "react";
-import { HomeParagraph, Title } from '@/components/texties'
-import { Button } from "@/components/ui/button";
+import React, {  } from "react";
+import { Title } from '@/components/texties'
 import AccommodationCard from "@/components/chatGPP/accomodationCard";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { accomodationData } from "@/data/accomodationData";
 import useFetchAll from "@/lib/hooks/useFetchAll";
 import SkeletonOne from "../skeletonOne";
 import { truncateDescription } from "@/lib/utils";
-import { DataTabs } from "@/app/(cms)/dashboard/companies/dataTabs";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
 //import DemoSlider from "../framerComponents/demoSlider";
 
 export default function CompanyServices() {
    const { isLoading, data } = useFetchAll("Properties");
-   console.log("Companies data section", data);
+   //console.log("Companies data section", data);
   //const sliderRef = useRef(null);
 
 
@@ -104,11 +101,11 @@ export default function CompanyServices() {
                 ))
               : data?.map((property) => (
                   <AccommodationCard
-                  key={property?.id}
-                img={property?.img}
-                address={property?.address}
-                locate={property?.location}
-                title={property?.name}
+                    key={property?.id}
+                    img={property?.img}
+                    address={property?.address}
+                    locate={property?.location}
+                    title={property?.name}
                     desc={truncateDescription(property?.desc, 10)}
                     href={`/accomodations/${property?.slug}`}
                   />
@@ -126,7 +123,6 @@ export default function CompanyServices() {
                 locate={property?.location}
                 title={property?.name}
                 desc={truncateDescription(property?.desc, 16)}
-                // desc={property.desc}
                 href={`/accomodations/${property?.slug}`}
               />
             ))}
