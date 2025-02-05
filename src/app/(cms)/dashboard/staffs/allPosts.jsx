@@ -59,7 +59,7 @@ export const AllPosts = ({ data: initialData }) => {
             <TableHead>Image</TableHead>
             <TableHead>Title</TableHead>
             <TableHead>State</TableHead>
-            <TableHead>Category</TableHead>
+            {/* <TableHead>Category</TableHead> */}
 
             <TableHead>Actions</TableHead>
           </TableRow>
@@ -67,12 +67,12 @@ export const AllPosts = ({ data: initialData }) => {
 
         {/* table row */}
         <TableBody>
-          {currentPosts.map((item, index) => (
+          {currentPosts?.map((item, index) => (
             <TableRow key={index}>
               <TableCell>{++index}</TableCell>
               <TableCell>
                 <Image
-                  src={item?.img}
+                  src={item?.img || ""}
                   alt="property"
                   width={80}
                   height={60}
@@ -85,24 +85,24 @@ export const AllPosts = ({ data: initialData }) => {
                 />
               </TableCell>
               <TableCell className="">
-                <h3 className="text-base">{item.title}</h3>
+                <h3 className="text-base">{item?.title || ""}</h3>
               </TableCell>
               <TableCell className="">
-                <h3>{item.isPublished ? "Published" : "Draft"}</h3>
+                <h3>{item?.isPublished ? "Published" : "Draft"}</h3>
               </TableCell>
-              <TableCell className="">
+              {/* <TableCell className="">
                 <h3>{item.category}</h3>
-              </TableCell>
+              </TableCell> */}
 
               <TableCell className=" items-center space-x-1">
                 <Button
-                  onClick={() => router.push(`/dashboard/staffs/${item.id}`)}
+                  onClick={() => router.push(`/dashboard/staffs/${item?.id}`)}
                   className="bg-pamojaprimary text-white hover:bg-pamojaaccent hover:text-pamojadark"
                 >
                   <FaEdit />
                 </Button>
                 <Button
-                  onClick={() => handleDelete(item.id)}
+                  onClick={() => handleDelete(item?.id)}
                    className="bg-pamojaprimary text-white hover:bg-pamojaaccent hover:text-pamojadark"
                 >
                   <FaTrash />

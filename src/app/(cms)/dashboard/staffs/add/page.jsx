@@ -37,7 +37,7 @@ export default function AddPost({ params }) {
       const fetchPost = async () => {
         setIsLoading(true);
         const { didSucceed, document } = await getSingleDocument(
-          "Sfaffs",
+          "Staffs",
           postId
         );
 
@@ -73,8 +73,8 @@ export default function AddPost({ params }) {
     }
   };
 
-  // Handle blog creation or update
-  const handleBlogSave = async (e) => {
+  // Handle staff creation or update
+  const handleStaffSave = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
@@ -83,7 +83,7 @@ export default function AddPost({ params }) {
       let imageUrl = formData.img;
 
       if (formData.img && typeof formData.img !== "string") {
-        imageUrl = await imageUploadToFirebase(formData.img, "blogImages");
+        imageUrl = await imageUploadToFirebase(formData.img, "staffImages");
       }
 
       const slug = getSlug(formData.title);
@@ -101,10 +101,10 @@ export default function AddPost({ params }) {
 
       let result;
       if (postId) {
-        result = await updateDocument("Sfaffs", postId, staffsData);
+        result = await updateDocument("Staffs", postId, staffsData);
       } else {
         staffsData.createdAt = new Date();
-        result = await createDocument(staffsData, "Sfaffs");
+        result = await createDocument(staffsData, "Staffs");
       }
 
       if (result.didSucceed) {
@@ -124,9 +124,9 @@ export default function AddPost({ params }) {
     <main>
       <div className="bg-white shadow-lg rounded-lg p-8 w-full">
         <h1 className="text-2xl font-bold text-center text-slate-700 mb-6">
-          {postId ? "Update Review Post" : "Create a Review Post"}
+          {postId ? "Update Staffs " : "Create a Staffs "}
         </h1>
-        <form onSubmit={handleBlogSave}>
+        <form onSubmit={handleStaffSave}>
           <div className="mb-4">
            
             <TextInput
@@ -215,11 +215,11 @@ export default function AddPost({ params }) {
             >
               {isLoading
                 ? postId
-                  ? "Updating Review..."
-                  : "Creating Review..."
+                  ? "Updating Staff..."
+                  : "Creating Staff..."
                 : postId
-                ? "Update Review"
-                : "Create Review"}
+                ? "Update Staff"
+                : "Create Staff"}
             </button>
           </div>
         </form>

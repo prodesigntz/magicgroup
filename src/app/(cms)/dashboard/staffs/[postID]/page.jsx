@@ -31,7 +31,7 @@ export default function EditPost({ params }) {
   const [formData, setFormData] = useState({
     title: "",
     desc: "",
-    category: "",
+   // category: "",
     img: null,
     imgPreview: null, // Added for image preview
     isPublished: false,
@@ -46,7 +46,7 @@ export default function EditPost({ params }) {
       const fetchPost = async () => {
         setIsLoading(true);
         const { didSucceed, document } = await getSingleDocument(
-          "Blogposts",
+          "Staffs",
           postId
         );
 
@@ -56,7 +56,7 @@ export default function EditPost({ params }) {
           setFormData({
             title: document.title,
             desc: document.desc,
-            category: document.category,
+            //category: document.category,
             img: document.img || null,
             imgPreview: document.img || null, // Added for image preview
           });
@@ -94,16 +94,16 @@ export default function EditPost({ params }) {
       let imageUrl = formData.img;
 
       if (formData.img && typeof formData.img !== "string") {
-        imageUrl = await imageUploadToFirebase(formData.img, "blogImages");
+        imageUrl = await imageUploadToFirebase(formData.img, "staffImages");
       }
 
       const slug = getSlug(formData.title);
 
-      const blogData = {
+      const staffsData = {
         title: formData.title,
         desc: formData.desc,
         author: authUser?.username || "Anonymous",
-        category: formData.category,
+        //category: formData.category,
         img: imageUrl,
         updatedAt: new Date(),
         // isPublished: formData.isPublished,
@@ -113,19 +113,19 @@ export default function EditPost({ params }) {
 
       let result;
       if (postId) {
-        result = await updateDocument("Blogposts", postId, blogData);
+        result = await updateDocument("Staffs", postId, staffsData);
       } else {
-        blogData.createdAt = new Date();
-        result = await createDocument(blogData, "Blogposts");
+        staffsData.createdAt = new Date();
+        result = await createDocument(staffsData, "Staffs");
       }
 
       if (result.didSucceed) {
-        router.push("/dashboard/blogs"); // Replace with your CMS route
+        router.push("/dashboard/staffs"); // Replace with your CMS route
       } else {
         setError("Failed to save blog post.");
       }
     } catch (error) {
-      console.error("Blogpost save error:", error.message);
+      console.error("Staff save error:", error.message);
       setError(error.message);
     } finally {
       setIsLoading(false);
@@ -136,7 +136,7 @@ export default function EditPost({ params }) {
     <main>
       <div className="bg-white shadow-lg rounded-lg p-8 w-full">
         <h1 className="text-2xl font-bold text-center text-slate-700 mb-6">
-          {postId ? "Update Blog Post" : "Create a Blog Post"}
+          {postId ? "Update Staff " : "Create a Staff"}
         </h1>
         <form onSubmit={handleBlogSave}>
           <TextInput
@@ -175,14 +175,14 @@ export default function EditPost({ params }) {
               required
             />
           </div>
-          <TextInput
+          {/* <TextInput
             label="Category"
             name="category"
             value={formData.category}
             onChange={handleChange}
             placeholder="Enter Category Here"
             required
-          />
+          /> */}
           <div className="mb-4">
             <label
               className="block text-slate-700 text-sm font-bold mb-2"

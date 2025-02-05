@@ -45,25 +45,6 @@ export default function ViewProperty({ params }) {
     location: "",
     address: "",
     destination: "",
-    //noRooms: "",
-    // rooms: [
-    //   {
-    //     name: "",
-    //     price: "",
-    //     desc: "",
-    //     img: null,
-    //     imgPreview: null,
-    //     capacity: "",
-    //     beds: "",
-    //     available: "",
-    //     facilities: [],
-    //   },
-    //],
-    //gallery: [{ img: null, imgPreview: null, title: "", dst: "", desc: "" }],
-    // faq: [{ title: "", desc: "" }],
-    // highlights: [
-    //   { img: null, imgPreview: null, title: "", subTitle: "", desc: "" },
-    // ],
     img: null,
     imgPreview: null,
     logo: null,
@@ -238,23 +219,6 @@ export default function ViewProperty({ params }) {
 
             {/* center */}
             <div className="sektion md:grid-cols-4">
-              {/* Amenities */}
-              {/* <div className="bg-pamojatertiary shadow-sm rounded-xs p-2">
-                <h1 className="text-lg drop-shadow-md font-semibold text-center md:text-start">
-                  Property Amenites
-                </h1>
-                <ul className="">
-                  {formData?.amenities?.map((data, index) => (
-                    <li
-                      className="text-sm flex items-center space-x-1"
-                      key={index}
-                    >
-                      <span> {renderIcon(data?.icon)}</span>{" "}
-                      <span> {data?.value || ""}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div> */}
 
               {/* Social Media */}
               <div className="bg-pamojatertiary shadow-sm rounded-xs p-2">
@@ -323,13 +287,6 @@ export default function ViewProperty({ params }) {
               </div>
             </div>
             <Separator />
-
-            {/* image gallery upload */}
-            {/* <div className="py-5">
-              <h3 className="text-lg font-bold mb-3">Image Gallery Upload:</h3>
-              <UploadImagesCloudinaryForm slug={slug} />
-            </div> */}
-            {/* image gallery upload */}
 
             {/* bottom pad */}
             <DataTabs propertyID={propertyID} data={formData} />

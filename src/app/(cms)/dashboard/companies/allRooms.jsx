@@ -79,7 +79,7 @@ export const AllRooms = ({ propertyID, data }) => {
               <TableCell>{++index}</TableCell>
               <TableCell>
                 <Image
-                  src={item?.img[0] || ""}
+                  src={item?.img || ""}
                   alt="property"
                   width={80}
                   height={60}

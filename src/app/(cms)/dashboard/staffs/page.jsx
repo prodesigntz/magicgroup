@@ -13,7 +13,7 @@ export default function Page() {
   const [published, setPublished] = useState([]);
   const [drafts, setDrafts] = useState([]);
   //fetch accommodations..............
-  const { data, isLoading } = useFetchAll("Reviews");
+  const { data, isLoading } = useFetchAll("Staffs");
 
   useEffect(() => {
     const drf = [];
@@ -40,7 +40,7 @@ export default function Page() {
       <SharedDashHeader
         title="All Staffs"
         btnTitle="New Staff"
-        onClick={() => router.push("/dashboard/reviews/add")}
+        onClick={() => router.push("/dashboard/staffs/add")}
       />
 
       {/* tabs */}
