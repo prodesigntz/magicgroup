@@ -5,7 +5,7 @@ import { SharedDashHeader } from "@/components/dashboard/sharedDashHeader";
 import { useRouter } from "next/navigation";
 import useFetchAll from "@/lib/hooks/useFetchAll";
 import DashboardDataLoader from "@/components/dashboard/dashboard-data-loader";
-import { AllStaff } from "./allStaff";
+import { AllPosts } from "./allPosts";
 
 export default function Page() {
   const router = useRouter();
@@ -13,9 +13,7 @@ export default function Page() {
   const [published, setPublished] = useState([]);
   const [drafts, setDrafts] = useState([]);
   //fetch accommodations..............
-  const { data, isLoading } = useFetchAll("Staffs");
-
-  console.log("Propeties: ", data);
+  const { data, isLoading } = useFetchAll("Reviews");
 
   useEffect(() => {
     const drf = [];
@@ -23,7 +21,7 @@ export default function Page() {
 
     if (data.length > 0) {
       data.forEach((element) => {
-        if (element.isPublished == true) {
+        if (element.isPublished) {
           pbd.push(element);
         } else {
           drf.push(element);
@@ -40,18 +38,19 @@ export default function Page() {
       {/* title & add destination button */}
 
       <SharedDashHeader
-        title="Properties"
+        title="All Staffs"
         btnTitle="New Staff"
-        onClick={() => router.push("/dashboard/staffs/add")}
+        onClick={() => router.push("/dashboard/reviews/add")}
       />
+
       {/* tabs */}
       <div className="">
-        <Tabs defaultValue="Properties">
-          <TabsList className="bg-pamojaaccent rounded-none">
+        <Tabs defaultValue="Published">
+          <TabsList className="bg-pamojatertiary rounded-none">
             <TabsTrigger value="Properties" className="">
               All
             </TabsTrigger>
-            <TabsTrigger value="Published">Pushlished</TabsTrigger>
+            <TabsTrigger value="Published">Published</TabsTrigger>
             <TabsTrigger value="Drafts">Drafts </TabsTrigger>
           </TabsList>
           {isLoading ? (
@@ -59,13 +58,13 @@ export default function Page() {
           ) : (
             <>
               <TabsContent value="Properties">
-                <AllStaff data={data} />
+                <AllPosts data={data} />
               </TabsContent>
               <TabsContent value="Published">
-                <AllStaff data={published} />
+                <AllPosts data={published} />
               </TabsContent>
               <TabsContent value="Drafts">
-                <AllStaff data={drafts} />
+                <AllPosts data={drafts} />
               </TabsContent>
             </>
           )}

@@ -19,7 +19,7 @@ import { FaEdit } from "react-icons/fa";
 import { FaEye, FaTrash } from "react-icons/fa6";
 //import { IoDuplicate } from "react-icons/io5";
 
-export const AllDestinations = ({ data: initialData }) => {
+export const AllPosts = ({ data: initialData }) => {
   const router = useRouter();
   const [data, setData] = useState(initialData); // Manage the posts data with useState
 
@@ -32,7 +32,7 @@ export const AllDestinations = ({ data: initialData }) => {
   const currentPosts = data.slice(firstPostIndex, lastPostIndex);
 
   const handleDelete = async (postId) => {
-    const { didSucceed } = await deleteDocument("Destinations", postId);
+    const { didSucceed } = await deleteDocument("Reviews", postId);
     if (didSucceed) {
       setData((prevData) => prevData.filter((post) => post.id !== postId));
     } else {
@@ -43,7 +43,7 @@ export const AllDestinations = ({ data: initialData }) => {
   if (data.length < 1) {
     return (
       <div className="w-full h-60 flex justify-center items-center">
-        <span>Services List Is Empty</span>
+        <span>Blog Posts List Is Empty</span>
       </div>
     );
   }
@@ -51,7 +51,7 @@ export const AllDestinations = ({ data: initialData }) => {
   return (
     <>
       <Table className="">
-        <TableCaption> List of Services</TableCaption>
+        <TableCaption> List of Blogs</TableCaption>
 
         {/* table header */}
         <TableHeader>
@@ -97,34 +97,19 @@ export const AllDestinations = ({ data: initialData }) => {
 
               <TableCell className=" items-center space-x-1">
                 <Button
-                  onClick={() =>
-                    router.push(`/dashboard/destinations/${item.id}`)
-                  }
+                  onClick={() => router.push(`/dashboard/reviews/${item.id}`)}
                   className="bg-pamojaprimary text-white hover:bg-pamojaaccent hover:text-pamojadark"
                 >
                   <FaEdit />
                 </Button>
                 <Button
                   onClick={() => handleDelete(item.id)}
-                  className="bg-pamojasecondary text-procolor hover:text-white hover:bg-pmaojaprimary"
+                   className="bg-pamojaprimary text-white hover:bg-pamojaaccent hover:text-pamojadark"
                 >
                   <FaTrash />
                 </Button>
-                {/* <Button className="bg-prosecondary text-procolor hover:text-white hover:bg-proprimary">
-                  <IoDuplicate />
-                </Button>  */}
-                <Button
-                  asChild
-                  className="bg-pamojaprimary text-white hover:bg-pamojaaccent hover:text-pamojadark"
-                >
-                  <Link
-                    href={`/destinations/${item.slug}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FaEye />
-                  </Link>
-                </Button>
+            
+               
               </TableCell>
             </TableRow>
           ))}

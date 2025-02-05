@@ -11,34 +11,34 @@ import {
 import { imageUploadToFirebase } from "@/firebase/fileOperations";
 import { getSlug } from "@/lib/utils";
 import Image from "next/image";
+import { TextInput } from "@/components/textInput";
 
-export default function AddDestination({ params }) {
-  const { destinationID } = useParams();
-  //console.log("Post ID:...", destinationID);
+export default function AddPost({ params }) {
+  const { postId } = useParams();
+  //console.log("Post ID:...", postId);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const { authUser } = useAppContext();
   const [formData, setFormData] = useState({
     title: "",
     desc: "",
-    category: "",
-    company:"",
+   // category: "",
     img: null,
     imgPreview: null, // Added for image preview
-    isPublished: false,
+    isPublished:false,
   });
 
   // Navigation
   const router = useRouter();
 
-  // Fetch existing post data if destinationID is provided
+  // Fetch existing post data if postId is provided
   useEffect(() => {
-    if (destinationID) {
+    if (postId) {
       const fetchPost = async () => {
         setIsLoading(true);
         const { didSucceed, document } = await getSingleDocument(
-          "Destinations",
-          destinationID
+          "Reviews",
+          postId
         );
 
         if (didSucceed) {
@@ -57,7 +57,7 @@ export default function AddDestination({ params }) {
 
       fetchPost();
     }
-  }, [destinationID]);
+  }, [postId]);
 
   // Handling data change on typing
   const handleChange = (e) => {
@@ -73,8 +73,8 @@ export default function AddDestination({ params }) {
     }
   };
 
-  // Handle destination creation or update
-  const handleDestinationSave = async (e) => {
+  // Handle blog creation or update
+  const handleBlogSave = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
@@ -83,41 +83,37 @@ export default function AddDestination({ params }) {
       let imageUrl = formData.img;
 
       if (formData.img && typeof formData.img !== "string") {
-        imageUrl = await imageUploadToFirebase(formData.img, "destinationImages");
+        imageUrl = await imageUploadToFirebase(formData.img, "blogImages");
       }
 
       const slug = getSlug(formData.title);
 
-      const destinationData = {
+      const reviewsData = {
         title: formData.title,
         desc: formData.desc,
         author: authUser?.username || "Anonymous",
-        category: formData.category,
+       // category: formData.category,
         img: imageUrl,
         updatedAt: new Date(),
-        isPublished: formData.isPublished,
+        isPublished:formData.isPublished,
         slug,
       };
 
       let result;
-      if (destinationID) {
-        result = await updateDocument(
-          "Destinations",
-          destinationID,
-          destinationData
-        );
+      if (postId) {
+        result = await updateDocument("Reviews", postId, reviewsData);
       } else {
-        destinationData.createdAt = new Date();
-        result = await createDocument(destinationData, "Destinations");
+        reviewsData.createdAt = new Date();
+        result = await createDocument(reviewsData, "Reviews");
       }
 
       if (result.didSucceed) {
-        router.push("/dashboard/destinations"); // Replace with your CMS route
+        router.push("/dashboard/reviews"); // Replace with your CMS route
       } else {
-        setError("Failed to save Destination post.");
+        setError("Failed to save blog post.");
       }
     } catch (error) {
-      console.error("Destinationpost save error:", error.message);
+      console.error("Review save error:", error.message);
       setError(error.message);
     } finally {
       setIsLoading(false);
@@ -128,27 +124,31 @@ export default function AddDestination({ params }) {
     <main>
       <div className="bg-white shadow-lg rounded-lg p-8 w-full">
         <h1 className="text-2xl font-bold text-center text-slate-700 mb-6">
-          {destinationID ? "Update Destination Post" : "Create a Destination Post"}
+          {postId ? "Update Review Post" : "Create a Review Post"}
         </h1>
-        <form onSubmit={handleDestinationSave}>
+        <form onSubmit={handleBlogSave}>
           <div className="mb-4">
-            <label
-              className="block text-slate-700 text-sm font-bold mb-2"
-              htmlFor="title"
-            >
-              Title
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="title"
-              type="text"
-              placeholder="Enter Title Here"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              required
-            />
+           
+            <TextInput
+                      label="Title"
+                      name="title"
+                      value={formData.title}
+                      onChange={handleChange}
+                      placeholder="Enter Title Here"
+                      required
+                    />
           </div>
+             <div className="mb-4 relative">
+                      <label
+                        className="block text-slate-700 text-sm font-bold mb-2"
+                        htmlFor="desc"
+                      >
+                        Slug
+                      </label>
+                      <p className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline">
+                        {getSlug(formData.title)}
+                      </p>
+                    </div>
           <div className="mb-4">
             <label
               className="block text-slate-700 text-sm font-bold mb-2"
@@ -166,24 +166,14 @@ export default function AddDestination({ params }) {
               required
             />
           </div>
-          <div className="mb-4">
-            <label
-              className="block text-slate-700 text-sm font-bold mb-2"
-              htmlFor="category"
-            >
-              Category
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="category"
-              type="text"
-              placeholder="Category"
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              required
-            />
-          </div>
+             {/* <TextInput
+                     label="Rating"
+                     name="category"
+                     value={formData.category}
+                     onChange={handleChange}
+                     placeholder="Enter Category Here"
+                     required
+                   /> */}
           <div className="mb-4">
             <label
               className="block text-slate-700 text-sm font-bold mb-2"
@@ -224,12 +214,12 @@ export default function AddDestination({ params }) {
               disabled={isLoading}
             >
               {isLoading
-                ? destinationID
-                  ? "Updating Destination..."
-                  : "Creating Destination..."
-                : destinationID
-                ? "Update Destination"
-                : "Create Destination"}
+                ? postId
+                  ? "Updating Review..."
+                  : "Creating Review..."
+                : postId
+                ? "Update Review"
+                : "Create Review"}
             </button>
           </div>
         </form>

@@ -5,7 +5,7 @@ import { SharedDashHeader } from "@/components/dashboard/sharedDashHeader";
 import { useRouter } from "next/navigation";
 import useFetchAll from "@/lib/hooks/useFetchAll";
 import DashboardDataLoader from "@/components/dashboard/dashboard-data-loader";
-import { AllDestinations } from "./allDestinations";
+import { AllPosts } from "./allPosts";
 
 export default function Page() {
   const router = useRouter();
@@ -13,7 +13,7 @@ export default function Page() {
   const [published, setPublished] = useState([]);
   const [drafts, setDrafts] = useState([]);
   //fetch accommodations..............
-  const { data, isLoading } = useFetchAll("Destinations");
+  const { data, isLoading } = useFetchAll("Reviews");
 
   useEffect(() => {
     const drf = [];
@@ -38,15 +38,16 @@ export default function Page() {
       {/* title & add destination button */}
 
       <SharedDashHeader
-        title="Services"
-        btnTitle="New Services"
-        onClick={() => router.push("/dashboard/services/add")}
+        title="Reviews Posts"
+        btnTitle="New Review"
+        onClick={() => router.push("/dashboard/reviews/add")}
       />
+
       {/* tabs */}
       <div className="">
         <Tabs defaultValue="Published">
           <TabsList className="bg-pamojatertiary rounded-none">
-            <TabsTrigger value="Services" className="">
+            <TabsTrigger value="Properties" className="">
               All
             </TabsTrigger>
             <TabsTrigger value="Published">Published</TabsTrigger>
@@ -56,14 +57,14 @@ export default function Page() {
             <DashboardDataLoader />
           ) : (
             <>
-              <TabsContent value="Services">
-                <AllDestinations data={data} />
+              <TabsContent value="Properties">
+                <AllPosts data={data} />
               </TabsContent>
               <TabsContent value="Published">
-                <AllDestinations data={published} />
+                <AllPosts data={published} />
               </TabsContent>
               <TabsContent value="Drafts">
-                <AllDestinations data={drafts} />
+                <AllPosts data={drafts} />
               </TabsContent>
             </>
           )}

@@ -108,9 +108,7 @@ export const AllPosts = ({ data: initialData }) => {
                 >
                   <FaTrash />
                 </Button>
-                {/* <Button className="bg-prosecondary text-procolor hover:text-white hover:bg-proprimary">
-                  <IoDuplicate />
-                </Button> */}
+            
                 <Button
                   asChild
                   className="bg-pamojaprimary text-white hover:bg-pamojaaccent hover:text-pamojadark"

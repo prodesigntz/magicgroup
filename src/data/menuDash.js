@@ -35,36 +35,19 @@ export const menuDashItem = [
   //   ],
   // },
   {
-    name: "Services",
+    name: "Reviews",
     subMenu: [
       {
-        name: "List Services",
-        path: "/dashboard/services",
+        name: "List Reviews",
+        path: "/dashboard/reviews",
       },
       {
-        name: "Add Services",
-        path: "/dashboard/services/add",
+        name: "Add Reviews",
+        path: "/dashboard/reviews/add",
       },
     ],
   },
-  // {
-  //   name: "Tasks",
-  //   subMenu: [
-  //     {
-  //       name: "Home",
-  //       path: "",
-  //     },
-  //   ],
-  // },
-  // {
-  //   name: "Leave",
-  //   subMenu: [
-  //     {
-  //       name: "Home",
-  //       path: "",
-  //     },
-  //   ],
-  // },
+
   {
     name: "Messages",
     subMenu: [

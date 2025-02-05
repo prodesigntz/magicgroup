@@ -12,20 +12,29 @@ import { imageUploadToFirebase } from "@/firebase/fileOperations";
 import { getSlug } from "@/lib/utils";
 import Image from "next/image";
 import { TextInput } from "@/components/textInput";
+import { Switch } from "@/components/ui/switch";
 
-export default function AddPost({ params }) {
-  const { postId } = useParams();
+export default function EditPost({ params }) {
+  ///const { postId } = useParams();
+
+  const postId = params.postID;
+
+  /// console.log("Post ID:...", postId);
+
+  // console.log("Params:...", params);
+
   //console.log("Post ID:...", postId);
+
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const { authUser } = useAppContext();
   const [formData, setFormData] = useState({
     title: "",
     desc: "",
-   // category: "",
+    category: "",
     img: null,
     imgPreview: null, // Added for image preview
-    isPublished:false,
+    isPublished: false,
   });
 
   // Navigation
@@ -37,9 +46,11 @@ export default function AddPost({ params }) {
       const fetchPost = async () => {
         setIsLoading(true);
         const { didSucceed, document } = await getSingleDocument(
-          "Sfaffs",
+          "Blogposts",
           postId
         );
+
+        console.log("Document Data.....:", document);
 
         if (didSucceed) {
           setFormData({
@@ -88,32 +99,33 @@ export default function AddPost({ params }) {
 
       const slug = getSlug(formData.title);
 
-      const staffsData = {
+      const blogData = {
         title: formData.title,
         desc: formData.desc,
         author: authUser?.username || "Anonymous",
-       // category: formData.category,
+        category: formData.category,
         img: imageUrl,
         updatedAt: new Date(),
-        isPublished:formData.isPublished,
+        // isPublished: formData.isPublished,
+        isPublished:false,
         slug,
       };
 
       let result;
       if (postId) {
-        result = await updateDocument("Sfaffs", postId, staffsData);
+        result = await updateDocument("Blogposts", postId, blogData);
       } else {
-        staffsData.createdAt = new Date();
-        result = await createDocument(staffsData, "Sfaffs");
+        blogData.createdAt = new Date();
+        result = await createDocument(blogData, "Blogposts");
       }
 
       if (result.didSucceed) {
-        router.push("/dashboard/staffs"); // Replace with your CMS route
+        router.push("/dashboard/blogs"); // Replace with your CMS route
       } else {
-        setError("Failed to save staff .");
+        setError("Failed to save blog post.");
       }
     } catch (error) {
-      console.error("Staffs save error:", error.message);
+      console.error("Blogpost save error:", error.message);
       setError(error.message);
     } finally {
       setIsLoading(false);
@@ -124,31 +136,28 @@ export default function AddPost({ params }) {
     <main>
       <div className="bg-white shadow-lg rounded-lg p-8 w-full">
         <h1 className="text-2xl font-bold text-center text-slate-700 mb-6">
-          {postId ? "Update Review Post" : "Create a Review Post"}
+          {postId ? "Update Blog Post" : "Create a Blog Post"}
         </h1>
         <form onSubmit={handleBlogSave}>
-          <div className="mb-4">
-           
-            <TextInput
-                      label="Title"
-                      name="title"
-                      value={formData.title}
-                      onChange={handleChange}
-                      placeholder="Enter Title Here"
-                      required
-                    />
+          <TextInput
+            label="Title"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            placeholder="Enter Title Here"
+            required
+          />
+          <div className="mb-4 relative">
+            <label
+              className="block text-slate-700 text-sm font-bold mb-2"
+              htmlFor="desc"
+            >
+              Slug
+            </label>
+            <p className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline">
+              {getSlug(formData.title)}
+            </p>
           </div>
-             <div className="mb-4 relative">
-                      <label
-                        className="block text-slate-700 text-sm font-bold mb-2"
-                        htmlFor="desc"
-                      >
-                        Slug
-                      </label>
-                      <p className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline">
-                        {getSlug(formData.title)}
-                      </p>
-                    </div>
           <div className="mb-4">
             <label
               className="block text-slate-700 text-sm font-bold mb-2"
@@ -166,14 +175,14 @@ export default function AddPost({ params }) {
               required
             />
           </div>
-             {/* <TextInput
-                     label="Rating"
-                     name="category"
-                     value={formData.category}
-                     onChange={handleChange}
-                     placeholder="Enter Category Here"
-                     required
-                   /> */}
+          <TextInput
+            label="Category"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            placeholder="Enter Category Here"
+            required
+          />
           <div className="mb-4">
             <label
               className="block text-slate-700 text-sm font-bold mb-2"
@@ -204,6 +213,18 @@ export default function AddPost({ params }) {
               </div>
             )}
           </div>
+{/* 
+          <div className="mb-4">
+            <Switch
+              checked={formData.isPublished}
+              onCheckedChange={(value) =>
+                setFormData({ ...formData, isPublished: value })
+              }
+              disabled={isLoading}
+              aria-readonly={isLoading}
+            />
+            <label htmlFor="isPublished">Is Published</label>
+          </div> */}
 
           {error && <p className="text-red-500 text-xs italic mb-4">{error}</p>}
 
@@ -215,11 +236,11 @@ export default function AddPost({ params }) {
             >
               {isLoading
                 ? postId
-                  ? "Updating Review..."
-                  : "Creating Review..."
+                  ? "Updating Post..."
+                  : "Creating Post..."
                 : postId
-                ? "Update Review"
-                : "Create Review"}
+                ? "Update Post"
+                : "Create Post"}
             </button>
           </div>
         </form>

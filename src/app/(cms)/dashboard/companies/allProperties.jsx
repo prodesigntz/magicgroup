@@ -18,8 +18,9 @@ import React, { useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { FaEye, FaTrash } from "react-icons/fa6";
 
-export const AllProperties = ({ data, postId }) => {
+export const AllProperties = ({ data: initialData, postId }) => {
   const router = useRouter();
+  const [data, setData] = useState(initialData);
   console.log("data in all properties ", data);
 
   // pagination data
@@ -41,6 +42,7 @@ export const AllProperties = ({ data, postId }) => {
   const handleDelete = async (postId) => {
     const { didSucceed } = await deleteDocument("Properties", postId);
     if (didSucceed) {
+      setData((prevData) => prevData.filter((post) => post.id !== postId));
       router.refresh();
       console.log("Company deleted successfully");
     } else {
