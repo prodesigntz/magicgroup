@@ -42,8 +42,8 @@ export default function Page() {
       {/* title & add destination button */}
 
       <SharedDashHeader
-        title="Properties"
-        btnTitle="New Property"
+        title="Companies"
+        btnTitle="New Company"
         onClick={() => router.push("/dashboard/companies/add")}
       />
       {/* tabs */}

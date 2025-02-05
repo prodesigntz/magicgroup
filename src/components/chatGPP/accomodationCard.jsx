@@ -1,10 +1,7 @@
 import Image from 'next/image';
-import { FaConciergeBell, FaParking, FaSwimmingPool } from 'react-icons/fa';
-import { FaBed,  FaWifi } from 'react-icons/fa6';
-import { Separator } from '../ui/separator';
 import Link from 'next/link';
 
-const AccommodationCard = ({ img,logo, address, title, desc, href }) => (
+const AccommodationCard = ({ img,logo,category, address, title, desc, href }) => (
   <div className="bg-white rounded-none shadow-lg max-w-md mx-auto">
     <div className="relative bg-black bg-opacity-40">
       <Image
@@ -44,7 +41,7 @@ const AccommodationCard = ({ img,logo, address, title, desc, href }) => (
 
       <div className=" flex flex-wrap gap-2">
         <span className="px-3 py-1 bg-pamojadark gilda_display text-white text-xs ">
-          Company Category
+         {category}
         </span>
       </div>
 

@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { deleteDocument } from "@/firebase/databaseOperations";
+//import { deleteDocument } from "@/firebase/databaseOperations";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -38,9 +39,10 @@ export const AllProperties = ({ data, postId }) => {
   }
 
   const handleDelete = async (postId) => {
-    const { didSucceed } = await deleteDocument("Property", postId);
+    const { didSucceed } = await deleteDocument("Properties", postId);
     if (didSucceed) {
       router.refresh();
+      console.log("Company deleted successfully");
     } else {
       console.error("Failed to delete company");
     }
@@ -86,15 +88,7 @@ export const AllProperties = ({ data, postId }) => {
               <TableCell className="">
                 <h3 className="text-base">{item?.name}</h3>
               </TableCell>
-              {/* <TableCell className="">
-                <h3>
-                  {item?.rooms.length > 1 ? (
-                    <>{item?.rooms.length}</>
-                  ) : (
-                    <>0 room</>
-                  )}
-                </h3>
-              </TableCell> */}
+            
               <TableCell className="">
                 <h3>
                   {item?.bookings.length > 1 ? (
@@ -121,22 +115,18 @@ export const AllProperties = ({ data, postId }) => {
                 >
                   <Link
                     href={`/dashboard/companies/viewProperty/${item?.id}`}
-                    //target="_blank"
-                    // rel="noopener noreferrer"
+                    
                   >
                     <FaEye size={8} className="h-10 w-10 text-white" />
                   </Link>
                 </Button>
            
-                <Button
-                  asChild
-                  className="h-10 w-10 bg-pamojaprimary text-white hover:bg-pamojaaccent hover:text-pamojadark"
-                  onClick={() => handleDelete(item?.id)}
-                >
-                
-                    <FaTrash size={10} className="h-10 w-10 text-white"/>
-               
-                </Button>
+              <Button
+                className="h-10 w-10 bg-pamojaprimary text-white hover:bg-pamojaaccent hover:text-pamojadark"
+                onClick={() => handleDelete(item?.id)}
+              >
+                  <FaTrash size={10} className="h-10 w-10 text-white"/>
+              </Button>
               
               </TableCell>
             </TableRow>
