@@ -175,7 +175,7 @@ export default function ViewProperty({ params }) {
                     disabled={isLoading}
                   >
                     <Link href={`/dashboard/companies/${propertyID}`}>
-                      Edit Property
+                      Edit Company
                     </Link>
                   </button>
                 </div>

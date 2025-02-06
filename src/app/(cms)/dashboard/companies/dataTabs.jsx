@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRouter } from 'next/navigation';
 import { AllProperties } from "./allProperties";
-import { AllRooms } from "./allRooms";
+import { AllProducts, AllRooms } from "./allProducts";
 import { AllGallery } from "./allGallery";
 import { AllFaqs } from "./allFaqs";
 import { AllHighlights } from "./allHighlights";
@@ -71,12 +71,8 @@ export const DataTabs = ({ propertyID, data }) => {
         ) : (
           <>
             <TabsContent value="Rooms">
-              <AllRooms propertyID={propertyID} data={data} />
+              <AllProducts propertyID={propertyID} data={data} />
             </TabsContent>
-
-            {/* <TabsContent value="Gallery">
-              <PropertyImageGalleryCloudinary slug={slug} />
-            </TabsContent> */}
             <TabsContent value="Faqs">
               <AllFaqs propertyID={propertyID} data={data?.faq} />
             </TabsContent>

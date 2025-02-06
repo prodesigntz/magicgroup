@@ -1,4 +1,4 @@
-import { AddRoomSheet } from "@/components/accomodation/addProductSheet";
+import { AddProductSheet, AddRoomSheet } from "@/components/accomodation/addProductSheet";
 import PaginationSet from "@/components/paginationSet";
 import { Button } from "@/components/ui/button";
 // import { Button } from "@/components/ui/button";
@@ -11,16 +11,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { deleteDocument } from "@/firebase/databaseOperations";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 // import { FaEdit } from "react-icons/fa";
 // import { FaEye, FaTrash } from "react-icons/fa6";
 // import { IoDuplicate } from "react-icons/io5";
 
-export const AllRooms = ({ propertyID, data }) => {
+export const AllProducts = ({ propertyID, data }) => {
   const router = useRouter();
   console.log("data in all rooms ", data?.rooms);
 
@@ -46,14 +47,18 @@ export const AllRooms = ({ propertyID, data }) => {
     );
   }
 
-  //    const handleDelete = async (postId) => {
-  //      const { didSucceed } = await deleteDocument("Blogpost", postId);
-  //      if (didSucceed) {
-  //        setData((prevData) => prevData.filter((post) => post.id !== postId));
-  //      } else {
-  //        console.error("Failed to delete post");
-  //      }
-  //    };
+    const handleDelete = async (propertyID, roomId) => {
+      const { didSucceed } = await deleteDocument(`properties/${propertyID}/rooms`, roomId);
+      if (didSucceed) {
+        setData((prevData) => ({
+          ...prevData,
+          rooms: prevData.rooms.filter((room) => room.id !== roomId),
+        }));
+      } else {
+        console.error("Failed to delete room");
+      }
+    };
+
   return (
     <div className="space-y-5">
       {/* <AddRoomSheet propertyID={propertyID} /> */}
@@ -105,9 +110,14 @@ export const AllRooms = ({ propertyID, data }) => {
                 >
                   <FaEdit />
                 </Button>
-                {/* <Button className="bg-prosecondary text-procolor hover:text-white hover:bg-proprimary">
+                {/* <AddProductSheet propertyID={propertyID} title="Edit" /> */}
+             
+                <Button
+                  onClick={() => handleDelete(item.id)}
+                  className="bg-prosecondary text-procolor hover:text-white hover:bg-proprimary"
+                >
                   <FaTrash />
-                </Button> */}
+                </Button>
                 {/* <Button className="bg-prosecondary text-procolor hover:text-white hover:bg-proprimary">
                   <IoDuplicate />
                 </Button>  */}

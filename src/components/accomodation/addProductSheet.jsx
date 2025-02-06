@@ -134,7 +134,7 @@ export const AddProductSheet = ({ propertyID, room = null, title = "Product" }) 
                   name="name"
                   value={roomData.name}
                   onChange={handleRoomChange}
-                  placeholder="Enter room name"
+                  placeholder="Enter product name"
                   required
                   className="w-full px-4 py-2 border"
                 />
