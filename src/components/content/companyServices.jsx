@@ -110,7 +110,7 @@ export default function CompanyServices() {
                     locate={property?.location}
                     title={property?.name}
                     desc={truncateDescription(property?.desc, 10)}
-                    href={`/accomodations/${property?.slug}`}
+                    // href={`/accomodations/${property?.slug}`}
                   />
                 ))}
           </div>
@@ -126,7 +126,7 @@ export default function CompanyServices() {
                 locate={property?.location}
                 title={property?.name}
                 desc={truncateDescription(property?.desc, 16)}
-                href={`/accomodations/${property?.slug}`}
+                // href={`/accomodations/${property?.slug}`}
               />
             ))}
           </Slider>
