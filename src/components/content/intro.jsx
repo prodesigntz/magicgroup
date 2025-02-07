@@ -62,18 +62,12 @@ export default function Intro() {
             subHeading="Authentic Experiences, Positive Impacts"
             first="Magic Group of Companies"
           />
+         
           <HomeParagraph
             className="md:text-center barlow"
-            content=" Our company name “Pamoja” is derived from the Kiswahili word “As One,” and it is the spirit and understanding of this concept that drives our company philosophy to make a difference on the planet earth by protecting nature, as well as our unique and welcoming hospitality to all. "
+            content=" Magic Group of Companies is a newly established Tanzanian conglomerate operating in chemicals, sports, mining, tours, and luxury services. With a vision for growth and innovation, the group focuses on industrial development, sports promotion, sustainable mining, and premium travel experiences. By integrating these diverse sectors, Magic Group aims to make a significant impact on Tanzania’s economy and global market presence."
           />
-          <HomeParagraph
-            className="md:text-center barlow"
-            content=" Our lodge is located on the outskirts of Karatu, a farming town. It is an eco-friendly luxury lodge located next to the famous Ngorongoro Crater and aims to harmonize with the environment through its natural unobtrusive design and positioning."
-          />
-          <HomeParagraph
-            className="md:text-center barlow"
-            content=" We are firm believers in the preservation of the land and its value as a home for future generations. We accomplish this by sharing our extensive knowledge and enthusiasm with everyone."
-          />
+      
           <div className=" flex justify-center space-x-5">
             <ButtonOne name="Explore More" href="" />
           </div>
