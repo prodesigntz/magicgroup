@@ -138,7 +138,7 @@ export const UniqueCard = ({ src, desc, subTitle, title }) => {
   );
 };
 
-export const RoomCard = ({ src, name, level, price }) => {
+export const ProductCard = ({ src, name, level, price }) => {
   return (
     <div className="relative  drop-shadow-md border border-pamojaprimary mx-2">
       <Image
@@ -154,23 +154,15 @@ export const RoomCard = ({ src, name, level, price }) => {
         }}
       />
       <div className=" bg-black space-y-5 bg-opacity-30 flex flex-col  text-pamojadark ">
-        <p className="absolute p-5 bg-pamojaaccent flex flex-col left-5 top-0">
-          <span className="gilda_display"> {price} / pp </span>
-          {/* <span className="gilda_display text-3xl">210/pp</span> */}
-        </p>
+       
 
         <div className="absolute bg-slate-800/40 p-5 left-5 right-5 bottom-5 ">
           <div className="flex items-center justify-between">
             <div className="text-pamojaaccent ">
-              <h2 className="text-2xl babylonica ">{level || " "}</h2>
-
-              <h3 className="text-2xl gilda_display font-bold">{name}</h3>
+            
+              <h3 className="text-2xl gilda_display font-semibold text-slate-100">{name}</h3>
             </div>
-            <div className="">
-              <Button className="h-12 w-12 p-2 rounded-full bg-pamojadark hover:bg-pamojaprimary shadow-md ">
-                <FaPlus size={12} className="" />
-              </Button>
-            </div>
+          
           </div>
         </div>
       </div>

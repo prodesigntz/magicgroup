@@ -58,6 +58,7 @@ export const AllProducts = ({ propertyID, data }) => {
         console.error("Failed to delete room");
       }
     };
+    
 
   return (
     <div className="space-y-5">

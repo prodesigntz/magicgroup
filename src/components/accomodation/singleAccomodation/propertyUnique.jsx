@@ -63,13 +63,13 @@ export default function PropertyUnique({property}) {
         </div>
 
         <div className="sektion md:grid-cols-3">
-          {property?.highlights.length >= 1 ? <>{property?.highlights.map((item, index) => (
+          {property?.highlights.length >= 0 ? <>{property?.highlights.map((item, index) => (
             <UniqueCard
               key={index}
-              src={item.img}
-              desc={item.desc}
-              subTitle={item.subTitle}
-              title={item.title}
+              src={item?.img}
+              desc={item?.desc}
+              subTitle={item?.subTitle}
+              title={item?.title}
             />
 
            

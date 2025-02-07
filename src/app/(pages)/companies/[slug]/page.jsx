@@ -14,13 +14,13 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import AccomodationBookForm from "@/components/accomodation/singleAccomodation/accomodationBookForm";
+//import AccomodationBookForm from "@/components/accomodation/singleAccomodation/accomodationBookForm";
 import PropertyIntro from "@/components/accomodation/singleAccomodation/propertyIntro";
-import PropertyAmenities from "@/components/accomodation/singleAccomodation/propertyAmenities";
+//import PropertyAmenities from "@/components/accomodation/singleAccomodation/propertyAmenities";
 import PropertyContact from "@/components/accomodation/singleAccomodation/propertyContact";
-import Gallery from "@/components/content/gallery";
+//import Gallery from "@/components/content/gallery";
 import PropertyRooms from "@/components/accomodation/singleAccomodation/propertyRooms";
-import PropertyActivities from "@/components/accomodation/singleAccomodation/propertyActivities";
+//import PropertyActivities from "@/components/accomodation/singleAccomodation/propertyActivities";
 import PropertyFAQs from "@/components/accomodation/singleAccomodation/propertyFAQs";
 import PropertyUnique from "@/components/accomodation/singleAccomodation/propertyUnique";
 import {
@@ -32,8 +32,10 @@ import PropertyGalleryCloud from "@/components/accomodation/singleAccomodation/p
 import { ButtonOne } from "@/components/buttons";
 import { Button } from "@/components/ui/button";
 
-export default function Page({ params }) {
+export default function Page() {
   const { slug } = useParams();
+
+  //console.log("slug--:", slug);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -72,6 +74,8 @@ export default function Page({ params }) {
         console.error("Error fetching property post:", error);
       }
     };
+
+    console.log("Property---:", property);
 
     fetchPropertyData();
   }, [slug]);
@@ -112,7 +116,7 @@ export default function Page({ params }) {
                 <div className="col-span-3 mb-10">
                   <HeaderTitle
                     className="uppercase md:text-start drop-shadow-md"
-                    subHeading="Luxury Camps & Lodges"
+                    // subHeading="Luxury Camps & Lodges"
                     first={formattedPageName}
                   />
                   <div className="flex justify-center md:justify-start  drop-shadow-md ">
@@ -153,7 +157,7 @@ export default function Page({ params }) {
       {/* intro */}
       {/* <div className="md:pt-10"> */}
       <div className="">
-      <PropertyIntro property={property} />
+        <PropertyIntro property={property} />
       </div>
       {/* amenities and reviews - bg overlay */}
       {/* <PropertyAmenities property={property} /> */}
@@ -161,10 +165,10 @@ export default function Page({ params }) {
       <div className="bg-gradient-to-tr from-slate-950 to-yellow-400 psektion ">
         <div className="respons sektion md:grid-cols-8  md:content-center">
           <div className="col-span-6"> <Title
-              className="md:text-start text-white"
-              first="Your Trusted Partner"
-            /></div>
-<div className="col-span-2"> <div className="flex md:justify-end md:content-center">
+            className="md:text-start text-white"
+            first="Your Trusted Partner"
+          /></div>
+          <div className="col-span-2"> <div className="flex md:justify-end md:content-center">
             <Button
               asChild
               variant="pro-primary"
@@ -187,13 +191,13 @@ export default function Page({ params }) {
         <PropertyActivities  />
       </div> */}
 
-     
+
 
       {/* frequent asked questions */}
       <PropertyFAQs property={property} />
 
       {/* gallery */}
-      <div className="psektion">
+      {/* <div className="psektion">
         <div className="respons sektion md:grid-cols-5">
           <div></div>
           <div className="col-span-3">
@@ -206,8 +210,8 @@ export default function Page({ params }) {
           <div></div>
         </div>
         {/* <Gallery /> */}
-        <PropertyGalleryCloud property={property} />
-      </div>
+        {/* <PropertyGalleryCloud property={property} /> 
+      </div> */}
 
       {/* contact */}
       <PropertyContact property={property} />

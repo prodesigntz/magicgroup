@@ -20,7 +20,7 @@ export const AddProductSheet = ({ propertyID, room = null, title = "Product" }) 
     name: room?.name || "",
     price: room?.price || "",
     desc: room?.desc || "",
-    available: room?.available || "",
+    available: room?.available || 0,
     img: null, // Image files for upload
     imgPreview: room?.img || [], // Array of image previews, use existing if editing
   });
@@ -56,7 +56,7 @@ export const AddProductSheet = ({ propertyID, room = null, title = "Product" }) 
         // Upload each image and store the URLs
         uploadedImgUrls = await Promise.all(
           roomData.img.map(async (image) => {
-            const imageUrl = await imageUploadToFirebase(image, "rooms");
+            const imageUrl = await imageUploadToFirebase(image, "productsImages");
             return imageUrl;
           })
         );
@@ -82,8 +82,8 @@ export const AddProductSheet = ({ propertyID, room = null, title = "Product" }) 
           room ? room.name : null // Use room name to update specific room if editing
         );
         console.log("Room and images saved successfully");
-        setIsOpen(false); // Close the sheet after saving
-        router.push(`/dashboard/companies/viewProperty/${propertyID}`);
+        setIsOpen(false); // Close the sheet after saving to provide feedback to the user and reset the form state
+        router.replace(`/dashboard/companies/viewProperty/${propertyID}`);
       } else {
         console.error("Company ID is required to add or update a product");
       }
@@ -162,8 +162,9 @@ export const AddProductSheet = ({ propertyID, room = null, title = "Product" }) 
                   name="available"
                   value={roomData.available}
                   onChange={handleRoomChange}
-                  placeholder="Enter number of available "
+                  required
                   className="w-full px-4 py-2 border"
+                  placeholder="Enter number of available products"
                 />
               </div>
             </div>

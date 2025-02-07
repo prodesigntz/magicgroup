@@ -102,7 +102,7 @@ export default function Programs() {
                   title={property?.name}
                   logo={property?.logo || ""}
                   desc={truncateDescription(property?.desc, 10)}
-                  href={`/accomodations/${property?.slug}`}
+                  href={`/companies/${property?.slug}`}
                 />
                 ))}
           </div>

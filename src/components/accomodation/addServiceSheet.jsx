@@ -85,6 +85,7 @@ export const AddServiceSheet = ({ propertyID, title = "Service" }) => {
         await updateDocumentArrayOrg("Properties", propertyID, updateData);
         console.log("Service saved successfully");
         setIsOpen(false); // Close the sheet after saving
+        router.refresh();
         router.push(`/dashboard/companies/viewProperty/${propertyID}`);
       } else {
         console.error("Companies ID is required to add highlights");

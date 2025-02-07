@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 //import { Button } from "@components/ui/button";
 //import { blogData } from "@/data/blog";
-import { RoomCard, UniqueCard } from "@/components/cards";
+import { ProductCard, RoomCard, UniqueCard } from "@/components/cards";
 import { Title } from "@/components/texties";
 import { Button } from "@/components/ui/button";
 import { ButtonOne } from "@/components/buttons";
@@ -128,11 +128,11 @@ export default function PropertyRooms({ property }) {
               <p className="text-center py-5">
                 Something went wrong, please contact admin.
               </p>
-            ) : property?.rooms?.length < 1 ? (
-              <p className="text-center py-5">No Blogs found.</p>
+            ) : property?.products?.length < 1 ? (
+              <p className="text-center py-5">No Products found.</p>
             ) : (
-              property?.rooms?.map((room) => (
-                <RoomCard
+              property?.products?.map((room) => (
+                <ProductCard
                   key={room.id}
                   //href={`blog/${blog.slug}`}
                  // type={room.tags[0]}
