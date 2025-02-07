@@ -4,7 +4,7 @@ import { FaBed,  FaWifi } from 'react-icons/fa6';
 import { Separator } from '../ui/separator';
 import Link from 'next/link';
 
-const AccommodationServiceCard = ({ img,logo, address, title, desc, href }) => (
+const AccommodationServiceCard = ({ img, title, desc }) => (
   <div className="bg-white rounded-none shadow-lg max-w-md mx-auto">
     <div className="relative bg-black bg-opacity-40">
       <Image
@@ -38,7 +38,7 @@ const AccommodationServiceCard = ({ img,logo, address, title, desc, href }) => (
     </div>
     <div className="my-4 mx-4 space-y-4">
       <h3 className="text-xl gilda_display font-bold">
-        <Link href={href}>{title || ""}</Link>
+        <h2 >{title || ""}</h2>
       </h3>
       <p className="text-md barlow ">{desc}</p>
 
