@@ -73,7 +73,7 @@ export default function PropertyUnique({property}) {
             />
 
            
-          ))}</>:<h1>No <Services></Services></h1>}
+          ))}</>:<h1>No Services</h1>}
         </div>
       </div>
     </section>
