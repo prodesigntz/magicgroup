@@ -84,7 +84,7 @@ export default function CompanyServices() {
           <Tabs>
              <TabsList  className="bg-pamojatertiary space-x-5 py-4 rounded-none">
               {data?.map((company) => (
-                <TabsTrigger  value={company?.slug}>
+                <TabsTrigger  key={company?.id} value={company?.slug}>
                   {company?.name}
                 </TabsTrigger>
               ))}
