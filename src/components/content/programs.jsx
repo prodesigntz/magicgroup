@@ -70,7 +70,6 @@ export default function Programs() {
           <div></div>
           <div>
             <Title place="" subHeading="Our Keys" first="Companies" />
-            {/* <HomeParagraph place="center" content="Lorem ipsum dolor sit amet consectetur adipisicing elit."/> */}
           </div>
           <div></div>
         </div>
@@ -83,17 +82,6 @@ export default function Programs() {
                   <SkeletonOne key={index} />
                 ))
               : data?.map((property) => (
-                  // <AccommodationCard
-                  //   key={property?.id}
-                  //   img={property?.img}
-                  //   address={property?.address}
-                  //   locate={property?.location}
-                  //   title={property?.name}
-                  //   desc={truncateDescription(property?.desc, 10)}
-                  //   logo={property?.logo}
-                  //   href={`/companies/${property?.slug}`}
-                  // />
-
                   <AccommodationCard
                   key={property?.id}
                   img={property?.img}

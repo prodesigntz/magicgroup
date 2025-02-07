@@ -69,15 +69,14 @@ export default function Programs() {
       <div className="respons space-y-10">
         {/* top column */}
         <div className="sektion md:grid-cols-3">
-          <div></div>
-          <div>
+       
+          <div className="col-span-2">
             <Title
               className="md:text-start"
               subHeading="Our Key"
               first="Companies"
             />
-            {/* <HomeParagraph place="center" content=" 
-            Lorem ipsum dolor sit amet consectetur adipisicing elit."/> */}
+        
           </div>
           <div></div>
         </div>
@@ -89,15 +88,16 @@ export default function Programs() {
                 <SkeletonOne key={index} />
               ))
             : data?.map((property) => (
-                <AccommodationCard
-                  key={property.id}
-                  img={property.img}
-                  address={property.address}
-                  locate={property.location}
-                  title={property.name}
-                  desc={truncateDescription(property.desc, 16)}
-                  href={`/accomodations/${property.slug}`}
-                />
+              <AccommodationCard
+              key={property?.id}
+              img={property?.img}
+              address={property?.address}
+              locate={property?.location}
+              title={property?.name}
+              logo={property?.logo || ""}
+              desc={truncateDescription(property?.desc, 10)}
+              href={`/companies/${property?.slug}`}
+            />
               ))}
         </div>
       </div>

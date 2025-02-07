@@ -13,7 +13,7 @@ import { team } from "@/data/team";
 //import { destinationData } from "@/data/destinationData";
 
 
-export default function Destinations() {
+export default function Team() {
   const {isLoading,didSucceed,error, data} = useFetchAll("Destinations");
 
   const settings = {

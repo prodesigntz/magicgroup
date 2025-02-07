@@ -1,17 +1,12 @@
 "use client";
-import { ButtonOne } from "@/components/buttons";
 import { Title } from "@/components/texties";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import React, { useState } from "react";
-import { FaEnvelope } from "react-icons/fa";
-import { FaMapLocationDot, FaPhone } from "react-icons/fa6";
 import { createDocument } from "@/firebase/databaseOperations";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DashboardDataLoader from "@/components/dashboard/dashboard-data-loader";
-import { AllProperties } from "@/app/(cms)/dashboard/companies/allProperties";
 import useFetchAll from "@/lib/hooks/useFetchAll";
 import PropertyContactDetails from "@/components/contactus/propertyContactDetails";
 

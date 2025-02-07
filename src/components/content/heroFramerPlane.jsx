@@ -1,15 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { HeaderTitle, HomeParagraph, Title } from "../texties";
+import { HeaderTitle } from "../texties";
 import NavBar from "../navbar";
 import { ButtonOne } from "../buttons";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { truncateDescription } from "@/lib/utils";
 import { FaArrowLeft, FaArrowRight, FaEnvelope, FaMapLocationDot, FaPhone } from "react-icons/fa6";
 import useFetchAll from "@/lib/hooks/useFetchAll";
-import Image from "next/image";
 import SkeletonOne from "../skeletonOne";
 import Socialmedias from "../socialmedias";
 
@@ -84,7 +82,7 @@ export default function HeroFramerPlane() {
                 <FaPhone />
               </div>
               <div className="flex-col">
-                <div className="text-sm text-white">+255 700 000 000</div>
+                <div className="text-sm text-white">+255 657 442 123</div>
                 <div className="text-xs text-slate-300">Call for help</div>
               </div>
             </div>
@@ -110,7 +108,7 @@ export default function HeroFramerPlane() {
             </div>
           </div>
 
-          <div className="respons py-2 px-2 bg-black/40">
+          <div className="respons py-5 px-2 bg-black/40">
             <NavBar />
           </div>
         </div>
