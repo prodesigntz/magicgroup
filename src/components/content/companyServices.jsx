@@ -8,8 +8,9 @@ import "slick-carousel/slick/slick-theme.css";
 import useFetchAll from "@/lib/hooks/useFetchAll";
 import SkeletonOne from "../skeletonOne";
 import { truncateDescription } from "@/lib/utils";
-import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import AccommodationServiceCard from "../chatGPP/accomodationServiceCard";
+import DashboardDataLoader from "../dashboard/dashboard-data-loader";
 //import DemoSlider from "../framerComponents/demoSlider";
 
 export default function CompanyServices() {
@@ -90,46 +91,49 @@ export default function CompanyServices() {
               ))}
             </TabsList>
 
-            
+            {isLoading ? (
+            <DashboardDataLoader />
+          ) : (
+            <>
+            {
+              data?.map((company) => (
+                <TabsContent key={company?.id} value={company?.slug}>
+                   <div className="hidden md:flex flex-col space-y-10">
+                      <div className="sektion md:grid-cols-3">
+                        {company?.highlights?.length >= 0 ? <>{company?.highlights.map((item, index) => (
+                          <AccommodationServiceCard
+                            key={index}
+                            img={item?.img}
+                            title={item?.title}
+                            desc={truncateDescription(item?.desc, 10)}
+                          />
+
+                        
+                        ))}</>:<h1>No Services</h1>}
+                      </div>
+                  </div>
+
+                  <div className="md:hidden slider-container">
+                    <Slider {...settings}>
+                      {company?.highlights?.length >= 0 ? <>{company?.highlights.map((item, index) => (
+                        <AccommodationServiceCard
+                          key={index}
+                          img={item?.img}
+                          title={item?.title}
+                          desc={truncateDescription(item?.desc, 10)}
+                        />
+
+
+                      ))}</>:<h1>No Services</h1>}
+                    </Slider>
+                  </div>
+                </TabsContent>
+              ))
+            }
+            </>
+          )}
           </Tabs>
           </div>
-        </div>
-
-        {/* bottom column */}
-        <div className="hidden md:flex flex-col space-y-10">
-          <div className="sektion md:grid-cols-3">
-            {isLoading
-              ? Array.from({ length: 3 }).map((_, index) => (
-                  <SkeletonOne key={index} />
-                ))
-              : data?.map((property) => (
-                  <AccommodationServiceCard
-                    key={property?.id}
-                    img={property?.img}
-                    address={property?.address}
-                    locate={property?.location}
-                    title={property?.name}
-                    desc={truncateDescription(property?.desc, 10)}
-                    // href={`/accomodations/${property?.slug}`}
-                  />
-                ))}
-          </div>
-        </div>
-
-        <div className="md:hidden slider-container">
-          <Slider {...settings}>
-            {data?.map((property) => (
-              <AccommodationServiceCard
-                key={property?.id}
-                img={property?.img}
-                address={property?.address}
-                locate={property?.location}
-                title={property?.name}
-                desc={truncateDescription(property?.desc, 16)}
-                // href={`/accomodations/${property?.slug}`}
-              />
-            ))}
-          </Slider>
         </div>
       </div>
     </section>

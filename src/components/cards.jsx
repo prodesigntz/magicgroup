@@ -122,17 +122,13 @@ export const UniqueCard = ({ src, desc, subTitle, title }) => {
             objectFit: "cover",
           }}
         />
-        <div className="absolute bg-slate-900/30 bottom-0 left-0 right-0 p-5 space-y-4">
-          <h3 className="text-2xl gilda_display font-bold drop-shadow-lg">
-            {title}
-          </h3>
-          <h3 className="text-sm gilda_display font-bold  drop-shadow-lg">
-            {subTitle}
-          </h3>
-        </div>
+       
       </div>
       <div className="p-5">
-        <HomeParagraph className="text-pamojadark" content={desc} />
+         <h3 className="text-2xl slate-900 gilda_display font-semibold drop-shadow-lg">
+            {title}
+          </h3>
+        <HomeParagraph className="" content={desc} />
       </div>
     </div>
   );

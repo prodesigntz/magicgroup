@@ -186,32 +186,9 @@ export default function Page() {
       {/* rooms */}
       <PropertyRooms property={property} />
 
-      {/* activities */}
-      {/* <div className="text-white bg-[url('/images/accomodations/oleaout.jpeg')] bg-cover bg-center bg-slate-700 bg-blend-overlay bg-no-repeat">
-        <PropertyActivities  />
-      </div> */}
-
-
-
       {/* frequent asked questions */}
       <PropertyFAQs property={property} />
 
-      {/* gallery */}
-      {/* <div className="psektion">
-        <div className="respons sektion md:grid-cols-5">
-          <div></div>
-          <div className="col-span-3">
-            <Title place="" subHeading="Gallery" first="Shared Memories" />
-            <HomeParagraph
-              className="md:text-center"
-              content="On these sweet mornings, hearing the sounds of birds and wild animals, a wonderful serenity will take possession of your entire soul, which you will enjoy with all your heart. In this spot, you can be close to nature and feel the allure of life."
-            />
-          </div>
-          <div></div>
-        </div>
-        {/* <Gallery /> */}
-        {/* <PropertyGalleryCloud property={property} /> 
-      </div> */}
 
       {/* contact */}
       <PropertyContact property={property} />

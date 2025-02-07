@@ -160,51 +160,11 @@ export default function Contact() {
                   className="w-full px-4 py-2 border border-pamojaprimary rounded-none"
                 />
               </div>
-              {/* <div className="col-span-2 space-y-5">
-                <div className="flex items-center space-x-3">
-                  <div className="flex items-center justify-between space-x-2">
-                    <Checkbox
-                      name="checkboxWhatsApp"
-                      checked={formData.checkboxWhatsApp}
-                      onChange={handleCheckboxChange}
-                    />
-                    <p className="text-sm text-pamojaprimary">WhatsApp</p>
-                  </div>
-                  <div className="flex items-center justify-between space-x-2">
-                    <Checkbox
-                      name="checkboxText"
-                      checked={formData.checkboxText}
-                      onChange={handleCheckboxChange}
-                    />
-                    <p className="text-sm text-pamojaprimary">Text</p>
-                  </div>
-                  <div className="flex items-center justify-between space-x-2">
-                    <Checkbox
-                      name="checkboxEmail"
-                      checked={formData.checkboxEmail}
-                      onChange={handleCheckboxChange}
-                    />
-                    <p className="text-sm text-pamojaprimary">Email</p>
-                  </div>
-                </div>
 
-                <Textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Enter Message"
-                  required
-                  className="w-full px-4 py-2 rounded-none border border-pamojaprimary"
-                />
-              </div> */}
               <div className="col-span-2 space-y-5">
                 <div className="flex items-center space-x-3">
                   <div className="flex items-center justify-between space-x-2">
-                    {/* <Checkbox
-                    name="checkboxWhatsApp"
-                    checked={formData.checkboxWhatsApp}
-                    onChange={handleCheckboxChange}
-                  /> */}
+               
                     <input
                       type="checkbox"
                       name="checkboxWhatsApp"
@@ -215,11 +175,7 @@ export default function Contact() {
                     <p className="text-sm text-pamojaprimary">WhatsApp</p>
                   </div>
                   <div className="flex items-center justify-between space-x-2">
-                    {/* <Checkbox
-                    name="checkboxText"
-                    checked={formData.checkboxText}
-                    onChange={handleCheckboxChange}
-                  /> */}
+                 
                     <input
                       type="checkbox"
                       name="checkboxText"
@@ -230,11 +186,7 @@ export default function Contact() {
                     <p className="text-sm text-pamojaprimary">Text</p>
                   </div>
                   <div className="flex items-center justify-between space-x-2">
-                    {/* <Checkbox
-                    name="checkboxEmail"
-                    checked={formData.checkboxEmail}
-                    onChange={handleCheckboxChange}
-                  /> */}
+               
                     <input
                       type="checkbox"
                       name="checkboxEmail"

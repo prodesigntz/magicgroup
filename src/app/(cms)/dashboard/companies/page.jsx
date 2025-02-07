@@ -56,6 +56,7 @@ export default function Page() {
             <TabsTrigger value="Published">Pushlished</TabsTrigger>
             <TabsTrigger value="Drafts">Drafts </TabsTrigger>
           </TabsList>
+          
           {isLoading ? (
             <DashboardDataLoader />
           ) : (

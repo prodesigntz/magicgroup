@@ -1,19 +1,12 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
-//import { Title } from "@components/texties";
+import React, { useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-//import { Button } from "@components/ui/button";
-//import { blogData } from "@/data/blog";
-import { ProductCard, RoomCard, UniqueCard } from "@/components/cards";
+import { ProductCard } from "@/components/cards";
 import { Title } from "@/components/texties";
-import { Button } from "@/components/ui/button";
-import { ButtonOne } from "@/components/buttons";
-import { blogData } from "@/data/blog";
 import SkeletonOne from "@/components/skeletonOne";
-//import { useState } from "react/cjs/react.production.min";
 
 export default function PropertyRooms({ property }) {
   const data = property.rooms;
@@ -77,44 +70,10 @@ export default function PropertyRooms({ property }) {
             />
           </div>
           <div className="flex md:justify-end">
-            {/* <Button
-              asChild
-              variant="pro-primary"
-              className=" bg-proprimary rounded-none text-white"
-            >
-              <ButtonOne name="Book Now" />
-            </Button> */}
+           
           </div>
         </div>
 
-        {/* bottom column */}
-        {/* <div>
-          <Slider {...settings}>
-            {blogData.map((blog) => (
-              <RoomCard
-                key={blog.id}
-                href={`blog/${blog.slug}`}
-                type={blog.tags[0]}
-                src={blog.image}
-                title={blog.title}
-              />
-            ))}
-          </Slider>
-        </div> */}
-
-        {/* <div>
-          <Slider {...settings}>
-            {data?.map((blog) => (
-              <RoomCard
-                key={blog.id}
-                href={`blog/${blog.slug}`}
-                type={blog.tags[0]}
-                src={blog.image}
-                title={blog.title}
-              />
-            ))}
-          </Slider>
-        </div> */}
 
         {/* bottom column */}
         <div className="">
@@ -134,12 +93,8 @@ export default function PropertyRooms({ property }) {
               property?.products?.map((room) => (
                 <ProductCard
                   key={room.id}
-                  //href={`blog/${blog.slug}`}
-                 // type={room.tags[0]}
                   src={room.img[0]}
                   name={room.name}
-                  price={room.price}
-                  level={room.level}
                 />
 
              
