@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import { FaEnvelope } from "react-icons/fa";
 import { FaMapLocationDot, FaPhone } from "react-icons/fa6";
 import { createDocument } from "@/firebase/databaseOperations";
+import Team from "./destinations";
 
 export default function Contact() {
     const [formData, setFormData] = useState({
@@ -128,11 +129,7 @@ export default function Contact() {
               />
               <div className="flex items-center space-x-3">
                 <div className="flex items-center justify-between space-x-2">
-                  {/* <Checkbox
-                    name="checkboxWhatsApp"
-                    checked={formData.checkboxWhatsApp}
-                    onChange={handleCheckboxChange}
-                  /> */}
+                
                   <input
                     type="checkbox"
                     name="checkboxWhatsApp"
@@ -142,11 +139,7 @@ export default function Contact() {
                   <p className="text-sm text-pamojaprimary">WhatsApp</p>
                 </div>
                 <div className="flex items-center justify-between space-x-2">
-                  {/* <Checkbox
-                    name="checkboxText"
-                    checked={formData.checkboxText}
-                    onChange={handleCheckboxChange}
-                  /> */}
+                 
                   <input
                     type="checkbox"
                     name="checkboxText"
@@ -156,11 +149,7 @@ export default function Contact() {
                   <p className="text-sm text-pamojaprimary">Text</p>
                 </div>
                 <div className="flex items-center justify-between space-x-2">
-                  {/* <Checkbox
-                    name="checkboxEmail"
-                    checked={formData.checkboxEmail}
-                    onChange={handleCheckboxChange}
-                  /> */}
+                
                   <input
                     type="checkbox"
                     name="checkboxEmail"
@@ -213,11 +202,8 @@ export default function Contact() {
           </form>
         </div>
         <div className="col-span-3 content-center">
-          <Title
-            className="md:text-start text-pamojasecondary"
-            subHeading="Learn More"
-            first="FAQs"
-          />
+         
+          <Team/> 
         </div>
       </div>
     </section>

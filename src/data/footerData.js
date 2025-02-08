@@ -4,11 +4,7 @@ export const footerData = [
     links: [
       {
         name: "About",
-        link: "/about",
-      },
-      {
-        name: "Accommodations",
-        link: "/accommodations",
+        link: "#about",
       },
 
       {
@@ -25,10 +21,7 @@ export const footerData = [
   {
     title: "Important",
     links: [
-      {
-        name: "Help Center",
-        link: "/help-center",
-      },
+     
       {
         name: "Privancy Policy",
         link: "/privancy-policy",

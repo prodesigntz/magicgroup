@@ -21,7 +21,7 @@ export const Footer = () => {
               width={1200}
               height={1200}
               style={{
-                maxWidth: "120px",
+                maxWidth: "240px",
                 height: "60px",
                 objectFit: "cover",
               }}
@@ -106,7 +106,7 @@ export const Footer = () => {
                 href="https://prodesign.co.tz"
                 className="pl-1 text-red-500"
               >
-                Pro Design
+                Pro DesignTZ
               </Link>
             </h5>
           </div>

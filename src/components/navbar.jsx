@@ -8,7 +8,7 @@ import { ButtonOne } from "./buttons";
 
 export default function NavBar() {
   return (
-    <nav className="bg-transparent shadow-md">
+    <nav className="bg-transparent ">
      
       <div className="">
         <div className="respons flex items-center justify-between">

@@ -1,20 +1,19 @@
 "use client";
 import React, { useRef, useEffect } from "react";
 import Slider from "react-slick";
-import { HomeParagraph, Title } from "../texties";
+import {  Title } from "../texties";
 import { DestinationCard } from "../cards";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 // import { destinationData } from "@/data/destiantionData";
 import useFetchAll from "@/lib/hooks/useFetchAll";
 import SkeletonOne from "../skeletonOne";
-import { truncateDescription, truncateDescriptionNew } from "@/lib/utils";
 import { team } from "@/data/team";
 //import { destinationData } from "@/data/destinationData";
 
 
 export default function Team() {
-  const {isLoading,didSucceed,error, data} = useFetchAll("Destinations");
+  const {isLoading,didSucceed,error, data} = useFetchAll("Staffs");
 
   const settings = {
     dots: true,
@@ -25,8 +24,8 @@ export default function Team() {
     infinite: false,
     speed: 2000,
     autoplaySpeed: 2000,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 3,
+    slidesToScroll: 3,
     initialSlide: 0,
     responsive: [
       {
@@ -62,14 +61,10 @@ export default function Team() {
     <section className="psektion md:pt-32 space-y-5">
       <div className="respons">
         <div className="sektion md:grid-cols-5">
-          <div></div>
+        
           <div className="col-span-3">
-            <Title place="" subHeading="The Heart" first="Our Team" />
-            {/* <HomeParagraph
-              className="text-center"
-              content="
-            On these sweet mornings, hearing the sounds of birds and wild animals, a wonderful serenity will take possession of your entire soul, which you will enjoy with all your heart. In this spot, you can be close to nature and feel the allure of life. "
-            /> */}
+            <Title className="md:text-start" subHeading="The Heart" first="Our Team" />
+          
           </div>
           <div></div>
         </div>

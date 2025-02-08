@@ -8,7 +8,6 @@ import React from "react";
 import HeroFramerPlane from "@/components/content/heroFramerPlane";
 import SuccessSection from "@/components/content/successSection";
 import CompanyServices from "@/components/content/companyServices";
-import Team from "@/components/content/destinations";
 
 
 export default function Home() {
@@ -24,7 +23,7 @@ export default function Home() {
       <Activities/>
       <CompanyServices/>
       <Contact/>
-      <Team/> 
+      {/* <Team/>  */}
       <Testimonials/>    
       <BlogSection/>
       {/* <ImageGallerySelectionCloudinary/> */}

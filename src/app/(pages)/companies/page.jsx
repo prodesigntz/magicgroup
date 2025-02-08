@@ -88,16 +88,16 @@ export default function Programs() {
                 <SkeletonOne key={index} />
               ))
             : data?.map((property) => (
-              <AccommodationCard
-              key={property?.id}
-              img={property?.img}
-              address={property?.address}
-              locate={property?.location}
-              title={property?.name}
-              logo={property?.logo || ""}
-              desc={truncateDescription(property?.desc, 10)}
-              href={`/companies/${property?.slug}`}
-            />
+                  <AccommodationCard
+                    key={property?.id}
+                    img={property?.img}
+                    address={property?.address}
+                    locate={property?.location}
+                    title={property?.name}
+                    logo={property?.logo || ""}
+                    desc={truncateDescription(property?.desc, 10)}
+                    href={`/companies/${property?.slug}`}
+                  />
               ))}
         </div>
       </div>
