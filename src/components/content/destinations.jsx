@@ -1,19 +1,17 @@
 "use client";
-import React, { useRef, useEffect } from "react";
+import React, {  } from "react";
 import Slider from "react-slick";
 import {  Title } from "../texties";
-import { DestinationCard } from "../cards";
+import { StaffCard } from "../cards";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-// import { destinationData } from "@/data/destiantionData";
 import useFetchAll from "@/lib/hooks/useFetchAll";
 import SkeletonOne from "../skeletonOne";
-import { team } from "@/data/team";
-//import { destinationData } from "@/data/destinationData";
 
 
 export default function Team() {
   const {isLoading,didSucceed,error, data} = useFetchAll("Staffs");
+
 
   const settings = {
     dots: true,
@@ -80,16 +78,16 @@ export default function Team() {
               <p className="text-center py-5">
                 Something went wrong, please contact admins
               </p>
-            ) : team?.length < 1 ? (
+            ) : data?.length < 1 ? (
               <p className="text-center py-5">No Team found.</p>
             ) : (
-              team?.map((destination, id) => (
-                <DestinationCard
-                  key={destination.id}
-                  src={destination.src}
-                  alt={destination.title}
-                  name={destination.name}
-                  title={destination.title}
+              data?.map((destination, id) => (
+                <StaffCard
+                  key={destination?.id}
+                  src={destination?.img}
+                  alt={destination?.title}
+                  desc={destination?.desc}
+                  title={destination?.title}
                 />
               ))
             )}

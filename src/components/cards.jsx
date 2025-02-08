@@ -166,7 +166,7 @@ export const ProductCard = ({ src, name, level, price }) => {
   );
 };
 
-export const DestinationCard = ({ src, alt, name,title }) => {
+export const StaffCard = ({ src, alt, desc,title }) => {
   return (
     <div className="relative mx-2">
       <Image
@@ -184,10 +184,10 @@ export const DestinationCard = ({ src, alt, name,title }) => {
 
       <div className=" inset-0 p-5 bg-black space-y-5 bg-opacity-40 flex flex-col justify-center items-center text-white text-center ">
         <h3 className="text-lg gilda_display font-bold">
-         {name}
+         {title}
         </h3>
 
-        <p className="text-xs text-pamojatertiary">{title}</p>
+        <p className="text-xs text-pamojatertiary">{desc}</p>
         {/* <ButtonLink className={"rounded-none text-center text-lg px-5 py-1.5  bg-pamojaprimary hover:bg-pamojadark gilda_display"} href={href}  name="Explore"  /> */}
       </div>
     </div>
