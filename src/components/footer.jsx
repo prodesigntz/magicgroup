@@ -1,6 +1,7 @@
+"use client"
 import { footerData } from "@/data/footerData";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "./ui/button";
 import Socialmedias from "./socialmedias";
 import { Input } from "./ui/input";
@@ -9,6 +10,54 @@ import Image from "next/image";
 import { Title } from "./texties";
 
 export const Footer = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setLoading(true);
+    setSuccessMessage("");
+    setErrorMessage("");
+
+    // Basic validation
+    if (
+      !formData.name ||
+      !formData.email
+    ) {
+      setLoading(false);
+      setErrorMessage("Please fill out all fields.");
+      return;
+    }
+
+    try {
+      // Add form data to Firebase Firestore
+      await createDocument(formData, "Subscribers");
+      setSuccessMessage("Your message has been sent successfully!");
+      setFormData({
+        name: "",
+        email: "",
+      });
+    } catch (error) {
+      setErrorMessage("Error sending message. Please try again.");
+      console.error("Error adding document: ", error);
+    }
+
+    setLoading(false);
+  };
+
   return (
     <section className="bg-[url('/images/dar.jpg')] bg-black/80 bg-blend-overlay bg-cover bg-no-repeat  ">
       <div className="psektion respons sektion md:grid-cols-6">
@@ -74,25 +123,29 @@ export const Footer = () => {
             first="Subscribe our Newsletter"
           />
 
-          <form className="flex flex-col items-center  space-y-5">
+          <form className="flex flex-col items-center  space-y-5" onSubmit={handleSubmit}>
             <Input
               type="text"
               placeholder="Name"
               className="w-full max-w-sm rounded-none"
+              value={formData.name}
+              onChange={handleChange}
             />
             <Input
               type="email"
               placeholder="Email"
               className="w-full max-w-sm rounded-none hover:ring-0 hover:ring-offset-0 hover:outline-0 hover:outline-offset-0"
+              value={formData.email}
+              onChange={handleChange}
             />
-            <Button
-              type="submit"
-              className="w-full max-w-sm ring-0 ring-offset-0 outline-0 outline-offset-0 flex items-center hover:bg-pamojadark space-x-2 bg-white text-pamojasecondary rounded-none"
-            >
-              <span>Subscribe</span>
-              <FaArrowRightLong />
-            </Button>
           </form>
+          <button
+            type="submit"
+            className="w-full max-w-sm ring-0 ring-offset-0 outline-0 outline-offset-0 flex items-center hover:bg-pamojadark space-x-2 bg-white text-pamojasecondary rounded-none"
+          >
+            <span>Subscribe</span>
+            <FaArrowRightLong />
+          </button>
           {/* <Socialmedias /> */}
         </div>
       </div>
