@@ -76,6 +76,23 @@ const deleteDocument = async (collName, docId) => {
     return { didSucceed: false };
   }
 };
+const deleteChildCollection = async (parentCollName, parentDocId, childCollName) => {
+  const batch = writeBatch(db);
+  try {
+    const childCollectionRef = collection(db, parentCollName, parentDocId, childCollName);
+    const childDocsSnapshot = await getDocs(childCollectionRef);
+
+    childDocsSnapshot.forEach((doc) => {
+      batch.delete(doc.ref);
+    });
+
+    await batch.commit();
+    return { didSucceed: true };
+  } catch (error) {
+    console.error("Error deleting child collection:", error);
+    return { didSucceed: false };
+  }
+};
 
 const getSingleDocument = async (collName, docId) => {
   try {

@@ -92,7 +92,7 @@ export default function HeroFramerPlane() {
                 <FaEnvelope />
               </div>
               <div className="flex-col">
-                <div className="text-sm text-white">info@magicgroup.com</div>
+                <div className="text-sm text-white">info@magicgroup.co.tz</div>
                 <div className="text-xs text-slate-300">Drop us a line</div>
               </div>
             </div>
@@ -102,8 +102,8 @@ export default function HeroFramerPlane() {
                 <FaMapLocationDot />
               </div>
               <div className="flex-col">
-                <div className="text-sm text-white">Dar es Salaam</div>
-                <div className="text-xs text-slate-300">Get Dirction</div>
+                <div className="text-sm text-white">Tanzania</div>
+                <div className="text-xs text-slate-300">Get Direction</div>
               </div>
             </div>
           </div>
@@ -122,7 +122,7 @@ export default function HeroFramerPlane() {
             <div className="col-span-3 content-center">
               <HeaderTitle
                 className=""
-                subHeading="Luxury Camps & Lodges"
+                subHeading={data[currentIndex]?.slogan || ""}
                 first={data[currentIndex]?.name || ""}
               />
               <ButtonOne

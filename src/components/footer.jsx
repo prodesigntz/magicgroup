@@ -44,7 +44,7 @@ export const Footer = () => {
                   </span>
                   <span className="flex items-center  space-x-2">
                     <FaEnvelope className="text-md" />
-                    <h5 className="">info@magicgroup.com</h5>
+                    <h5 className="">info@magicgroup.co.tz</h5>
                   </span>
                 </div>
               </div>

@@ -42,7 +42,7 @@ export default function Page({params}) {
   return (
     <div className="">
       <div className="psektion respons">
-        <div className="relative">
+        <div className="relative border rounded-md overflow-hidden">
           <Image
               width={2000}
               height={520}

@@ -1,8 +1,8 @@
 export const menuData = [
-  {
-    name: "About",
-    link: "#",
-  },
+  // {
+  //   name: "About",
+  //   link: "#",
+  // },
 
   {
     name: "Companies",
