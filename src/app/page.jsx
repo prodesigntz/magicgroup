@@ -1,5 +1,6 @@
 // "use client"
 
+import TawtoMessenger from "@/components/tawtoMessenger";
 import Landing from "./(pages)/home/page";
 import { Footer } from "@/components/footer";
 
@@ -13,6 +14,7 @@ export default function Home() {
     <main className="">
     
       <Landing />
+      <TawtoMessenger/>
       <Footer />
     </main>
   );
