@@ -8,6 +8,7 @@ import { Input } from "./ui/input";
 import { FaArrowLeftLong, FaArrowRightLong, FaEnvelope, FaPhone } from "react-icons/fa6";
 import Image from "next/image";
 import { Title } from "./texties";
+import { createDocument } from "@/firebase/databaseOperations";
 
 export const Footer = () => {
   const [formData, setFormData] = useState({
@@ -89,7 +90,7 @@ export const Footer = () => {
                 <div className="flex-col">
                   <span className="flex items-center  space-x-2">
                     <FaPhone className="text-md" />
-                    <h5 className=""> +255 786 707 931</h5>
+                    <h5 className=""> +255 700 000 000</h5>
                   </span>
                   <span className="flex items-center  space-x-2">
                     <FaEnvelope className="text-md" />
@@ -138,14 +139,14 @@ export const Footer = () => {
               value={formData.email}
               onChange={handleChange}
             />
+            <button
+              type="submit"
+              className="w-full max-w-sm ring-0 ring-offset-0 outline-0 outline-offset-0 flex items-center hover:bg-pamojadark space-x-2 bg-white text-pamojasecondary rounded-none"
+            >
+              <span>Subscribe</span>
+              <FaArrowRightLong />
+            </button>
           </form>
-          <button
-            type="submit"
-            className="w-full max-w-sm ring-0 ring-offset-0 outline-0 outline-offset-0 flex items-center hover:bg-pamojadark space-x-2 bg-white text-pamojasecondary rounded-none"
-          >
-            <span>Subscribe</span>
-            <FaArrowRightLong />
-          </button>
           {/* <Socialmedias /> */}
         </div>
       </div>
