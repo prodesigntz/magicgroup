@@ -246,7 +246,7 @@ export default function Contact() {
             className="respons sektion md:grid-cols-3"
           >
             <div className="relative bg-pamojaaccent md:col-span-1 md:p-5">
-              <TabsList className=" rounded-none sektion  ">
+              <TabsList className="bg-transparent rounded-none  flex space-x-2 flex-wrap gap-x-0 md:gap-x-5 gap-5 px-5 md:px-0">
                 {data.map((property) => (
                   <TabsTrigger
                     key={property.id}
@@ -263,7 +263,7 @@ export default function Contact() {
             ) : (
               <div className="col-span-2">
                 {data.map((property) => (
-                  <TabsContent key={property.id} value={property.slug}>
+                  <TabsContent key={property.id} value={property.slug} className=" mt-10 md:m-0 border border-pamojaprimary rounded-none p-5">
                     <PropertyContactDetails property={property} />
                   </TabsContent>
                 ))}
