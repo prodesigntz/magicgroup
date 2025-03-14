@@ -242,7 +242,7 @@ export default function Contact() {
       <section className="psektion">
         {data && data.length > 0 && (
           <Tabs
-            defaultValue="pamoja-farm-villa"
+            defaultValue="magic-chemicals"
             className="respons sektion md:grid-cols-3"
           >
             <div className="relative bg-pamojaaccent md:col-span-1 md:p-5">
