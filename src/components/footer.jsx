@@ -20,8 +20,13 @@ export const Footer = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+  // const handleChange = (e) => {
+  //   setFormData({ ...formData, [e.target.name]: e.target.value });
+  // };
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
 
@@ -45,7 +50,7 @@ export const Footer = () => {
 
     try {
       // Add form data to Firebase Firestore
-      await createDocument(formData, "Subscribers");
+      await createDocument( formData, "Subscribers");
       setSuccessMessage("Your message has been sent successfully!");
       setFormData({
         name: "",
