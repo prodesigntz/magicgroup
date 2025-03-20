@@ -49,7 +49,13 @@ export default function NavBar() {
               variant="pamoja-primary"
               className=" bg-pamojaprimary hover:bg-pamojadark rounded-none text-pamojasecondary"
             >
-              <ButtonOne name="Get Quote" />
+               <ButtonOne
+                              name="Get In Touch"
+                              onClick={() =>
+                                router.push(`/contact`)
+                              }
+                              className="justify-center  mt-5"
+                            />
             </Button>
           </div>
           <MobileNav />
