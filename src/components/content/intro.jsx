@@ -1,10 +1,10 @@
 import React from "react";
 import { HomeParagraph, Title } from "../texties";
 import { ButtonOne } from "../buttons";
-import Image from "next/image";
-import { Separator } from "../ui/separator";
-import Socialmedias from "../socialmedias";
-import { StarRating } from "../starRating";
+// import Image from "next/image";
+// import { Separator } from "../ui/separator";
+// import Socialmedias from "../socialmedias";
+// import { StarRating } from "../starRating";
 
 export default function Intro() {
   return (
@@ -69,7 +69,13 @@ export default function Intro() {
           />
       
           <div className=" flex justify-center space-x-5">
-            <ButtonOne name="Explore More" href="" />
+           <ButtonOne
+                         name="Explore More"
+                         onClick={() =>
+                           router.push(`/companies`)
+                         }
+                         className="justify-center  mt-5"
+                       />
           </div>
         </div>
         <div className=""></div>
