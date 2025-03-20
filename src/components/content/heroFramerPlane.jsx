@@ -82,7 +82,7 @@ export default function HeroFramerPlane() {
                 <FaPhone />
               </div>
               <div className="flex-col">
-                <div className="text-sm text-white">+255 657 442 123</div>
+                <div className="text-sm text-white">+255 222 701 285</div>
                 <div className="text-xs text-slate-300">Call for help</div>
               </div>
             </div>
@@ -128,7 +128,7 @@ export default function HeroFramerPlane() {
               <ButtonOne
                 name="Get In Touch"
                 onClick={() =>
-                  router.push(`/accomodations/${data[currentIndex]?.slug}`)
+                  router.push(`/companies/${data[currentIndex]?.slug}`)
                 }
                 className="justify-center  mt-5"
               />
