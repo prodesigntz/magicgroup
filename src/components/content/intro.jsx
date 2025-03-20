@@ -1,12 +1,16 @@
+"use client";
+
 import React from "react";
 import { HomeParagraph, Title } from "../texties";
 import { ButtonOne } from "../buttons";
+import { useRouter } from "next/navigation";
 // import Image from "next/image";
 // import { Separator } from "../ui/separator";
 // import Socialmedias from "../socialmedias";
 // import { StarRating } from "../starRating";
 
 export default function Intro() {
+  const router = useRouter();
   return (
     <section className="psektion bg-gradient-to-t from-[#ffefe2] to-white">
       <div className="respons sektion md:grid-cols-5">

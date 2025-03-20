@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import React from "react";
 import { MobileNav } from "./mobilenav";
@@ -5,8 +7,11 @@ import { menuData } from "@/data/menuData";
 import { Button } from "./ui/button";
 import Image from "next/image";
 import { ButtonOne } from "./buttons";
+import { useRouter } from "next/navigation";
 
 export default function NavBar() {
+  const router = useRouter();
+
   return (
     <nav className="bg-transparent ">
      

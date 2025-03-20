@@ -174,7 +174,14 @@ export default function Page() {
               variant="pro-primary"
               className=" bg-proprimary rounded-none text-white"
             >
-              <ButtonOne name="Contact Us Now" />
+              
+               <ButtonOne
+                                       name="Contact Us Now"
+                                       onClick={() =>
+                                         router.push(`/contact`)
+                                       }
+                                       className="justify-center  mt-5"
+                                     />
             </Button>
           </div></div>        </div>
       </div>
