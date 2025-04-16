@@ -30,10 +30,11 @@ export default function EditPost({ params }) {
   const { authUser } = useAppContext();
   const [formData, setFormData] = useState({
     title: "",
+    name: "",
     desc: "",
-    category: "",
     img: null,
-    imgPreview: null, // Added for image preview
+    imgPreview: null,
+    isApproved: false,
     isPublished: false,
   });
 
@@ -46,7 +47,7 @@ export default function EditPost({ params }) {
       const fetchPost = async () => {
         setIsLoading(true);
         const { didSucceed, document } = await getSingleDocument(
-          "Blogposts",
+          "Reviews",
           postId
         );
 
@@ -56,7 +57,7 @@ export default function EditPost({ params }) {
           setFormData({
             title: document.title,
             desc: document.desc,
-            category: document.category,
+           // category: document.category,
             img: document.img || null,
             imgPreview: document.img || null, // Added for image preview
           });
@@ -103,7 +104,7 @@ export default function EditPost({ params }) {
         title: formData.title,
         desc: formData.desc,
         author: authUser?.username || "Anonymous",
-        category: formData.category,
+        //category: formData.category,
         img: imageUrl,
         updatedAt: new Date(),
         // isPublished: formData.isPublished,
@@ -113,19 +114,19 @@ export default function EditPost({ params }) {
 
       let result;
       if (postId) {
-        result = await updateDocument("Blogposts", postId, blogData);
+        result = await updateDocument("Reviews", postId, blogData);
       } else {
         blogData.createdAt = new Date();
-        result = await createDocument(blogData, "Blogposts");
+        result = await createDocument(blogData, "Reviews");
       }
 
       if (result.didSucceed) {
-        router.push("/dashboard/blogs"); // Replace with your CMS route
+        router.push("/dashboard/reviews"); // Replace with your CMS route
       } else {
-        setError("Failed to save blog post.");
+        setError("Failed to save reviews post.");
       }
     } catch (error) {
-      console.error("Blogpost save error:", error.message);
+      console.error("Reviews save error:", error.message);
       setError(error.message);
     } finally {
       setIsLoading(false);
@@ -145,6 +146,14 @@ export default function EditPost({ params }) {
             value={formData.title}
             onChange={handleChange}
             placeholder="Enter Title Here"
+            required
+          />
+          <TextInput
+            label="Name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Enter Name Here"
             required
           />
           <div className="mb-4 relative">
@@ -175,14 +184,14 @@ export default function EditPost({ params }) {
               required
             />
           </div>
-          <TextInput
+          {/* <TextInput
             label="Category"
             name="category"
             value={formData.category}
             onChange={handleChange}
             placeholder="Enter Category Here"
             required
-          />
+          /> */}
           <div className="mb-4">
             <label
               className="block text-slate-700 text-sm font-bold mb-2"

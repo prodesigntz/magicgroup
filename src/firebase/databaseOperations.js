@@ -18,17 +18,33 @@ const { db } = firebase;
 
 const createDocument = async (data, collName) => {
   try {
+    if (!data || !collName) {
+      throw new Error('Missing required parameters');
+    }
     const docRef = await addDoc(collection(db, collName), data);
-    return { didSucceed: true, docId: docRef.id };
+    return { 
+      didSucceed: true, 
+      docId: docRef.id,
+      status: 200,
+      message: 'Document created successfully'
+    };
   } catch (error) {
-    console.error("Error creating document:", error);
-    return { didSucceed: false, message: "Failed to create document." };
+    console.error(`Error creating document in ${collName}:`, error);
+    return { 
+      didSucceed: false, 
+      status: error.code === 'permission-denied' ? 403 : 500,
+      message: error.message || 'Failed to create document',
+      error: error.code
+    };
   }
 };
 
 const fetchDocuments = async (collName) => {
   let items = [];
   try {
+    if (!collName) {
+      throw new Error('Collection name is required');
+    }
     const docsQuery = query(
       collection(db, collName),
       orderBy("createdAt", "desc")
@@ -40,10 +56,21 @@ const fetchDocuments = async (collName) => {
       items.push(item);
     });
 
-    return { didSucceed: true, items };
+    return { 
+      didSucceed: true, 
+      items,
+      status: 200,
+      message: items.length ? 'Documents fetched successfully' : 'No documents found'
+    };
   } catch (error) {
-    console.error("Error fetching documents:", error);
-    return { didSucceed: false, items: [] };
+    console.error(`Error fetching documents from ${collName}:`, error);
+    return { 
+      didSucceed: false, 
+      items: [],
+      status: error.code === 'permission-denied' ? 403 : 500,
+      message: error.message || 'Failed to fetch documents',
+      error: error.code
+    };
   }
 };
 
@@ -59,21 +86,45 @@ const fetchDocuments = async (collName) => {
 
 const updateDocument = async (collName, docId, data) => {
   try {
+    if (!collName || !docId || !data) {
+      throw new Error('Missing required parameters');
+    }
     await updateDoc(doc(db, collName, docId), data);
-    return { didSucceed: true };
+    return { 
+      didSucceed: true,
+      status: 200,
+      message: 'Document updated successfully'
+    };
   } catch (error) {
-    console.error("Error updating document:", error);
-    return { didSucceed: false };
+    console.error(`Error updating document ${docId} in ${collName}:`, error);
+    return { 
+      didSucceed: false,
+      status: error.code === 'not-found' ? 404 : error.code === 'permission-denied' ? 403 : 500,
+      message: error.message || 'Failed to update document',
+      error: error.code
+    };
   }
 };
 
 const deleteDocument = async (collName, docId) => {
   try {
+    if (!collName || !docId) {
+      throw new Error('Collection name and document ID are required');
+    }
     await deleteDoc(doc(db, collName, docId));
-    return { didSucceed: true };
+    return { 
+      didSucceed: true,
+      status: 200,
+      message: 'Document deleted successfully'
+    };
   } catch (error) {
-    console.error("Error deleting document:", error);
-    return { didSucceed: false };
+    console.error(`Error deleting document ${docId} from ${collName}:`, error);
+    return { 
+      didSucceed: false,
+      status: error.code === 'not-found' ? 404 : error.code === 'permission-denied' ? 403 : 500,
+      message: error.message || 'Failed to delete document',
+      error: error.code
+    };
   }
 };
 const deleteChildCollection = async (parentCollName, parentDocId, childCollName) => {

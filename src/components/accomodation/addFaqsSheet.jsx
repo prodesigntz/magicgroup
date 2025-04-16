@@ -7,11 +7,16 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { updateDocumentArrayOrg } from "@/firebase/databaseOperations"; // Firebase function for updating documents
+import { toast } from "react-hot-toast";
+import { updateDocumentArrayOrg } from "@/firebase/databaseOperations";
+import { useRouter } from "next/navigation";
 
 export const AddFAQSheet = ({ propertyID, title = "FAQ" }) => {
-  const [isOpen, setIsOpen] = useState(false); // Manage sheet visibility
-  const [faqs, setFaqs] = useState([{ title: "", desc: "" }]); // Initialize FAQs
+  const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
+  const [faqs, setFaqs] = useState([{ title: "", desc: "" }]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
 
   // Handle changes for text inputs (title, desc)
   const handleFAQChange = (index, e) => {
@@ -32,28 +37,53 @@ export const AddFAQSheet = ({ propertyID, title = "FAQ" }) => {
     setFaqs(updatedFaqs);
   };
 
-  const handleFAQSubmit = (e) => {
-    e.preventDefault(); // Prevent page reload
-    handleSave();
+  const validateForm = () => {
+    const newErrors = {};
+    faqs.forEach((faq, index) => {
+      if (!faq.title.trim()) {
+        newErrors[`title-${index}`] = "Question is required";
+      }
+      if (!faq.desc.trim()) {
+        newErrors[`desc-${index}`] = "Answer is required";
+      }
+    });
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  // Save the FAQs to Firestore
+  const handleFAQSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+    await handleSave();
+  };
+
   const handleSave = async () => {
+    if (!propertyID) {
+      toast.error("Property ID is required to add FAQs");
+      return;
+    }
+
+    setIsSubmitting(true);
     try {
-      if (propertyID) {
-        const updateData = {
-          faq: faqs, // Store the updated FAQs
-        };
-        await updateDocumentArrayOrg("Properties", propertyID, updateData);
-        console.log("FAQs saved successfully");
-        setIsOpen(false); // Close the sheet after saving
-        router.refresh();
-        router.push(`/dashboard/companies/viewProperty/${propertyID}`);
-      } else {
-        console.error("Property ID is required to add FAQs");
-      }
+      const updateData = {
+        faq: faqs.map(faq => ({
+          title: faq.title.trim(),
+          desc: faq.desc.trim()
+        }))
+      };
+      await updateDocumentArrayOrg("Properties", propertyID, updateData);
+      toast.success("FAQs saved successfully");
+      setIsOpen(false);
+      router.refresh();
+      router.push(`/dashboard/companies/viewProperty/${propertyID}`);
     } catch (error) {
+      toast.error(error.message || "Failed to save FAQs");
       console.error("Error saving FAQs:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -90,7 +120,8 @@ export const AddFAQSheet = ({ propertyID, title = "FAQ" }) => {
                     onChange={(e) => handleFAQChange(index, e)}
                     placeholder="Enter FAQ question"
                     required
-                    className="w-full px-4 py-2 border"
+                    className={`w-full px-4 py-2 border ${errors[`title-${index}`] ? 'border-red-500' : ''}`}
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -102,7 +133,8 @@ export const AddFAQSheet = ({ propertyID, title = "FAQ" }) => {
                     value={faq.desc}
                     onChange={(e) => handleFAQChange(index, e)}
                     placeholder="Enter FAQ answer"
-                    className="w-full px-4 py-2 border"
+                    className={`w-full px-4 py-2 border ${errors[`desc-${index}`] ? 'border-red-500' : ''}`}
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -120,14 +152,16 @@ export const AddFAQSheet = ({ propertyID, title = "FAQ" }) => {
               <button
                 type="button"
                 onClick={handleAddFAQ}
-                className="bg-pamojaprimary text-white font-bold py-2 px-4 rounded"
-              >
+                className="bg-pamojaprimary text-white font-bold py-2 px-4 rounded disabled:opacity-50"
+                disabled={isSubmitting}
+                >
                 Add Another FAQ
-              </button>
+                </button>
 
               <button
                 type="submit"
-                className="bg-pamojaprimary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-pamojaprimary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-50"
+                disabled={isSubmitting}
               >
                 Save FAQs
               </button>

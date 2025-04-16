@@ -9,30 +9,28 @@ import { ButtonOne } from "./buttons";
 import { HomeParagraph } from "./texties";
 import { FaConciergeBell, FaParking, FaSwimmingPool } from "react-icons/fa";
 import { Button } from "./ui/button";
+0.
 
-export const ReviewsCard = () => {
+export const ReviewsCard = ({ title, desc, img, name }) => {
   return (
     <div className="bg-pamojatertiary rounded-none space-y-4 p-5 mx-2 ">
       {/* start rating */}
 
       {/* title */}
-      <h3 className="gilda_display text-lg font-bold"> Best Suppliers.</h3>
+      <h3 className="gilda_display text-lg font-bold">{title}</h3>
 
       {/* content */}
-      <h5 className="barlow">
-        It was the best place i could recomdend tto anyone heading to ngorongoro
-        and all over the world.
-      </h5>
+      <h5 className="barlow">{desc}</h5>
       <Separator className="bg-pamojaprimary" />
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarImage src={img} />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
 
           <div className="flex flex-col space-y-1">
-            <h5 className="gilda_display text-sm"> George P.</h5>
+            <h5 className="gilda_display text-sm">{name}</h5>
             <StarRating />
           </div>
         </div>

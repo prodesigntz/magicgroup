@@ -1,16 +1,19 @@
 "use client";
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import { Title } from "../texties";
-import Image from "next/image";
 import { ReviewsCard } from "../cards";
+import useFetchAll from "@/lib/hooks/useFetchAll";
+import SkeletonOne from "../skeletonOne";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { destinationData } from "@/data/destiantionData";
 
 export default function Testimonials() {
   const sliderRef = useRef(null);
+  const { isLoading, data, error, didSucceed } = useFetchAll("Reviews");
+
+ console.log(data);
 
   const settings = {
     dots: true,
@@ -65,8 +68,6 @@ export default function Testimonials() {
             subHeading="Testimonials"
             first="Satisfied Customers"
           />
-          {/* <HomeParagraph place="center" content=" 
-            Lorem ipsum dolor sit amet consectetur adipisicing elit."/> */}
         </div>
         <div></div>
       </div>
@@ -75,18 +76,29 @@ export default function Testimonials() {
       <div className="">
         <div>
           <Slider {...settings} ref={sliderRef}>
-            {destinationData.map((tour) => (
-              <ReviewsCard
-                key={tour.id}
-                href={tour.href}
-                icon={tour.icon}
-                type={tour.type}
-                amount={tour.amount}
-              />
-            ))}
+            {isLoading ? (
+              Array.from({ length: 4 }).map((_, index) => (
+                <SkeletonOne key={index} />
+              ))
+            ) : !didSucceed ? (
+              <p className="text-center py-5">
+                Something went wrong, please contact admin.
+              </p>
+            ) : data.length < 1 ? (
+              <p className="text-center py-5">No reviews found.</p>
+            ) : (
+              data.map((review) => (
+                <ReviewsCard
+                  key={review.id}
+                  title={review.title}
+                  icon={review.img}
+                  name={review.name}
+                  desc={review.desc}
+                />
+              ))
+            )}
           </Slider>
         </div>
-       
       </div>
     </section>
   );

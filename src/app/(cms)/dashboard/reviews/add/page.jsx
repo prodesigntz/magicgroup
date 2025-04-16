@@ -21,8 +21,8 @@ export default function AddPost({ params }) {
   const { authUser } = useAppContext();
   const [formData, setFormData] = useState({
     title: "",
+    name: "",
     desc: "",
-   // category: "",
     img: null,
     imgPreview: null, // Added for image preview
     isPublished:false,
@@ -45,6 +45,7 @@ export default function AddPost({ params }) {
           setFormData({
             title: document.title,
             desc: document.desc,
+            name: document.name,
             category: document.category,
             img: document.img || null,
             imgPreview: document.img || null, // Added for image preview
@@ -91,8 +92,9 @@ export default function AddPost({ params }) {
       const reviewsData = {
         title: formData.title,
         desc: formData.desc,
+        name: formData.name,
         author: authUser?.username || "Anonymous",
-       // category: formData.category,
+         // category: formData.category,
         img: imageUrl,
         updatedAt: new Date(),
         isPublished:formData.isPublished,
@@ -138,6 +140,17 @@ export default function AddPost({ params }) {
                       required
                     />
           </div>
+          <div className="mb-4">
+           
+           <TextInput
+                     label="Name"
+                     name="name"
+                     value={formData.name}
+                     onChange={handleChange}
+                     placeholder="Enter Name Here"
+                     required
+                   />
+         </div>
              <div className="mb-4 relative">
                       <label
                         className="block text-slate-700 text-sm font-bold mb-2"
