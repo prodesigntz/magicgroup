@@ -141,7 +141,7 @@ export default function EditPost({ params }) {
     }
   };
 
- console.log("Form Data:", formData);
+ //console.log("Form Data:", formData);
 
   return (
     <main>

@@ -38,12 +38,9 @@ export const Title = ({ first, last, subHeading, className }) => {
 
 export const HomeParagraph = ({ content, className }) => {
   return (
-    <>
-      <p 
-       className={`pb-5 text-justify text-wrap text-lg antialiased ${className}`}>
-      
-        {content}
-      </p>
-    </>
+    <div 
+      className={`pb-5 text-justify text-wrap text-lg antialiased ${className}`}
+      dangerouslySetInnerHTML={{ __html: content }}
+    />
   );
 };
