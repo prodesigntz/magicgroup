@@ -84,7 +84,7 @@ export default function AddPost({ params }) {
       let imageUrl = formData.img;
 
       if (formData.img && typeof formData.img !== "string") {
-        imageUrl = await imageUploadToFirebase(formData.img, "blogImages");
+        imageUrl = await imageUploadToFirebase(formData.img, "reviewImages");
       }
 
       const slug = getSlug(formData.title);
@@ -112,7 +112,7 @@ export default function AddPost({ params }) {
       if (result.didSucceed) {
         router.push("/dashboard/reviews"); // Replace with your CMS route
       } else {
-        setError("Failed to save blog post.");
+        setError("Failed to save review post.");
       }
     } catch (error) {
       console.error("Review save error:", error.message);

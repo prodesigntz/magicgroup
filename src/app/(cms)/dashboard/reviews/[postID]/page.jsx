@@ -57,6 +57,8 @@ export default function EditPost({ params }) {
           setFormData({
             title: document.title,
             desc: document.desc,
+            name: document.name,
+            
            // category: document.category,
             img: document.img || null,
             imgPreview: document.img || null, // Added for image preview
@@ -103,6 +105,7 @@ export default function EditPost({ params }) {
       const blogData = {
         title: formData.title,
         desc: formData.desc,
+        name: formData.name,
         author: authUser?.username || "Anonymous",
         //category: formData.category,
         img: imageUrl,

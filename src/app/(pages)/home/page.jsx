@@ -13,9 +13,6 @@ import CompanyServices from "@/components/content/companyServices";
 export default function Home() {
   return (
     <main>
-      {/* <HeroOne/> */}
-      {/* <Hero/> */}
-      {/* <HeroFramer/> */}
       <HeroFramerPlane/>
       <SuccessSection/>
       <Intro/>
@@ -23,11 +20,10 @@ export default function Home() {
       <Activities/>
       <CompanyServices/>
       <Contact/>
-      {/* <Team/>  */}
+    
       <Testimonials/>    
       <BlogSection/>
-      {/* <ImageGallerySelectionCloudinary/> */}
-      {/* <Gallery/> */}
+    
     </main>
     );
 }
