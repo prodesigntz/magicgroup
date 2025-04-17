@@ -12,7 +12,7 @@ import { imageUploadToFirebase } from "@/firebase/fileOperations";
 import { getSlug } from "@/lib/utils";
 import Image from "next/image";
 import { TextInput } from "@/components/textInput";
-import { Switch } from "@/components/ui/switch";
+//import { Switch } from "@/components/ui/switch";
 
 export default function EditPost({ params }) {
   ///const { postId } = useParams();
@@ -58,8 +58,6 @@ export default function EditPost({ params }) {
             title: document.title,
             desc: document.desc,
             name: document.name,
-            
-           // category: document.category,
             img: document.img || null,
             imgPreview: document.img || null, // Added for image preview
           });
@@ -136,6 +134,8 @@ export default function EditPost({ params }) {
     }
   };
 
+  //console.log("Form Data:", formData);
+
   return (
     <main>
       <div className="bg-white shadow-lg rounded-lg p-8 w-full">
@@ -187,14 +187,6 @@ export default function EditPost({ params }) {
               required
             />
           </div>
-          {/* <TextInput
-            label="Category"
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            placeholder="Enter Category Here"
-            required
-          /> */}
           <div className="mb-4">
             <label
               className="block text-slate-700 text-sm font-bold mb-2"

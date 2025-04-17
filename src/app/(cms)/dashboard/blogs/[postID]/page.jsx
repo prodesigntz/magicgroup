@@ -9,10 +9,11 @@ import {
   getSingleDocument,
 } from "@/firebase/databaseOperations";
 import { imageUploadToFirebase } from "@/firebase/fileOperations";
-import { getSlug } from "@/lib/utils";
+//import { getSlug } from "@/lib/utils";
 import Image from "next/image";
 import { TextInput } from "@/components/textInput";
-import { Switch } from "@/components/ui/switch";
+import QuillEditor from "@/components/quillEditor/QuillEditor";
+import { getSlug, serializeToHtml } from "@/lib/utils";
 
 export default function EditPost({ params }) {
   ///const { postId } = useParams();
@@ -52,13 +53,15 @@ export default function EditPost({ params }) {
 
         console.log("Document Data.....:", document);
 
-        if (didSucceed) {
+        if (didSucceed && document) {
+          //console.log("Setting form data with:", document);
           setFormData({
             title: document.title,
-            desc: document.desc,
+            desc: document.desc || document.htmlContent ,
             category: document.category,
             img: document.img || null,
-            imgPreview: document.img || null, // Added for image preview
+            imgPreview: document.img || null,
+            isPublished: document.isPublished || false
           });
         } else {
           setError("Failed to fetch post data.");
@@ -73,6 +76,10 @@ export default function EditPost({ params }) {
   // Handling data change on typing
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleEditorChange = (content) => {
+    setFormData({ ...formData, desc: content });
   };
 
   // Handling image upload and preview
@@ -99,15 +106,17 @@ export default function EditPost({ params }) {
 
       const slug = getSlug(formData.title);
 
+      const htmlContent = formData.desc; // Quill already provides HTML content
+
       const blogData = {
         title: formData.title,
         desc: formData.desc,
+        htmlContent,
         author: authUser?.username || "Anonymous",
         category: formData.category,
         img: imageUrl,
         updatedAt: new Date(),
-        // isPublished: formData.isPublished,
-        isPublished:false,
+        isPublished: false,
         slug,
       };
 
@@ -131,6 +140,8 @@ export default function EditPost({ params }) {
       setIsLoading(false);
     }
   };
+
+ console.log("Form Data:", formData);
 
   return (
     <main>
@@ -158,21 +169,16 @@ export default function EditPost({ params }) {
               {getSlug(formData.title)}
             </p>
           </div>
-          <div className="mb-4">
+          <div className="mb-4 relative">
             <label
               className="block text-slate-700 text-sm font-bold mb-2"
               htmlFor="desc"
             >
               Content
             </label>
-            <textarea
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="desc"
-              placeholder="Enter Content Here"
-              name="desc"
+            <QuillEditor
               value={formData.desc}
-              onChange={handleChange}
-              required
+              onChange={handleEditorChange}
             />
           </div>
           <TextInput

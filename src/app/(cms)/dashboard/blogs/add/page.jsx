@@ -9,13 +9,13 @@ import {
   getSingleDocument,
 } from "@/firebase/databaseOperations";
 import { imageUploadToFirebase } from "@/firebase/fileOperations";
-import { getSlug } from "@/lib/utils";
+import { getSlug, serializeToHtml } from "@/lib/utils";
 import Image from "next/image";
 import { TextInput } from "@/components/textInput";
+import QuillEditor from "@/components/quillEditor/QuillEditor";
 
 export default function AddPost({ params }) {
   const { postId } = useParams();
-  //console.log("Post ID:...", postId);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const { authUser } = useAppContext();
@@ -24,8 +24,8 @@ export default function AddPost({ params }) {
     desc: "",
     category: "",
     img: null,
-    imgPreview: null, // Added for image preview
-    isPublished:false,
+    imgPreview: null,
+    isPublished: false,
   });
 
   // Navigation
@@ -37,17 +37,18 @@ export default function AddPost({ params }) {
       const fetchPost = async () => {
         setIsLoading(true);
         const { didSucceed, document } = await getSingleDocument(
-          "Blogpost",
+          "Blogposts",
           postId
         );
 
         if (didSucceed) {
           setFormData({
             title: document.title,
-            desc: document.desc,
+            desc: document.desc || document.htmlContent,
             category: document.category,
             img: document.img || null,
-            imgPreview: document.img || null, // Added for image preview
+            imgPreview: document.img || null,
+            isPublished: document.isPublished || false
           });
         } else {
           setError("Failed to fetch post data.");
@@ -59,12 +60,14 @@ export default function AddPost({ params }) {
     }
   }, [postId]);
 
-  // Handling data change on typing
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handling image upload and preview
+  const handleEditorChange = (content) => {
+    setFormData({ ...formData, desc: content });
+  };
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -73,7 +76,6 @@ export default function AddPost({ params }) {
     }
   };
 
-  // Handle blog creation or update
   const handleBlogSave = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -87,15 +89,17 @@ export default function AddPost({ params }) {
       }
 
       const slug = getSlug(formData.title);
+      const htmlContent = formData.desc; // Quill already provides HTML content
 
       const blogData = {
         title: formData.title,
         desc: formData.desc,
+        htmlContent,
         author: authUser?.username || "Anonymous",
         category: formData.category,
         img: imageUrl,
         updatedAt: new Date(),
-        isPublished:formData.isPublished,
+        isPublished: formData.isPublished,
         slug,
       };
 
@@ -108,7 +112,7 @@ export default function AddPost({ params }) {
       }
 
       if (result.didSucceed) {
-        router.push("/dashboard/blogs"); // Replace with your CMS route
+        router.push("/dashboard/blogs");
       } else {
         setError("Failed to save blog post.");
       }
@@ -127,58 +131,48 @@ export default function AddPost({ params }) {
           {postId ? "Update Blog Post" : "Create a Blog Post"}
         </h1>
         <form onSubmit={handleBlogSave}>
-          <div className="mb-4">
+          <TextInput
+            label="Title"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            placeholder="Enter Title Here"
+            required
+          />
+          <div className="mb-4 relative">
             <label
               className="block text-slate-700 text-sm font-bold mb-2"
-              htmlFor="title"
+              htmlFor="desc"
             >
-              Title
+              Slug
             </label>
-            <TextInput
-                      label="Title"
-                      name="title"
-                      value={formData.title}
-                      onChange={handleChange}
-                      placeholder="Enter Title Here"
-                      required
-                    />
+            <p className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline">
+              {getSlug(formData.title)}
+            </p>
           </div>
-             <div className="mb-4 relative">
-                      <label
-                        className="block text-slate-700 text-sm font-bold mb-2"
-                        htmlFor="desc"
-                      >
-                        Slug
-                      </label>
-                      <p className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline">
-                        {getSlug(formData.title)}
-                      </p>
-                    </div>
-          <div className="mb-4">
+
+          <div className="mb-4 relative">
             <label
               className="block text-slate-700 text-sm font-bold mb-2"
               htmlFor="desc"
             >
               Content
             </label>
-            <textarea
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="desc"
-              placeholder="Enter Content Here"
-              name="desc"
+            <QuillEditor
               value={formData.desc}
-              onChange={handleChange}
-              required
+              onChange={handleEditorChange}
             />
           </div>
-             <TextInput
-                     label="Category"
-                     name="category"
-                     value={formData.category}
-                     onChange={handleChange}
-                     placeholder="Enter Category Here"
-                     required
-                   />
+
+          <TextInput
+            label="Category"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            placeholder="Enter Category Here"
+            required
+          />
+
           <div className="mb-4">
             <label
               className="block text-slate-700 text-sm font-bold mb-2"
