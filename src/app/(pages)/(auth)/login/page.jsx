@@ -7,19 +7,21 @@ import {
   browserSessionPersistence,
   signInWithPopup,
 } from "firebase/auth";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import firebase from "@/firebase/firebaseInit";
+import { createDocument, getSingleDocument } from "@/firebase/databaseOperations";
 import Backdrop from "@/components/simpleComponents/backdrop";
 import Image from "next/image";
 
 export default function LoginPage() {
   const router = useRouter();
 
-  const { auth } = firebase;
+  const { auth, db } = firebase;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
@@ -37,7 +39,22 @@ const handleLogin = async (e) => {
         : browserSessionPersistence
     );
     const rs = await signInWithEmailAndPassword(auth, email, password);
-    console.log("user", rs.user);
+    const user = rs.user;
+
+    // Check if user is verified
+    const userDoc = await getSingleDocument("users", user.uid);
+    if (!userDoc.didSucceed) {
+      throw new Error("Failed to fetch user data");
+    }
+
+    // Set verification status in cookie
+    document.cookie = `isVerified=${userDoc.document.isVerified}; path=/`;
+
+    if (!userDoc.document.isVerified) {
+      router.replace("/pending");
+      return;
+    }
+
     router.replace("/dashboard");
   } catch (error) {
     const errorMessage =
@@ -62,8 +79,50 @@ const handleLogin = async (e) => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-      console.log("Google Sign-In successful:", user);
+      
+      // Check if email is already registered
+      const emailQuery = query(collection(db, "users"), where("email", "==", user.email));
+      const emailSnapshot = await getDocs(emailQuery);
+      
+      if (emailSnapshot.empty) {
+        // Create new user document in Firestore
+        const userDetails = {
+          firstName: user.displayName?.split(' ')[0] || '',
+          lastName: user.displayName?.split(' ').slice(1).join(' ') || '',
+          email: user.email,
+          userId: user.uid,
+          role: "user",
+          createdAt: new Date(),
+          profilePicture: user.photoURL || "",
+          isVerified: false,
+          isEmailVerified: user.emailVerified,
+          lastLogin: new Date(),
+          department: [],
+          authProvider: "google"
+        };
+
+        const rs = await createDocument(userDetails, "users");
+        if (!rs.didSucceed) {
+          throw new Error("Failed to save user information");
+        }
+        document.cookie = `isVerified=false; path=/`;
+        router.replace("/pending");
+        return;
+      }
+
+      // User exists, get their document
+      const existingUserDoc = emailSnapshot.docs[0].data();
+      document.cookie = `isVerified=${existingUserDoc.isVerified}; path=/`;
+      
+      if (!existingUserDoc.isVerified) {
+        router.replace("/pending");
+        return;
+      }
+      
       router.replace("/dashboard");
+
+
+
     } catch (error) {
       Swal.fire({
         title: "Error!",

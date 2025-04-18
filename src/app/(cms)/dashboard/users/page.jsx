@@ -5,43 +5,40 @@ import { fetchDocuments, updateDocument } from '@/firebase/databaseOperations';
 import { format } from 'date-fns';
 import useFetchAll from '@/lib/hooks/useFetchAll';
 
-const MessageStatus = {
+const UserStatus = {
   PENDING: 'Pending',
-  WORKING: 'Working',
-  SOLVED: 'Solved',
+  APPROVED: 'Approved',
   DECLINED: 'Declined'
 };
 
-function MessagesPage() {
-  const [messages, setMessages] = useState([]);
-  const [selectedMessage, setSelectedMessage] = useState(null);
+function UsersPage() {
+  const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
-   //fetch messages...............
-   const { data, didSucceed, isLoading } = useFetchAll("Contactus");
+  // Fetch users
+  const { data, didSucceed, isLoading } = useFetchAll("users");
 
-   console.log("Contactus: ", data);
-
-   useEffect(() => {
+  useEffect(() => {
     if (data && data.length > 0) {
-      const sortedMessages = [...data].sort((a, b) => {
+      const sortedUsers = [...data].sort((a, b) => {
         return b.createdAt?.toDate() - a.createdAt?.toDate();
       });
-      setMessages(sortedMessages);
+      setUsers(sortedUsers);
     }
     setLoading(false);
   }, [data]);
 
-  const handleStatusChange = async (messageId, newStatus) => {
+  const handleStatusChange = async (userId, newStatus) => {
     try {
       setLoading(true);
-      const result = await updateDocument('Contactus', messageId, { status: newStatus });
+      const result = await updateDocument('users', userId, { isVerified: newStatus === UserStatus.APPROVED });
       if (result.didSucceed) {
-        const updatedData = data.map(msg => 
-          msg.id === messageId ? { ...msg, status: newStatus } : msg
+        const updatedData = data.map(user => 
+          user.id === userId ? { ...user, isVerified: newStatus === UserStatus.APPROVED } : user
         );
-        setMessages(updatedData);
+        setUsers(updatedData);
       }
     } catch (error) {
       console.error('Error updating status:', error);
@@ -50,13 +47,16 @@ function MessagesPage() {
     }
   };
 
-  const getStatusColor = (status) => {
-    switch (status) {
-      case MessageStatus.WORKING: return 'bg-yellow-100 text-yellow-800';
-      case MessageStatus.SOLVED: return 'bg-green-100 text-green-800';
-      case MessageStatus.DECLINED: return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
-    }
+  const getStatusColor = (isVerified) => {
+    if (isVerified === true) return 'bg-green-100 text-green-800';
+    if (isVerified === false) return 'bg-red-100 text-red-800';
+    return 'bg-gray-100 text-gray-800';
+  };
+
+  const getUserStatus = (isVerified) => {
+    if (isVerified === true) return UserStatus.APPROVED;
+    if (isVerified === false) return UserStatus.DECLINED;
+    return UserStatus.PENDING;
   };
 
   if (loading) {
@@ -65,7 +65,7 @@ function MessagesPage() {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Messages Dashboard</h1>
+      <h1 className="text-2xl font-bold mb-6">Users Management</h1>
       
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white rounded-lg overflow-hidden">
@@ -74,27 +74,29 @@ function MessagesPage() {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {messages.map((message) => (
-              <tr key={message.id}>
+            {users.map((user) => (
+              <tr key={user.id}>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {format(message.createdAt?.toDate() || new Date(), 'MMM dd, yyyy')}
+                  {format(user.createdAt?.toDate() || new Date(), 'MMM dd, yyyy')}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{message.name}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{message.email}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{message.subject}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  {user.firstName} {user.lastName}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.email}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.role}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <select
-                    value={message.status || MessageStatus.PENDING}
-                    onChange={(e) => handleStatusChange(message.id, e.target.value)}
-                    className={`rounded-full px-3 py-1 text-xs font-semibold ${getStatusColor(message.status)}`}
+                    value={getUserStatus(user.isVerified)}
+                    onChange={(e) => handleStatusChange(user.id, e.target.value)}
+                    className={`rounded-full px-3 py-1 text-xs font-semibold ${getStatusColor(user.isVerified)}`}
                   >
-                    {Object.values(MessageStatus).map((status) => (
+                    {Object.values(UserStatus).map((status) => (
                       <option key={status} value={status}>{status}</option>
                     ))}
                   </select>
@@ -102,7 +104,7 @@ function MessagesPage() {
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   <button
                     onClick={() => {
-                      setSelectedMessage(message);
+                      setSelectedUser(user);
                       setIsModalOpen(true);
                     }}
                     className="text-indigo-600 hover:text-indigo-900"
@@ -117,11 +119,11 @@ function MessagesPage() {
       </div>
 
       {/* Modal */}
-      {isModalOpen && selectedMessage && (
+      {isModalOpen && selectedUser && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg p-6 max-w-2xl w-full">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold">Message Details</h2>
+              <h2 className="text-xl font-bold">User Details</h2>
               <button
                 onClick={() => setIsModalOpen(false)}
                 className="text-gray-500 hover:text-gray-700"
@@ -131,22 +133,26 @@ function MessagesPage() {
             </div>
             <div className="space-y-4">
               <div>
-                <label className="font-medium">From:</label>
-                <p>{selectedMessage.name} ({selectedMessage.email})</p>
+                <label className="font-medium">Name:</label>
+                <p>{selectedUser.firstName} {selectedUser.lastName}</p>
               </div>
               <div>
-                <label className="font-medium">Subject:</label>
-                <p>{selectedMessage.subject}</p>
+                <label className="font-medium">Email:</label>
+                <p>{selectedUser.email}</p>
               </div>
               <div>
-                <label className="font-medium">Message:</label>
-                <p className="whitespace-pre-wrap">{selectedMessage.message}</p>
+                <label className="font-medium">Role:</label>
+                <p>{selectedUser.role}</p>
               </div>
               <div>
                 <label className="font-medium">Status:</label>
-                <p className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${getStatusColor(selectedMessage.status)}`}>
-                  {selectedMessage.status || MessageStatus.PENDING}
+                <p className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${getStatusColor(selectedUser.isVerified)}`}>
+                  {getUserStatus(selectedUser.isVerified)}
                 </p>
+              </div>
+              <div>
+                <label className="font-medium">Created At:</label>
+                <p>{format(selectedUser.createdAt?.toDate() || new Date(), 'MMM dd, yyyy')}</p>
               </div>
             </div>
           </div>
@@ -156,4 +162,4 @@ function MessagesPage() {
   );
 }
 
-export default MessagesPage;
+export default UsersPage;

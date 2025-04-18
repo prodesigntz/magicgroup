@@ -77,7 +77,8 @@ const SignUpPage = () => {
         isVerified: false,
         isEmailVerified: false,
         lastLogin: new Date(),
-        department:[]
+        department: [],
+        authProvider: "email"
       };
 
       // Create user document in Firestore

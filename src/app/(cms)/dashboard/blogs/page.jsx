@@ -45,25 +45,25 @@ export default function Page() {
 
       {/* tabs */}
       <div className="">
-        <Tabs defaultValue="Published">
+        <Tabs defaultValue="published">
           <TabsList className="bg-pamojatertiary rounded-none">
-            <TabsTrigger value="Properties" className="">
+            <TabsTrigger value="all" className="">
               All
             </TabsTrigger>
-            <TabsTrigger value="Published">Published</TabsTrigger>
-            <TabsTrigger value="Drafts">Drafts </TabsTrigger>
+            <TabsTrigger value="published">Published</TabsTrigger>
+            <TabsTrigger value="drafts">Drafts </TabsTrigger>
           </TabsList>
           {isLoading ? (
             <DashboardDataLoader />
           ) : (
             <>
-              <TabsContent value="Properties">
+              <TabsContent value="all">
                 <AllPosts data={data} />
               </TabsContent>
-              <TabsContent value="Published">
+              <TabsContent value="published">
                 <AllPosts data={published} />
               </TabsContent>
-              <TabsContent value="Drafts">
+              <TabsContent value="drafts">
                 <AllPosts data={drafts} />
               </TabsContent>
             </>

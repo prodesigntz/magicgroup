@@ -15,32 +15,30 @@ export default function RootLayout({ children }) {
 
   useEffect(() => {
     if (!authUser && !isFetchingAuthUser) {
-      router.replace("/login");
+      router.replace('/login');
     }
-  }, [authUser, router, isFetchingAuthUser]);
+  }, [authUser, isFetchingAuthUser, router]);
 
   if (isFetchingAuthUser) {
     return <DashboardDataLoader />;
   }
 
-  if (!isFetchingAuthUser && authUser) {
-    return (
-      <div className="flex ">
-        <div className=" w-64 space-y-5 p-5 hidden md:block max-h-full bg-pamojatertiary">
-          <div className="bg-pamojaprimary p-5  rounded-lg  sticky top-0 z-20 shadow-md ">
-            <h1 className="gilda_display text-lg font-bold antialiased">
-              Magic Group
-            </h1>
-          </div>
-          <SideBar />
-        </div>
-        <div className="flex-1  p-5  ">
-          <DashboardHeader />
-          <PageWrapper>{children}</PageWrapper>
-        </div>
-      </div>
-    );
+  if (!authUser) {
+    return null;
   }
 
-  return <DashboardDataLoader />;
+  return (
+    <div className="h-screen bg-gray-100">
+      <DashboardHeader />
+      <div className="flex h-[calc(100vh-80px)]">
+        <SideBar />
+        <main className="flex-1 overflow-y-auto p-4">
+          <PageWrapper>{children}</PageWrapper>
+        </main>
+      </div>
+      <footer className="fixed bottom-0 w-full bg-white shadow-lg p-4 text-center text-gray-600">
+        © {new Date().getFullYear()} Magic Group. All rights reserved.
+      </footer>
+    </div>
+  );
 }

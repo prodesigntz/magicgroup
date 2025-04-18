@@ -21,19 +21,7 @@ export const menuDashItem = [
       },
     ],
   },
-  // {
-  //   name: "Bookings",
-  //   subMenu: [
-  //     {
-  //       name: "List Bookings",
-  //       path: "/dashboard/bookings",
-  //     },
-  //     // {
-  //     //   name: "Add Destination",
-  //     //   path: "/dashboard/bookings/add",
-  //     // },
-  //   ],
-  // },
+ 
   {
     name: "Reviews",
     subMenu: [
@@ -53,12 +41,9 @@ export const menuDashItem = [
     subMenu: [
       {
         name: "Contact",
-        path: "",
+        path: "/dashboard/messages",
       },
-      {
-        name: "Chat",
-        path: "",
-      },
+     
     ],
   },
   {
@@ -88,15 +73,20 @@ export const menuDashItem = [
     ],
   },
   {
+    name: "Users",
+    subMenu: [
+      {
+        name: "List Users",
+        path: "/dashboard/users",
+      },
+    ],
+  },
+  {
     name: "Setting",
     subMenu: [
       {
         name: "Options",
         path: "/dashboard/setting",
-      },
-      {
-        name: "Users",
-        path: "/dashboard/users",
       },
     ],
   },
