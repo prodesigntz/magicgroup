@@ -25,7 +25,7 @@ export default function PendingApprovalPage() {
         <div className="mb-6">
           <p className="text-gray-600 mb-4">
             Your account is currently pending approval from our administrators.
-            You'll be notified via email once your account has been approved.
+            You&apos;ll be notified via email once your account has been approved.
           </p>
           <p className="text-gray-600">
             Thank you for your patience!
