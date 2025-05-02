@@ -95,7 +95,7 @@ export const Footer = () => {
                 <div className="flex-col">
                   <span className="flex items-center  space-x-2">
                     <FaPhone className="text-md" />
-                    <h5 className=""> +255 700 000 000</h5>
+                    <h5 className=""> +255 222 701 285</h5>
                   </span>
                   <span className="flex items-center  space-x-2">
                     <FaEnvelope className="text-md" />
