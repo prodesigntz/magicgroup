@@ -4,7 +4,7 @@ import { HeaderTitle, HomeParagraph, Title } from "@/components/texties";
 import Image from "next/image";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { Slash } from "lucide-react";
+import { Slash, AlertCircle, RefreshCw, Home } from "lucide-react";
 
 import {
   Breadcrumb,
@@ -28,20 +28,23 @@ import {
   updateDocumentArrayOrg,
 } from "@/firebase/databaseOperations";
 import DashboardDataLoader from "@/components/dashboard/dashboard-data-loader";
+import PropertyPageSkeleton from "@/components/skeletons/PropertyPageSkeleton";
+import ErrorBoundary, { useErrorHandler } from "@/components/ErrorBoundary";
+import { ProgressiveLoader, PropertySectionSkeleton, useProgressiveLoading } from "@/components/ProgressiveLoader";
+import { useProperty } from "@/lib/hooks/useProperty";
+
 import PropertyGalleryCloud from "@/components/accomodation/singleAccomodation/propertyGalleryCloud";
 import { ButtonOne } from "@/components/buttons";
 import { Button } from "@/components/ui/button";
 
-export default function Page() {
-  const { slug } = useParams();
-
-  //console.log("slug--:", slug);
+function PropertyPageContent() {
+  const params = useParams();
+  const { slug } = params;
+  const { property, isLoading, error, isRetrying, retry } = useProperty(slug);
+  const { error: handlerError, handleError, resetError } = useErrorHandler();
+  const { markSectionLoaded, isSectionLoaded } = useProgressiveLoading([property]);
   const router = useRouter();
   const pathname = usePathname();
-
-  const [property, setProperty] = useState(null);
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
 
   // Extract the page name from the pathname and format it
   const pageName = pathname.split("/").pop();
@@ -50,46 +53,72 @@ export default function Page() {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 
-  // Fetch property data by slug
+  // Log errors for debugging
   useEffect(() => {
-    const fetchPropertyData = async () => {
-      if (!slug) {
-        console.error("No slug provided");
-        return;
-      }
+    if (error && !isRetrying) {
+      console.error('Property loading error:', error);
+    }
+  }, [error, isRetrying]);
 
-      try {
-        const { didSucceed, document } = await getSingleDocByFieldNameOrg(
-          "Properties",
-          "slug",
-          slug
-        );
+  // Loading state with enhanced skeleton
+  if (isLoading && !property) {
+    return <PropertyPageSkeleton />;
+  }
 
-        if (didSucceed) {
-          setProperty(document);
-        } else {
-          console.error("Failed to fetch property post");
-        }
-      } catch (error) {
-        console.error("Error fetching property post:", error);
-      }
-    };
-
-    console.log("Property---:", property);
-
-    fetchPropertyData();
-  }, [slug]);
+  // Error state with better UX
+  if ((error || handlerError) && !property) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <div className="text-center space-y-6 max-w-md">
+          <div className="flex justify-center">
+            <AlertCircle className="h-16 w-16 text-red-500" />
+          </div>
+          <div className="space-y-2">
+            <h2 className="text-2xl font-bold text-gray-900">Oops! Something went wrong</h2>
+            <p className="text-gray-600">
+              {error || handlerError || "We couldn't load the property details."}
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Button
+              onClick={() => {
+                retry();
+                resetError();
+              }}
+              disabled={isRetrying}
+              className="flex items-center gap-2"
+            >
+              {isRetrying ? (
+                <RefreshCw className="h-4 w-4 animate-spin" />
+              ) : (
+                <RefreshCw className="h-4 w-4" />
+              )}
+              {isRetrying ? "Retrying..." : "Try Again"}
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/companies")} className="flex items-center gap-2">
+              <Home className="h-4 w-4" />
+              Back to Properties
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (!property) {
     return (
-      <div>
-        <DashboardDataLoader />
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <h2 className="text-2xl font-bold text-gray-900">Property Not Found</h2>
+          <p className="text-gray-600">The property you're looking for doesn't exist.</p>
+          <Button onClick={() => router.push("/companies")}>Browse All Properties</Button>
+        </div>
       </div>
-    ); // Add a loading spinner or message if needed
+    );
   }
 
   // Extract propertyID from the fetched property
-  const propertyID = property?.id;
+  //const propertyID = property?.id;
   //console.log("property id ", propertyID);
 
   return (
@@ -154,13 +183,10 @@ export default function Page() {
       {/* booking form - pass propertyID to AccomodationBookForm */}
       {/* <AccomodationBookForm propertyID={propertyID} /> */}
 
-      {/* intro */}
-      {/* <div className="md:pt-10"> */}
+      {/* Property Intro - Load immediately */}
       <div className="">
         <PropertyIntro property={property} />
       </div>
-      {/* amenities and reviews - bg overlay */}
-      {/* <PropertyAmenities property={property} /> */}
 
       <div className="bg-gradient-to-tr from-slate-950 to-yellow-400 psektion ">
         <div className="respons sektion md:grid-cols-8  md:content-center">
@@ -186,19 +212,43 @@ export default function Page() {
           </div></div>        </div>
       </div>
 
-      {/* unique features - bg overlay */}
-      <PropertyUnique property={property} />
+      {/* Property Features - Progressive loading */}
+      <ProgressiveLoader
+        fallback={<PropertySectionSkeleton type="features" />}
+        delay={100}
+        className="mb-16"
+      >
+        <PropertyUnique property={property} />
+      </ProgressiveLoader>
 
+      {/* Property Rooms - Progressive loading */}
+      <ProgressiveLoader
+        fallback={<PropertySectionSkeleton type="rooms" />}
+        delay={200}
+        className="mb-16"
+      >
+        <PropertyRooms property={property} />
+      </ProgressiveLoader>
 
-      {/* rooms */}
-      <PropertyRooms property={property} />
+      {/* Property FAQs - Progressive loading */}
+      <ProgressiveLoader
+        fallback={<PropertySectionSkeleton type="faqs" />}
+        delay={300}
+        className="mb-16"
+      >
+        <PropertyFAQs property={property} />
+      </ProgressiveLoader>
 
-      {/* frequent asked questions */}
-      <PropertyFAQs property={property} />
-
-
-      {/* contact */}
+      {/* Property Contact - Load immediately for accessibility */}
       <PropertyContact property={property} />
     </main>
+  );
+}
+
+export default function Page() {
+  return (
+    <ErrorBoundary>
+      <PropertyPageContent />
+    </ErrorBoundary>
   );
 }

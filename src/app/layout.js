@@ -9,6 +9,7 @@ import "./globals.css";
 import { AppContextProvider } from "@/context/AppContext";
 
 
+
 // Fonts inputs
 const inter = Inter({ subsets: ["latin"] });
 
