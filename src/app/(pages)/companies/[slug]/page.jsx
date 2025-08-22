@@ -19,10 +19,10 @@ import PropertyIntro from "@/components/accomodation/singleAccomodation/property
 //import PropertyAmenities from "@/components/accomodation/singleAccomodation/propertyAmenities";
 import PropertyContact from "@/components/accomodation/singleAccomodation/propertyContact";
 //import Gallery from "@/components/content/gallery";
-import PropertyRooms from "@/components/accomodation/singleAccomodation/propertyRooms";
+//import PropertyRooms from "@/components/accomodation/singleAccomodation/propertyRooms";
 //import PropertyActivities from "@/components/accomodation/singleAccomodation/propertyActivities";
 import PropertyFAQs from "@/components/accomodation/singleAccomodation/propertyFAQs";
-import PropertyUnique from "@/components/accomodation/singleAccomodation/propertyUnique";
+//import PropertyUnique from "@/components/accomodation/singleAccomodation/propertyUnique";
 
 import PropertyPageSkeleton from "@/components/skeletons/PropertyPageSkeleton";
 import ErrorBoundary, { useErrorHandler } from "@/components/ErrorBoundary";
@@ -101,17 +101,17 @@ function PropertyPageContent() {
     );
   }
 
-  if (!property) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <h2 className="text-2xl font-bold text-gray-900">Property Not Found</h2>
-          <p className="text-gray-600">The property you're looking for doesn't exist.</p>
-          <Button onClick={() => router.push("/companies")}>Browse All Properties</Button>
-        </div>
-      </div>
-    );
-  }
+  // if (!property) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center">
+  //       <div className="text-center space-y-4">
+  //         <h2 className="text-2xl font-bold text-gray-900">Property Not Found</h2>
+  //         <p className="text-gray-600">The property you're looking for doesn't exist.</p>
+  //         <Button onClick={() => router.push("/companies")}>Browse All Properties</Button>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   // Extract propertyID from the fetched property
   // const propertyID = property?.id;
