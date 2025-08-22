@@ -9,7 +9,7 @@ export const heroslideData = [
     id:2,
     title: "Authentic Experiences ",
     content:
-      "Our company name “Pamoja” is derived from the Kiswahili word “As One,” and it is the spirit and understanding of this concept that drives our company philosophy to make a difference on the planet earth by protecting nature.",
+      "Our company name \"Pamoja\" is derived from the Kiswahili word \"As One,\" and it is the spirit and understanding of this concept that drives our company philosophy to make a difference on the planet earth by protecting nature.",
   },
   {
     id:3,

@@ -19,6 +19,7 @@ export default function HeroFramerPlane() {
   // Fetch data
   const { isLoading, data } = useFetchAll("Properties");
 
+
   const getVisibleCards = 3; // Always show 3 cards
 
   // Auto-slide functionality (pauses on hover)

@@ -23,17 +23,11 @@ import PropertyRooms from "@/components/accomodation/singleAccomodation/property
 //import PropertyActivities from "@/components/accomodation/singleAccomodation/propertyActivities";
 import PropertyFAQs from "@/components/accomodation/singleAccomodation/propertyFAQs";
 import PropertyUnique from "@/components/accomodation/singleAccomodation/propertyUnique";
-import {
-  getSingleDocByFieldNameOrg,
-  updateDocumentArrayOrg,
-} from "@/firebase/databaseOperations";
-import DashboardDataLoader from "@/components/dashboard/dashboard-data-loader";
+
 import PropertyPageSkeleton from "@/components/skeletons/PropertyPageSkeleton";
 import ErrorBoundary, { useErrorHandler } from "@/components/ErrorBoundary";
 import { ProgressiveLoader, PropertySectionSkeleton, useProgressiveLoading } from "@/components/ProgressiveLoader";
 import { useProperty } from "@/lib/hooks/useProperty";
-
-import PropertyGalleryCloud from "@/components/accomodation/singleAccomodation/propertyGalleryCloud";
 import { ButtonOne } from "@/components/buttons";
 import { Button } from "@/components/ui/button";
 
@@ -45,6 +39,8 @@ function PropertyPageContent() {
   const { markSectionLoaded, isSectionLoaded } = useProgressiveLoading([property]);
   const router = useRouter();
   const pathname = usePathname();
+
+  console.log("property", property);
 
   // Extract the page name from the pathname and format it
   const pageName = pathname.split("/").pop();
@@ -118,15 +114,15 @@ function PropertyPageContent() {
   }
 
   // Extract propertyID from the fetched property
-  //const propertyID = property?.id;
-  //console.log("property id ", propertyID);
+  // const propertyID = property?.id;
+  // console.log("property id ", propertyID);
 
   return (
     <main className="">
       {/* hero section */}
       <div className="relative p-5">
         <Image
-          src={property?.img}
+          src={property?.img || "/images/heros/bghero.jpg"}
           alt="Magic Group"
           width={2000}
           height={440}
@@ -180,55 +176,56 @@ function PropertyPageContent() {
         </div>
       </div>
 
-      {/* booking form - pass propertyID to AccomodationBookForm */}
-      {/* <AccomodationBookForm propertyID={propertyID} /> */}
-
-      {/* Property Intro - Load immediately */}
       <div className="">
         <PropertyIntro property={property} />
       </div>
 
       <div className="bg-gradient-to-tr from-slate-950 to-yellow-400 psektion ">
         <div className="respons sektion md:grid-cols-8  md:content-center">
-          <div className="col-span-6"> <Title
+          <div className="col-span-6"> 
+            <Title
             className="md:text-start text-white"
             first="Your Trusted Partner"
-          /></div>
-          <div className="col-span-2"> <div className="flex md:justify-end md:content-center">
+          />
+          </div>
+          <div className="col-span-2">
+             <div className="flex md:justify-end md:content-center">
             <Button
               asChild
               variant="pro-primary"
               className=" bg-proprimary rounded-none text-white"
             >
-              
-               <ButtonOne
-                                       name="Contact Us Now"
-                                       onClick={() =>
-                                         router.push(`/contact`)
-                                       }
-                                       className="justify-center  mt-5"
-                                     />
+
+              <ButtonOne
+                name="Contact Us Now"
+                onClick={() =>
+                  router.push(`/contact`)
+                }
+                className="justify-center  mt-5"
+              />
             </Button>
-          </div></div>        </div>
+          </div>
+          </div>        
+          </div>
       </div>
 
       {/* Property Features - Progressive loading */}
-      <ProgressiveLoader
+      {/* <ProgressiveLoader
         fallback={<PropertySectionSkeleton type="features" />}
         delay={100}
         className="mb-16"
       >
         <PropertyUnique property={property} />
-      </ProgressiveLoader>
+      </ProgressiveLoader> */}
 
       {/* Property Rooms - Progressive loading */}
-      <ProgressiveLoader
+      {/* <ProgressiveLoader
         fallback={<PropertySectionSkeleton type="rooms" />}
         delay={200}
         className="mb-16"
       >
         <PropertyRooms property={property} />
-      </ProgressiveLoader>
+      </ProgressiveLoader> */}
 
       {/* Property FAQs - Progressive loading */}
       <ProgressiveLoader

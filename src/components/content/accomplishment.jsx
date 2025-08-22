@@ -11,7 +11,7 @@ export default function Accomplishment() {
   return (
     <section className='respons bg-[#f8941d] rounded-lg px-5'>    
     <div className="psektion    sektion2 md:grid-cols-4">     
-      <div className='bflex flex-col text-center shadow p-1 rounded '>
+      <div className='flex flex-col text-center shadow p-1 rounded '>
         <div className='flex justify-center'><FaChildren className='text-6xl shadow-sm text-center'/></div>
         <div><Title first="354+"/></div>
         <div><p className='font-bold'>Students Admission</p></div>
